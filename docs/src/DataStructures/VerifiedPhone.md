@@ -5,18 +5,18 @@
     "https://www.w3.org/ns/credentials/undefined-terms/v2"
   ],
   "type": [
-    "VerifiedEmailAddressCredential",
+    "VerifiedPhoneNumberCredential",
     "VerifiableCredential"
   ],
   "issuer": "did:web:frequencyaccess.com",
   "validFrom": "2024-08-21T21:28:08.289+0000",
   "credentialSchema": {
     "type": "JsonSchema",
-    "id": "https://some.permanent.url/schema/email_address.json"
+    "id": "https://some.permanent.url/schema/phone_number.json"
   },
   "credentialSubject": {
     "id": "did:key:z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ",
-    "emailAddress": "john.doe@example.com",
+    "phoneNumber": "+01-234-867-5309",
     "lastVerified": "2024-08-21T21:27:59.309+0000"
   },
   "proof": {

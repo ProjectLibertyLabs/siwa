@@ -29,7 +29,7 @@ describe('request', () => {
       })
     );
 
-    expect(
+    await expect(
       getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], ['VerifiedEmailAddressCredential'])
     ).to.resolves.toBe('https://unittest.frequencyaccess.com/go');
 
@@ -57,7 +57,7 @@ describe('request', () => {
         anyOf: [
           {
             type: 'VerifiedEmailAddressCredential',
-            hash: [],
+            hash: ['multihash_of_email_schema_file'],
           },
         ],
       },
@@ -73,7 +73,7 @@ describe('request', () => {
       })
     );
 
-    expect(getRedirectUrl('//Alice', 'http://localhost:3000', [], [], { endpoint: 'testnet' })).to.resolves.toBe(
+    await expect(getRedirectUrl('//Alice', 'http://localhost:3000', [], [], { endpoint: 'testnet' })).to.resolves.toBe(
       'https://unittest.frequencyaccess.com/go'
     );
 
@@ -89,7 +89,7 @@ describe('request', () => {
       })
     );
 
-    expect(
+    await expect(
       getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], ['VerifiedEmailAddressCredential'])
     ).to.resolves.toBe('https://unittest.frequencyaccess.com/go');
 
@@ -100,7 +100,7 @@ describe('request', () => {
     signatureVerify(
       serializeRequestPayloadHex({
         callback: 'http://localhost:3000',
-        permissions: [1, 2, 100],
+        permissions: [5, 7, 8, 9, 10],
       }),
       signature,
       'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH'

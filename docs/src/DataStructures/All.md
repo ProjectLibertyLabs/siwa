@@ -18,6 +18,12 @@
 
 {{#markdown-embed src/DataStructures/Response-LoginOnly.md 0}}
 
+## Verified User Data
+
+### Graph Key
+
+{{#markdown-embed src/DataStructures/VerifiedGraphKeyPair.md 0}}
+
 ## Verified Contact Credentials
 
 ### Email

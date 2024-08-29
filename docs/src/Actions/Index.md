@@ -13,7 +13,7 @@ Frequency Access handles three different situations for each user:
 1. Generate a new login request to Frequency Access ([See Details](./Request.md))
 2. Have the user agent follow the location response
 2. Receive a callback from Frequency Access
-3. Retrieve and process the result from Frequency Access ([See Details](./Result.md))
+3. Retrieve and process the login response from Frequency Access ([See Details](./Response.md))
 
 ### Sequence Diagram
 

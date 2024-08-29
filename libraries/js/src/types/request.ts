@@ -26,14 +26,9 @@ export interface SiwaRequest {
   };
 }
 
-export interface SiwaResult {
-  raw: string;
-}
-
-export interface SiwaOptions {
-  endpoint: string;
-}
-
-export type SiwaCredentialTypes = 'VerifiedEmailAddressCredential' | 'VerifiedPhoneNumberCredential';
+export type SiwaCredentialTypes =
+  | 'VerifiedEmailAddressCredential'
+  | 'VerifiedPhoneNumberCredential'
+  | 'VerifiedGraphKeyCredential';
 
 export type SiwaCredential = SiwaCredentialTypes | SiwaCredentialRequest;

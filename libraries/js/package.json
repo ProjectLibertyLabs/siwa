@@ -13,7 +13,8 @@
     "prettier": "npx prettier --write src",
     "lint": "tsc -p ./tsconfig.eslint.json --noEmit --pretty && npx eslint src",
     "lint:fix": "npx eslint --fix src",
-    "lint:ci": "npx eslint src && npx prettier --check ."
+    "lint:ci": "npx eslint src && npx prettier --check .",
+    "generate:data-structures": "npx tsx src/mocks/generate-data-structures.ts"
   },
   "repository": {
     "type": "git",
@@ -26,20 +27,28 @@
   },
   "homepage": "https://github.com/ProjectLibertyLabs/siwa#readme",
   "devDependencies": {
+    "@digitalbazaar/data-integrity": "^2.3.0",
+    "@digitalbazaar/ed25519-multikey": "^1.2.0",
+    "@digitalbazaar/eddsa-rdfc-2022-cryptosuite": "^1.1.0",
     "@eslint/js": "^9.9.1",
     "@types/eslint__js": "^8.42.3",
     "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^9.9.1",
+    "jsonld": "^8.3.2",
+    "jsonld-signatures": "^11.3.0",
     "prettier": "3.3.3",
+    "rdf-canonize": "^4.0.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.3.0",
     "vitest": "^2.0.5"
   },
   "dependencies": {
+    "@digitalbazaar/vc": "^7.0.0",
     "@polkadot/keyring": "^13.0.2",
     "@polkadot/types": "^12.4.2",
     "@polkadot/types-codec": "^12.4.2",
     "@polkadot/util": "^13.0.2",
-    "@polkadot/util-crypto": "^13.0.2"
+    "@polkadot/util-crypto": "^13.0.2",
+    "tweetnacl": "^1.0.3"
   }
 }

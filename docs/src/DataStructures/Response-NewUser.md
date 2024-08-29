@@ -1,21 +1,11 @@
 ```json
 {
   "userPublicKey": {
-    "encodedValue": "f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH",
+    "encodedValue": "f6akufkq9Lex6rT8RCEDRuoZQRgo5pWiRzeo81nmKNGWGNJdJ",
     "encoding": "base58",
     "format": "ss58",
     "type": "Sr25519"
   },
-  "userKeys": [
-    {
-      "encodedPublicKeyValue": "0xfa627dd95fcb838c46fe049bb1ab17691b1001301ea3e7721eec9175af5b4234",
-      "encodedPrivateKeyValue": "0x06d384634ac01c3e83aa3e27652391b363e15624c0db0bc0da61a7dc5ff77db8",
-      "encoding": "base16",
-      "format": "bare",
-      "type": "X25519",
-      "keyType": "dsnp.public-key-key-agreement",
-    }
-  ],
   "payloads": [
     {
       "signature": {
@@ -30,7 +20,13 @@
       "type": "addProvider",
       "payload": {
         "authorizedMsaId": 1,
-        "schemaIds": [5, 7, 8, 9, 10],
+        "schemaIds": [
+          5,
+          7,
+          8,
+          9,
+          10
+        ],
         "expiration": 24
       }
     },
@@ -52,7 +48,7 @@
         "actions": [
           {
             "type": "addItem",
-            "payloadHex": "0xfa627dd95fcb838c46fe049bb1ab17691b1001301ea3e7721eec9175af5b4234"
+            "payloadHex": "0x40eea1e39d2f154584c4b1ca8f228bb49ae5a14786ed63c90025e755f16bd58d37"
           }
         ]
       }
@@ -76,8 +72,14 @@
   ],
   "credentials": [
     {
-      "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/undefined-terms/v2"],
-      "type": ["VerifiedEmailAddressCredential", "VerifiableCredential"],
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/undefined-terms/v2"
+      ],
+      "type": [
+        "VerifiedEmailAddressCredential",
+        "VerifiableCredential"
+      ],
       "issuer": "did:web:frequencyaccess.com",
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
@@ -93,6 +95,39 @@
         "type": "DataIntegrityProof",
         "created": "2024-02-12T03:09:44.000+0000",
         "verificationMethod": "did:web:frequencyaccess.com#z6Mkumvf8FpJybzi9byLX7qAhTPuKpqH7d5rWyqcrKJ9Mies",
+        "cryptosuite": "eddsa-rdfc-2022",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z2YLydotgaGsbRGRxPzmoscd7dH5CgGHydXLKXJXefcT2SJGExtxmkJxGfUGoe81Vm62JGEYrwcS6ht1ixEvuZF9c"
+      }
+    },
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/undefined-terms/v2"
+      ],
+      "type": [
+        "VerifiedGraphKeyCredential",
+        "VerifiableCredential"
+      ],
+      "issuer": "did:key:z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ",
+      "validFrom": "2024-08-21T21:28:08.289+0000",
+      "credentialSchema": {
+        "type": "JsonSchema",
+        "id": "https://some.permanent.url/schema/private_key.json"
+      },
+      "credentialSubject": {
+        "id": "did:key:z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ",
+        "encodedPublicKeyValue": "0xeea1e39d2f154584c4b1ca8f228bb49ae5a14786ed63c90025e755f16bd58d37",
+        "encodedPrivateKeyValue": "0x06d384634ac01c3e83aa3e27652391b363e15624c0db0bc0da61a7dc5ff77db8",
+        "encoding": "base16",
+        "format": "bare",
+        "type": "X25519",
+        "keyType": "dsnp.public-key-key-agreement"
+      },
+      "proof": {
+        "type": "DataIntegrityProof",
+        "created": "2024-02-12T03:09:44.000+0000",
+        "verificationMethod": "did:key:z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
         "proofValue": "z2YLydotgaGsbRGRxPzmoscd7dH5CgGHydXLKXJXefcT2SJGExtxmkJxGfUGoe81Vm62JGEYrwcS6ht1ixEvuZF9c"

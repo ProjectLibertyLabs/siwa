@@ -1,6 +1,6 @@
 import { Struct, Text } from '@polkadot/types-codec';
 import { TypeRegistry } from '@polkadot/types';
-import { SiwaRequest } from './types.js';
+import { SiwaRequest } from './types/request.js';
 import { u8aToHex, u8aWrapBytes } from '@polkadot/util';
 const registry = new TypeRegistry();
 

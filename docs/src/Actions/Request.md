@@ -3,6 +3,7 @@
 To retrieve a URL to send the user through the authentication loop, your application must first request a new redirect URL for each user from Frequency Access.
 
 ## Quick Reference
+
 - Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
 - Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
 - Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
@@ -16,9 +17,10 @@ To retrieve a URL to send the user through the authentication loop, your applica
 When the user has completed the authentication, this is the return URI that will be used.
 
 Appended to the URL will be this parameter:
+
 - `authorizationCode` Used to retrieve the full response payload
 
-The callback url *will maintain* any other URL parameters included.
+The callback url _will maintain_ any other URL parameters included.
 For example, if you wish to correlate the original unauthorized session with the authorized session, you can generate a dynamic callback url with a parameter with a random UUIDv4 identifier on each request.
 
 ### Parameter: `permissions`
@@ -35,13 +37,13 @@ The signature MUST be from one of the [Control Keys]() of the Frequency Provider
 ### 2a: Serialize the payload using the [SCALE Codec](https://docs.substrate.io/reference/scale-codec/)
 
 SCALE Type (Note: Order matters!)
+
 ```json
 {
   "callback": "String",
-  "permissions": "Vec<U16>",
+  "permissions": "Vec<U16>"
 }
 ```
-
 
 ### 2b: Wrap the Payload
 
@@ -52,7 +54,6 @@ Byte Arrays Concatenated: `[ 60, 66, 121, 116, 101, 115, 62 ] + scale_encoded_pa
 ### 2c: Sign the Wrapped Payload Bytes
 
 Sign the serialized payload using Schnorr signatures over ECDSA.
-
 
 ### 2d: Example
 
@@ -65,13 +66,14 @@ This example uses the `//Alice` key pair.
 - Signing Public Key (SS58 Prefix 90): `f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH`
 - Signature (Hex): `0x446c32dd524c1f4b06c213891e9e3a025dded43eae55d2df40a766187684ac2704434e1835573077c1abb783b98f3684488e41f8c9bdc359458f9e043ae5cd86`
 
-## Step 3 (Optional): Request Credentials (Email, Phone)
+## Step 3 (Optional): Request Credentials (Graph Key, Email, Phone)
 
 Frequency Access users can provide verified email or phone/SMS to your application when requested and approved by the user.
-This is *not* required, and best practice is to only make such a request if it is required for the functioning of the application.
+This is _not_ required, and best practice is to only make such a request if it is required for the functioning of the application.
 
-The request MUST be wrapped in `requestedCredentials`.
+The request MUST be wrapped in `requestedCredentials` which is an array that is treated as an `allOf`.
 Supported Options:
+
 - `oneOf`: Requires ONLY one credential from the list
 - `anyOf`: Requires one or more credentials from the list
 - `allOf`: Requires ALL listed credentials
@@ -79,16 +81,29 @@ Supported Options:
 ```json
 {
   // ...
-  "requestedCredentials": {
-    "oneOf": [
-      // List of requests here
-    ]
-  }
+  "requestedCredentials": [
+    {
+      "type": "VerifiedGraphKeyCredential",
+      "hash": ["multihash_of_private_key_schema_file"]
+    }
+    {
+      "oneOf": [
+        // List of contact credential requests here
+        {
+          "type": "VerifiedEmailAddressCredential",
+          "hash": ["multihash_of_email_schema_file"]
+        },
+        {
+          "type": "VerifiedPhoneNumberCredential",
+          "hash": ["multihash_of_phone_schema_file"]
+        }
+      ]
+    }
+  ]
 }
 ```
 
 - See a full list of [Available Credentials](../Credentials.md)
-
 
 ## Step 4: Build and Submit the Request
 

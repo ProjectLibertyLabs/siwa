@@ -17,5 +17,13 @@
     "target": "ES2022"
   },
   "include": ["src"],
-  "exclude": ["**/node_modules/**", "**/dist/**", "**/build/**", "**/coverage/**", "**/*.test.ts"]
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/*.test.ts",
+    "**/*.mock.ts",
+    "**/mocks/*"
+  ]
 }
