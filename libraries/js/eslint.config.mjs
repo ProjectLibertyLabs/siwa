@@ -22,7 +22,6 @@ export default tseslint.config(
         },
       ],
       'no-unused-vars': 'off',
-      indent: ['warn', 2],
       'linebreak-style': ['error', 'unix'],
     },
   },

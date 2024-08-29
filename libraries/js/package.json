@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "description": "Sign In With Access Utility Library",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
-    "test": "jest",
-    "format": "npm run prettier && npm run lint:fix",
+    "build": "npm run clean && tsc -p ./tsconfig.types.json && tsc -p ./tsconfig.cjs.json && tsc -p ./tsconfig.esm.json && node scripts/package.cjs",
+    "clean": "rm -Rf dist",
+    "test": "vitest run",
+    "test:quiet": "vitest run --silent",
+    "format": "tsc -p ./tsconfig.eslint.json --noEmit --pretty && npm run prettier && npm run lint:fix",
     "prettier": "npx prettier --write src",
-    "lint": "npx eslint src",
+    "lint": "tsc -p ./tsconfig.eslint.json --noEmit --pretty && npx eslint src",
     "lint:fix": "npx eslint --fix src",
     "lint:ci": "npx eslint src && npx prettier --check ."
   },
@@ -24,9 +28,18 @@
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@types/eslint__js": "^8.42.3",
+    "@vitest/coverage-v8": "^2.0.5",
     "eslint": "^9.9.1",
     "prettier": "3.3.3",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.3.0"
+    "typescript-eslint": "^8.3.0",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "@polkadot/keyring": "^13.0.2",
+    "@polkadot/types": "^12.4.2",
+    "@polkadot/types-codec": "^12.4.2",
+    "@polkadot/util": "^13.0.2",
+    "@polkadot/util-crypto": "^13.0.2"
   }
 }
