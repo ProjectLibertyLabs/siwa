@@ -52,8 +52,12 @@ For website interactions, just forward the user to the returned `redirectUrl`.
 
 ## Step 2 (Android/iOS): Forward the User to an Embedded Browser
 
-For a mobile applications, it is suggested to use an embedded browser and set the `callbackUri` to your application Universal Link.
-This way the user will not leave the application.
+For mobile applications, it is recommended to use an embedded browser and set the `callbackUri` to your application's Universal Link. This ensures that the user remains within the application environment and does not have to leave the app.
+
+For more details, refer to the official documentation:
+
+- [SafariViewController for iOS](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
+- [Chrome Custom Tabs for Android](https://developer.chrome.com/docs/android/custom-tabs/)
 
 ## Step 3: Callback Processing
 

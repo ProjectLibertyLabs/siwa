@@ -120,3 +120,5 @@ Supported Options:
 
 - Extract the Location header
 - Redirect the user's Browser or Embedded Browser (for mobile apps) to the location URL
+  - [SafariViewController for iOS](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
+  - [Chrome Custom Tabs for Android](https://developer.chrome.com/docs/android/custom-tabs/)
