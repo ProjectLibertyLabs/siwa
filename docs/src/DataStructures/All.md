@@ -32,4 +32,4 @@
 
 ### SMS/Phone
 
-{{#markdown-embed src/DataStructures/VerifiedSMS.md 0}}
+{{#markdown-embed src/DataStructures/VerifiedPhone.md 0}}
