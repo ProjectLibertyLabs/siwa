@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { signatureVerify } from '@polkadot/util-crypto';
 import { getRedirectUrl } from './request.js';
-import { serializeRequestPayloadHex } from './util.js';
+import { serializeLoginPayloadHex } from './util.js';
 
 global.fetch = vi.fn();
 
@@ -98,7 +98,7 @@ describe('request', () => {
     const signature = body.requestedSignatures.signature.encodedValue;
 
     signatureVerify(
-      serializeRequestPayloadHex({
+      serializeLoginPayloadHex({
         callback: 'http://localhost:3000',
         permissions: [5, 7, 8, 9, 10],
       }),

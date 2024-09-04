@@ -39,12 +39,12 @@ export const ExampleLogin = async (): Promise<SiwaResponse> => ({
 
 export const ExampleNewUser = async (): Promise<SiwaResponse> => ({
   userPublicKey: ExampleUserPublicKey,
-  payloads: [ExamplePayloadCreateSponsoredAccount, ExamplePayloadPublicGraphKey, ExamplePayloadClaimHandle],
+  payloads: [ExamplePayloadCreateSponsoredAccount(), ExamplePayloadPublicGraphKey(), ExamplePayloadClaimHandle()],
   credentials: [await ExampleEmailCredential(), await ExampleUserGraphCredential()],
 });
 
 export const ExampleNewProvider = async (): Promise<SiwaResponse> => ({
   userPublicKey: ExampleUserPublicKey,
-  payloads: [ExamplePayloadGrantDelegation],
+  payloads: [ExamplePayloadGrantDelegation()],
   credentials: [await ExampleEmailCredential(), await ExampleUserGraphCredential()],
 });

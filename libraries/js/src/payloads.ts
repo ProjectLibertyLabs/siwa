@@ -7,6 +7,11 @@ import {
   SiwaResponsePayloadLogin,
 } from './types/payload.js';
 import { SiwaResponse, SiwaUserPublicKey } from './types/response.js';
+import {
+  serializeAddProviderPayloadHex,
+  serializeClaimHandlePayloadHex,
+  serializeItemActionsPayloadHex,
+} from './util.js';
 
 interface SiwxMessage {
   domain: string;
@@ -72,8 +77,11 @@ function validateLoginPayload(payload: SiwaResponsePayloadLogin, userPublicKey: 
     !msg.expired,
     `Message does not match expected user public key value. Message: ${msg.expirationTime.toISOString()}`
   );
+}
 
-  // throw new Error('Invalid Login Payload');
+function validateSignature(key: string, signature: string, message: string) {
+  const verifyResult = signatureVerify(message, signature, key);
+  expect(verifyResult.isValid, 'Payload signature failed');
 }
 
 export async function validatePayloads(response: SiwaResponse): Promise<void> {
@@ -84,9 +92,23 @@ export async function validatePayloads(response: SiwaResponse): Promise<void> {
       case isPayloadLogin(payload):
         return validateLoginPayload(payload, response.userPublicKey);
       case isPayloadAddProvider(payload):
+        return validateSignature(
+          response.userPublicKey.encodedValue,
+          payload.signature.encodedValue,
+          serializeAddProviderPayloadHex(payload.payload)
+        );
       case isPayloadClaimHandle(payload):
+        return validateSignature(
+          response.userPublicKey.encodedValue,
+          payload.signature.encodedValue,
+          serializeClaimHandlePayloadHex(payload.payload)
+        );
       case isPayloadItemActions(payload):
-        return;
+        return validateSignature(
+          response.userPublicKey.encodedValue,
+          payload.signature.encodedValue,
+          serializeItemActionsPayloadHex(payload.payload)
+        );
     }
   });
 }

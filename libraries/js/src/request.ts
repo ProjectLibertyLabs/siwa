@@ -1,9 +1,10 @@
 import { Keyring } from '@polkadot/keyring';
 import { encodeAddress } from '@polkadot/keyring';
 import { u8aToHex } from '@polkadot/util';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { SiwaOptions } from './types/general.js';
 import { SiwaCredential, SiwaCredentialRequest, SiwaRequest } from './types/request.js';
-import { parseEndpoint, serializeRequestPayloadHex } from './util.js';
+import { parseEndpoint, serializeLoginPayloadHex } from './util.js';
 
 const keyring = new Keyring({ type: 'sr25519' });
 
@@ -55,6 +56,7 @@ export async function getRedirectUrl(
   anyOfCredentials: SiwaCredential[] = [],
   options?: SiwaOptions
 ): Promise<string> {
+  await cryptoWaitReady();
   const keyPair = keyring.createFromUri(providerKeyUri);
 
   const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/api/payload`;
@@ -64,7 +66,7 @@ export async function getRedirectUrl(
   };
   const credentialRequests = anyOfCredentials.map(credentialRequest);
 
-  const signature = keyPair.sign(serializeRequestPayloadHex(payload), {});
+  const signature = keyPair.sign(serializeLoginPayloadHex(payload), {});
 
   const request: SiwaRequest = {
     requestedSignatures: {

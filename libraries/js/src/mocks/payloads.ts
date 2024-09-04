@@ -6,6 +6,11 @@ import {
   SiwaResponsePayloadLogin,
 } from '../types/payload.js';
 import { ExampleUserKey } from './keys.js';
+import {
+  serializeAddProviderPayloadHex,
+  serializeClaimHandlePayloadHex,
+  serializeItemActionsPayloadHex,
+} from '../util.js';
 
 function generateLoginMessage(account: string, issued: Date, expires: Date) {
   return `localhost wants you to sign in with your Frequency account:\n${account}\n\n\n\nURI: https://testnet.frequencyaccess.com/signin/confirm\nNonce: N6rLwqyz34oUxJEXJ\nIssued At: ${issued.toISOString()}\nExpiration Time: ${expires.toISOString()}`;
@@ -62,12 +67,20 @@ export const ExamplePayloadLoginStatic: SiwaResponsePayloadLogin = {
   },
 };
 
-export const ExamplePayloadCreateSponsoredAccount: SiwaResponsePayloadAddProvider = {
+// Signed by ExampleUserKey
+export const ExamplePayloadCreateSponsoredAccount = (): SiwaResponsePayloadAddProvider => ({
   signature: {
     algo: 'Sr25519',
     encoding: 'base16',
-    encodedValue:
-      '0xa20a4fe45f667b25fcdb2bb7f3a9fc83c9ee811df29c7c20257258667f86394eaa31729c05765c1b8bdb0c6772d37026d784d03ee4540193a86b44b5907ead84',
+    encodedValue: u8aToHex(
+      ExampleUserKey.keyPair().sign(
+        serializeAddProviderPayloadHex({
+          authorizedMsaId: 1,
+          schemaIds: [5, 7, 8, 9, 10],
+          expiration: 24,
+        })
+      )
+    ),
   },
   endpoint: {
     pallet: 'msa',
@@ -79,14 +92,22 @@ export const ExamplePayloadCreateSponsoredAccount: SiwaResponsePayloadAddProvide
     schemaIds: [5, 7, 8, 9, 10],
     expiration: 24,
   },
-};
+});
 
-export const ExamplePayloadGrantDelegation: SiwaResponsePayloadAddProvider = {
+// Signed by ExampleUserKey
+export const ExamplePayloadGrantDelegation = (): SiwaResponsePayloadAddProvider => ({
   signature: {
     algo: 'Sr25519',
     encoding: 'base16',
-    encodedValue:
-      '0xa20a4fe45f667b25fcdb2bb7f3a9fc83c9ee811df29c7c20257258667f86394eaa31729c05765c1b8bdb0c6772d37026d784d03ee4540193a86b44b5907ead84',
+    encodedValue: u8aToHex(
+      ExampleUserKey.keyPair().sign(
+        serializeAddProviderPayloadHex({
+          authorizedMsaId: 1,
+          schemaIds: [5, 7, 8, 9, 10],
+          expiration: 24,
+        })
+      )
+    ),
   },
   endpoint: {
     pallet: 'msa',
@@ -98,14 +119,28 @@ export const ExamplePayloadGrantDelegation: SiwaResponsePayloadAddProvider = {
     schemaIds: [5, 7, 8, 9, 10],
     expiration: 24,
   },
-};
+});
 
-export const ExamplePayloadPublicGraphKey: SiwaResponsePayloadItemActions = {
+// Signed by ExampleUserKey
+export const ExamplePayloadPublicGraphKey = (): SiwaResponsePayloadItemActions => ({
   signature: {
     algo: 'Sr25519',
     encoding: 'base16',
-    encodedValue:
-      '0x4a18962ca49435ac43d8c82b84398cac16415e5e9c594503345782c5f8bfdc7d25c9cb7d271d1f272fd44b02a8fca99351cf913871156ddbbb7fa97c60d8a58e',
+    encodedValue: u8aToHex(
+      ExampleUserKey.keyPair().sign(
+        serializeItemActionsPayloadHex({
+          schemaId: 7,
+          targetHash: 0,
+          expiration: 20,
+          actions: [
+            {
+              type: 'addItem',
+              payloadHex: '0x40eea1e39d2f154584c4b1ca8f228bb49ae5a14786ed63c90025e755f16bd58d37',
+            },
+          ],
+        })
+      )
+    ),
   },
   endpoint: {
     pallet: 'statefulStorage',
@@ -123,14 +158,21 @@ export const ExamplePayloadPublicGraphKey: SiwaResponsePayloadItemActions = {
       },
     ],
   },
-};
+});
 
-export const ExamplePayloadClaimHandle: SiwaResponsePayloadClaimHandle = {
+// Signed by ExampleUserKey
+export const ExamplePayloadClaimHandle = (): SiwaResponsePayloadClaimHandle => ({
   signature: {
     algo: 'Sr25519',
     encoding: 'base16',
-    encodedValue:
-      '0xdaed2e41dc3e6207fceb5367094a8232deb69e9565d0c67a78dcb95c16386658c9145616ed73490e2df707615bae45186acdd9fd8aa5f8ca7bef47a6c7516885',
+    encodedValue: u8aToHex(
+      ExampleUserKey.keyPair().sign(
+        serializeClaimHandlePayloadHex({
+          baseHandle: 'ExampleHandle',
+          expiration: 24,
+        })
+      )
+    ),
   },
   endpoint: {
     pallet: 'handles',
@@ -141,4 +183,4 @@ export const ExamplePayloadClaimHandle: SiwaResponsePayloadClaimHandle = {
     baseHandle: 'ExampleHandle',
     expiration: 24,
   },
-};
+});

@@ -34,14 +34,6 @@ export async function signCredential(
       documentLoader: documentLoaderGenerator(),
     })) as SiwaResponseCredential;
 
-    // const vcTest = await vc.verifyCredential({
-    //   credential: signedCredential,
-    //   suite,
-    //   documentLoader: documentLoaderGenerator(['did:web:frequencyaccess.com', 'did:web:testnet.frequencyaccess.com']),
-    // });
-
-    // console.log('signCredential', vcTest.verified, vcTest.error);
-
     return signedCredential;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

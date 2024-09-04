@@ -20,18 +20,18 @@ describe('Payload Types and Type Predicates', () => {
     });
 
     it('is successful with ExamplePayloadCreateSponsoredAccount', () => {
-      expect(isPayloadAddProvider(ExamplePayloadCreateSponsoredAccount)).toBe(true);
-      expect(isPayloads([ExamplePayloadCreateSponsoredAccount])).toBe(true);
+      expect(isPayloadAddProvider(ExamplePayloadCreateSponsoredAccount())).toBe(true);
+      expect(isPayloads([ExamplePayloadCreateSponsoredAccount()])).toBe(true);
     });
 
     it('is successful with ExamplePayloadGrantDelegation', () => {
-      expect(isPayloadAddProvider(ExamplePayloadGrantDelegation)).toBe(true);
-      expect(isPayloads([ExamplePayloadGrantDelegation])).toBe(true);
+      expect(isPayloadAddProvider(ExamplePayloadGrantDelegation())).toBe(true);
+      expect(isPayloads([ExamplePayloadGrantDelegation()])).toBe(true);
     });
 
     it('is successful with ExamplePayloadPublicGraphKey', () => {
-      expect(isPayloadItemActions(ExamplePayloadPublicGraphKey)).toBe(true);
-      expect(isPayloads([ExamplePayloadPublicGraphKey])).toBe(true);
+      expect(isPayloadItemActions(ExamplePayloadPublicGraphKey())).toBe(true);
+      expect(isPayloads([ExamplePayloadPublicGraphKey()])).toBe(true);
     });
   });
 
@@ -40,9 +40,9 @@ describe('Payload Types and Type Predicates', () => {
       expect(
         isPayloads([
           ExamplePayloadLoginGood(),
-          ExamplePayloadCreateSponsoredAccount,
-          ExamplePayloadGrantDelegation,
-          ExamplePayloadPublicGraphKey,
+          ExamplePayloadCreateSponsoredAccount(),
+          ExamplePayloadGrantDelegation(),
+          ExamplePayloadPublicGraphKey(),
         ])
       ).toBe(true);
     });
@@ -51,9 +51,9 @@ describe('Payload Types and Type Predicates', () => {
       expect(
         isPayloads([
           ExamplePayloadLoginGood(),
-          ExamplePayloadCreateSponsoredAccount,
-          ExamplePayloadGrantDelegation,
-          ExamplePayloadPublicGraphKey,
+          ExamplePayloadCreateSponsoredAccount(),
+          ExamplePayloadGrantDelegation(),
+          ExamplePayloadPublicGraphKey(),
           {},
         ])
       ).toBe(false);

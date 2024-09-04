@@ -1,3 +1,4 @@
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { SiwaOptions } from './types/general.js';
 import { isSiwaResponse, SiwaResponse } from './types/response.js';
 import { parseEndpoint } from './util.js';
@@ -27,6 +28,7 @@ export function hasChainSubmissions(result: SiwaResponse): boolean {
  * @returns {Promise<SiwaResponse>} The parsed and validated response
  */
 export async function getLoginResult(authorizationCode: string, options?: SiwaOptions): Promise<SiwaResponse> {
+  await cryptoWaitReady();
   const endpoint = new URL(
     `${parseEndpoint(options?.endpoint)}/siwa/api/payload?authorizationCode=${authorizationCode}`
   );

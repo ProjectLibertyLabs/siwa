@@ -4,7 +4,7 @@ import { u8aToHex } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { ExampleEmailCredential, ExamplePhoneCredential, ExampleUserGraphCredential } from './credentials.js';
 import { ExampleLogin, ExampleNewProvider, ExampleNewUser } from './index.js';
-import { serializeRequestPayloadHex } from '../util.js';
+import { serializeLoginPayloadHex } from '../util.js';
 
 function output(obj: unknown, file: string) {
   writeFileSync(file, '```json\n' + JSON.stringify(obj, null, 2) + '\n```\n');
@@ -16,7 +16,7 @@ function exampleRequest() {
     callback: 'http://localhost:3000',
     permissions: [5, 7, 8, 9, 10],
   };
-  const requestPayload = serializeRequestPayloadHex(payload);
+  const requestPayload = serializeLoginPayloadHex(payload);
 
   const alice = keyring.createFromUri('//Alice');
   const signature = alice.sign(requestPayload);
