@@ -36,16 +36,16 @@
         "id": "https://some.permanent.url/schema/email_address.json"
       },
       "credentialSubject": {
-        "id": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
+        "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
         "emailAddress": "john.doe@example.com",
         "lastVerified": "2024-08-21T21:27:59.309+0000"
       },
       "proof": {
         "type": "DataIntegrityProof",
-        "verificationMethod": "did:web:frequencyaccess.com#z6Mktjdrv1ZHpSQM2RA5xNj1pmxqUJ2iZ1qzB7t8vHQuWKi4",
+        "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z2mPfK67bGd4QLiAsbti6jmYPLRvsqqGn9VAr3xztH6VsTRtYA2pBj4C9i1ji7PtS1gzQ6zzeLUx6PRHrotuPhf6t"
+        "proofValue": "z38CC2SNcH64FYHsgQHCC6Tu2g9rT6kCfxj4Y5LYDGFmDEczAmPqUFWvaK8PSMcM9dPfEM1WDXb2kyTkREdd1Bums"
       }
     },
     {
@@ -57,14 +57,14 @@
         "VerifiedGraphKeyCredential",
         "VerifiableCredential"
       ],
-      "issuer": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
+      "issuer": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
         "type": "JsonSchema",
         "id": "https://some.permanent.url/schema/private_key.json"
       },
       "credentialSubject": {
-        "id": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
+        "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
         "encodedPublicKeyValue": "0xb5032900293f1c9e5822fd9c120b253cb4a4dfe94c214e688e01f32db9eedf17",
         "encodedPrivateKeyValue": "0xd0910c853563723253c4ed105c08614fc8aaaf1b0871375520d72251496e8d87",
         "encoding": "base16",
@@ -77,7 +77,7 @@
         "verificationMethod": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z3ScnMRSCmqoBm24HKwAWqx3vLJ9xewiBJTvSH3HhTLDGcFzEpB2G2yxqtt2ZJBjfA3fKvPE3kbvCGmmseKsSSJo6"
+        "proofValue": "z5r9jTXbssu1AWswnZkrgmx7MaQ8evviTbAJKwULs8rsDLKiTTKoDUT2Rihfq4yHLZg1f9tHHfhoUdQAWrSBTCsap"
       }
     }
   ]

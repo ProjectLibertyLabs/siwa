@@ -5,7 +5,7 @@ import {
   SiwaResponsePayloadItemActions,
   SiwaResponsePayloadLogin,
 } from '../types/payload.js';
-import { ExampleUserKey } from './index.js';
+import { ExampleUserKey } from './keys.js';
 
 function generateLoginMessage(account: string, issued: Date, expires: Date) {
   return `localhost wants you to sign in with your Frequency account:\n${account}\n\n\n\nURI: https://testnet.frequencyaccess.com/signin/confirm\nNonce: N6rLwqyz34oUxJEXJ\nIssued At: ${issued.toISOString()}\nExpiration Time: ${expires.toISOString()}`;

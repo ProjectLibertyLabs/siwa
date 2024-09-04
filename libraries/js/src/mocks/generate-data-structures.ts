@@ -63,13 +63,13 @@ async function main() {
 
   output(exampleRequest(), '../../docs/src/DataStructures/Request.md');
 
-  output(ExampleLogin(), '../../docs/src/DataStructures/Response-LoginOnly.md');
-  output(ExampleNewUser(), '../../docs/src/DataStructures/Response-NewUser.md');
-  output(ExampleNewProvider(), '../../docs/src/DataStructures/Response-NewProvider.md');
+  output(await ExampleLogin(), '../../docs/src/DataStructures/Response-LoginOnly.md');
+  output(await ExampleNewUser(), '../../docs/src/DataStructures/Response-NewUser.md');
+  output(await ExampleNewProvider(), '../../docs/src/DataStructures/Response-NewProvider.md');
 
-  output(ExampleEmailCredential(), '../../docs/src/DataStructures/VerifiedEmail.md');
-  output(ExamplePhoneCredential(), '../../docs/src/DataStructures/VerifiedPhone.md');
-  output(ExampleUserGraphCredential(), '../../docs/src/DataStructures/VerifiedGraphKeyPair.md');
+  output(await ExampleEmailCredential(), '../../docs/src/DataStructures/VerifiedEmail.md');
+  output(await ExamplePhoneCredential(), '../../docs/src/DataStructures/VerifiedPhone.md');
+  output(await ExampleUserGraphCredential(), '../../docs/src/DataStructures/VerifiedGraphKeyPair.md');
 }
 
 main().catch(console.error).finally(process.exit);

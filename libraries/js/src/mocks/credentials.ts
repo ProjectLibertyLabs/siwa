@@ -1,42 +1,53 @@
 import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
 import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
-import jsigs from 'jsonld-signatures';
-const {
-  purposes: { AssertionProofPurpose },
-} = jsigs;
+import * as vc from '@digitalbazaar/vc';
 
 import { SiwaResponseCredential } from '../types/credential.js';
-import { ExampleProviderKey, ExampleUserKey } from './index.js';
-import { documentLoader } from './documentLoader.js';
+import { ExampleProviderKey, ExampleUserKey, multibaseEd25519, multibaseSr25519 } from './keys.js';
+import { documentLoaderGenerator } from '../documents/loader.js';
+import { KeyringPair } from '@polkadot/keyring/types';
 
-export async function signCredentialAsAccess(
-  subject: SiwaResponseCredential['credentialSubject']
+export async function signCredential(
+  keypair: KeyringPair,
+  credential: Omit<SiwaResponseCredential, 'proof'>
 ): Promise<SiwaResponseCredential> {
-  const providerKey = ExampleProviderKey.keyPairEd();
+  const multicodec = multibaseEd25519(keypair.publicKey);
+  // Use the did:web version if it is a "provider key" coming through
+  const signerId =
+    ExampleProviderKey.keyPairEd().address === keypair.address
+      ? `did:web:frequencyaccess.com#${multicodec}`
+      : `did:key:${multicodec}`;
 
   const signer = {
-    id: `did:web:frequencyaccess.com#${ExampleProviderKey.multicodecEd}`,
+    id: signerId,
     algorithm: 'Ed25519',
-    sign: providerKey.sign,
+    sign: ({ data }: { data: string | Uint8Array }) => {
+      return keypair.sign(data, { withType: false });
+    },
   };
-  const suite = new DataIntegrityProof({ signer, cryptosuite: eddsaRdfc2022CryptoSuite });
+  const suite = new DataIntegrityProof({ signer, cryptosuite: eddsaRdfc2022CryptoSuite, date: null });
 
-  // const keyPair = await Ed25519Multikey.from({
-  //   '@context': 'https://w3id.org/security/multikey/v1',
-  //   type: 'Multikey',
-  //   controller,
-  //   id: controller + '#z6MkwXG2WjeQnNxSoynSGYU8V9j3QzP3JSqhdmkHc6SaVWoT',
-  //   publicKeyMultibase: 'z6MkwXG2WjeQnNxSoynSGYU8V9j3QzP3JSqhdmkHc6SaVWoT',
-  //   secretKeyMultibase: 'zrv3rbPamVDGvrm7LkYPLWYJ35P9audujKKsWn3x29EUiGwwhdZQd',
-  // });
+  try {
+    const signedCredential = (await vc.issue({
+      credential,
+      suite,
+      documentLoader: documentLoaderGenerator(),
+    })) as SiwaResponseCredential;
 
-  const signedCredential = await jsigs.sign(subject, {
-    suite,
-    purpose: new AssertionProofPurpose(),
-    documentLoader,
-  });
+    // const vcTest = await vc.verifyCredential({
+    //   credential: signedCredential,
+    //   suite,
+    //   documentLoader: documentLoaderGenerator(['did:web:frequencyaccess.com', 'did:web:testnet.frequencyaccess.com']),
+    // });
 
-  return signedCredential as SiwaResponseCredential;
+    // console.log('signCredential', vcTest.verified, vcTest.error);
+
+    return signedCredential;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    console.error(e.details ? e.details : e);
+  }
+  throw new Error('Unable to sign message. See `signCredentialAsAccess`');
 }
 
 // Generate a new pair:
@@ -50,78 +61,57 @@ const exampleX25519 = {
   secretKey: '0xd0910c853563723253c4ed105c08614fc8aaaf1b0871375520d72251496e8d87',
 };
 
-export const ExampleUserGraphCredential = (): SiwaResponseCredential => ({
-  '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
-  type: ['VerifiedGraphKeyCredential', 'VerifiableCredential'],
-  issuer: 'did:key:' + ExampleUserKey.multicodecEd,
-  validFrom: '2024-08-21T21:28:08.289+0000',
-  credentialSchema: {
-    type: 'JsonSchema',
-    id: 'https://some.permanent.url/schema/private_key.json',
-  },
-  credentialSubject: {
-    id: 'did:key:' + ExampleUserKey.multicodecEd,
-    encodedPublicKeyValue: exampleX25519.publicKey,
-    encodedPrivateKeyValue: exampleX25519.secretKey,
-    encoding: 'base16',
-    format: 'bare',
-    type: 'X25519',
-    keyType: 'dsnp.public-key-key-agreement',
-  },
-  proof: {
-    type: 'DataIntegrityProof',
-    created: '2024-02-12T03:09:44.000+0000',
-    verificationMethod: 'did:key:z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ',
-    cryptosuite: 'eddsa-rdfc-2022',
-    proofPurpose: 'assertionMethod',
-    proofValue: 'z2YLydotgaGsbRGRxPzmoscd7dH5CgGHydXLKXJXefcT2SJGExtxmkJxGfUGoe81Vm62JGEYrwcS6ht1ixEvuZF9c',
-  },
-});
+export const ExampleUserGraphCredential = (): Promise<SiwaResponseCredential> =>
+  signCredential(ExampleUserKey.keyPairEd(), {
+    '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
+    type: ['VerifiedGraphKeyCredential', 'VerifiableCredential'],
+    issuer: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
+    validFrom: '2024-08-21T21:28:08.289+0000',
+    credentialSchema: {
+      type: 'JsonSchema',
+      id: 'https://some.permanent.url/schema/private_key.json',
+    },
+    credentialSubject: {
+      id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
+      encodedPublicKeyValue: exampleX25519.publicKey,
+      encodedPrivateKeyValue: exampleX25519.secretKey,
+      encoding: 'base16',
+      format: 'bare',
+      type: 'X25519',
+      keyType: 'dsnp.public-key-key-agreement',
+    },
+  });
 
-export const ExampleEmailCredential = (): SiwaResponseCredential => ({
-  '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
-  type: ['VerifiedEmailAddressCredential', 'VerifiableCredential'],
-  issuer: 'did:web:frequencyaccess.com',
-  validFrom: '2024-08-21T21:28:08.289+0000',
-  credentialSchema: {
-    type: 'JsonSchema',
-    id: 'https://some.permanent.url/schema/email_address.json',
-  },
-  credentialSubject: {
-    id: 'did:key:' + ExampleUserKey.multicodecEd,
-    emailAddress: 'john.doe@example.com',
-    lastVerified: '2024-08-21T21:27:59.309+0000',
-  },
-  proof: {
-    type: 'DataIntegrityProof',
-    created: '2024-02-12T03:09:44.000+0000',
-    verificationMethod: 'did:web:frequencyaccess.com#' + ExampleProviderKey.multicodecEd,
-    cryptosuite: 'eddsa-rdfc-2022',
-    proofPurpose: 'assertionMethod',
-    proofValue: 'z2YLydotgaGsbRGRxPzmoscd7dH5CgGHydXLKXJXefcT2SJGExtxmkJxGfUGoe81Vm62JGEYrwcS6ht1ixEvuZF9c',
-  },
-});
+export const ExampleEmailCredential = (): Promise<SiwaResponseCredential> =>
+  signCredential(ExampleProviderKey.keyPairEd(), {
+    '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
+    type: ['VerifiedEmailAddressCredential', 'VerifiableCredential'],
+    issuer: 'did:web:frequencyaccess.com',
+    validFrom: '2024-08-21T21:28:08.289+0000',
+    credentialSchema: {
+      type: 'JsonSchema',
+      id: 'https://some.permanent.url/schema/email_address.json',
+    },
+    credentialSubject: {
+      id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
+      emailAddress: 'john.doe@example.com',
+      lastVerified: '2024-08-21T21:27:59.309+0000',
+    },
+  });
 
-export const ExamplePhoneCredential = (): SiwaResponseCredential => ({
-  '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
-  type: ['VerifiedPhoneNumberCredential', 'VerifiableCredential'],
-  issuer: 'did:web:frequencyaccess.com',
-  validFrom: '2024-08-21T21:28:08.289+0000',
-  credentialSchema: {
-    type: 'JsonSchema',
-    id: 'https://some.permanent.url/schema/phone_number.json',
-  },
-  credentialSubject: {
-    id: 'did:key:' + ExampleUserKey.multicodecEd,
-    phoneNumber: '+01-234-867-5309',
-    lastVerified: '2024-08-21T21:27:59.309+0000',
-  },
-  proof: {
-    type: 'DataIntegrityProof',
-    created: '2024-02-12T03:09:44.000+0000',
-    verificationMethod: 'did:web:frequencyaccess.com#' + ExampleProviderKey.multicodecEd,
-    cryptosuite: 'eddsa-rdfc-2022',
-    proofPurpose: 'assertionMethod',
-    proofValue: 'z2YLydotgaGsbRGRxPzmoscd7dH5CgGHydXLKXJXefcT2SJGExtxmkJxGfUGoe81Vm62JGEYrwcS6ht1ixEvuZF9c',
-  },
-});
+export const ExamplePhoneCredential = (): Promise<SiwaResponseCredential> =>
+  signCredential(ExampleProviderKey.keyPairEd(), {
+    '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
+    type: ['VerifiedPhoneNumberCredential', 'VerifiableCredential'],
+    issuer: 'did:web:frequencyaccess.com',
+    validFrom: '2024-08-21T21:28:08.289+0000',
+    credentialSchema: {
+      type: 'JsonSchema',
+      id: 'https://some.permanent.url/schema/phone_number.json',
+    },
+    credentialSubject: {
+      id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
+      phoneNumber: '+01-234-867-5309',
+      lastVerified: '2024-08-21T21:27:59.309+0000',
+    },
+  });

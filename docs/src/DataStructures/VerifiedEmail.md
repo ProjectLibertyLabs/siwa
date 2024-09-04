@@ -15,16 +15,16 @@
     "id": "https://some.permanent.url/schema/email_address.json"
   },
   "credentialSubject": {
-    "id": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
+    "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
     "emailAddress": "john.doe@example.com",
     "lastVerified": "2024-08-21T21:27:59.309+0000"
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "verificationMethod": "did:web:frequencyaccess.com#z6Mktjdrv1ZHpSQM2RA5xNj1pmxqUJ2iZ1qzB7t8vHQuWKi4",
+    "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "z2oVvzK22Hfuz91YSi4NtHEvQRbJS8DXuBr5efWiFT3JU9NxsJ73HLtcs7ZvUsFn59T8Kn7fSnjFcmny3PgLNPCai"
+    "proofValue": "z38CC2SNcH64FYHsgQHCC6Tu2g9rT6kCfxj4Y5LYDGFmDEczAmPqUFWvaK8PSMcM9dPfEM1WDXb2kyTkREdd1Bums"
   }
 }
 ```

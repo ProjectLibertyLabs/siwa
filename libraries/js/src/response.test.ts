@@ -11,7 +11,7 @@ beforeAll(async () => {
 
 describe('getLoginResult', () => {
   it('Can get and validate a login', async () => {
-    const example = ExampleLogin();
+    const example = await ExampleLogin();
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(example),
@@ -22,7 +22,7 @@ describe('getLoginResult', () => {
   });
 
   it('Can get and validate a New User', async () => {
-    const example = ExampleNewUser();
+    const example = await ExampleNewUser();
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(example),
@@ -33,7 +33,7 @@ describe('getLoginResult', () => {
   });
 
   it('Can get and validate a New Provider', async () => {
-    const example = ExampleNewProvider();
+    const example = await ExampleNewProvider();
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(example),

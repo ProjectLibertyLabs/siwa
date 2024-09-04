@@ -1,8 +1,7 @@
-import { isArray } from '@polkadot/util';
-// import * as vc from '@digitalbazaar/vc';
-// import { cryptosuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
+import * as vc from '@digitalbazaar/vc';
+import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
+import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
 import { SiwaResponse } from './types/response.js';
-import { isObj } from './types/general.js';
 import {
   isCredentialEmail,
   isCredentialGraph,
@@ -11,81 +10,7 @@ import {
   SiwaResponseCredentialGraph,
 } from './types/credential.js';
 import { isValidX25519PrivateKey } from './x25519.js';
-
-let cachedValidDids = new Map<string, string>();
-let cacheDate = Date.now();
-// Expire the cache after 24 hours
-const CACHE_EXPIRES_MS = 1000 * 60 * 60 * 24;
-
-async function extractDidWeb(method: string, issuer: string, trustDids: string[]): Promise<string> {
-  const [did, key] = method.split('#');
-  if (!did || !key) {
-    throw new Error(`Missing DID Key: ${method}`);
-  }
-
-  if (did !== issuer) {
-    throw new Error(`Issuer (${issuer}) and method (${method}) mismatched!`);
-  }
-
-  // Trusted DID?
-  if (trustDids.includes(did)) {
-    cachedValidDids.set(method, key);
-    return key;
-  }
-
-  const url = new URL(did.replace(/^did:web:/, 'https://'));
-  if (url.pathname === '') {
-    url.pathname = '/.well-known/did.json';
-  }
-  const docResponse = await fetch(url);
-  if (!docResponse.ok) {
-    throw new Error(`Unable to resolve DID: ${method} with ${url.toString()}`);
-  }
-  const didDoc = await docResponse.json();
-  if (!isObj(didDoc)) {
-    throw new Error(`Invalid response from ${url.toString()}`);
-  }
-  if (didDoc.id !== did) {
-    throw new Error(`Issuer (${issuer}) and Response Id (${didDoc.id}) mismatched!`);
-  }
-  if (isArray(didDoc.assertionMethod) && didDoc.assertionMethod.find((x) => isObj(x) && x.id === method)) {
-    return key;
-  }
-  throw new Error(`Unable to find matching key in DID Document listed verification methods: ${JSON.stringify(didDoc)}`);
-}
-
-// This is a simplified method that would only work due to assumptions in Frequency Access, but it works for the limited use case of this library which is Frequency Access
-// NOTICE: It does NOT support the `trust` extensions
-// NOTICE: This does NOT currently validate the credentialSchema, it validates the structure instead trusting that Frequency Access doesn't change things
-async function getVerificationMethodKey(method: string, issuer: string, trustDids: string[]): Promise<string> {
-  // Handle the cache case
-  if (cacheDate + CACHE_EXPIRES_MS > Date.now()) {
-    cacheDate = Date.now();
-    cachedValidDids = new Map();
-  }
-  const cachedValue = cachedValidDids.get(method);
-  if (cachedValue) {
-    return cachedValue;
-  }
-
-  if (method.startsWith('did:web:')) {
-    const webKey = await extractDidWeb(method, issuer, trustDids);
-    if (webKey) {
-      cachedValidDids.set(method, webKey);
-      return webKey;
-    }
-  }
-
-  if (method.startsWith('did:key:')) {
-    if (method !== issuer) {
-      throw new Error(`Issuer (${issuer}) and method (${method}) mismatched!`);
-    }
-    const key = method.replace(/^did:key:/, '');
-    cachedValidDids.set(method, key);
-    return key;
-  }
-  throw new Error(`Unable to handle unknown verification method: ${method}`);
-}
+import { documentLoaderGenerator } from './documents/loader.js';
 
 async function validateGraph(credential: SiwaResponseCredentialGraph): Promise<void> {
   // Make sure that the key is good.
@@ -104,6 +29,7 @@ export async function validateGeneralCredential(
   trustDids: string[]
 ): Promise<void> {
   // Make sure we can validate
+  // I don't think we need this? Likely happens inside vc.verifyCredential
   if (
     credential.proof.proofPurpose !== 'assertionMethod' ||
     !['eddsa-rdfc-2022'].includes(credential.proof.cryptosuite)
@@ -119,17 +45,19 @@ export async function validateGeneralCredential(
     throw new Error(`Credential Expired: ${credential.proof.expirationDate}`);
   }
 
-  // Get the key for verification
-  const _key = await getVerificationMethodKey(credential.proof.verificationMethod, credential.issuer, trustDids);
+  const suite = new DataIntegrityProof({ cryptosuite: eddsaRdfc2022CryptoSuite });
 
-  // const vcTest = await vc.verifyCredential({
-  //   credential,
-  //   documentLoader: () => key,
-  // });
+  const vcTest = await vc.verifyCredential({
+    credential,
+    suite,
+    documentLoader: documentLoaderGenerator(trustDids),
+  });
 
-  // if (!vcTest.valid) {
-  //   throw new Error(`Unable to validate credential: ${JSON.stringify(vcTest)}`);
-  // }
+  if (!vcTest.verified) {
+    throw new Error(
+      `Unable to validate credential (${credential.type.join(', ')}). ${vcTest.error.name}:${vcTest.error?.errors?.join(', ') || 'Unknown'}`
+    );
+  }
 }
 
 export async function validateCredential(credential: SiwaResponseCredential, trustDids: string[]): Promise<void> {

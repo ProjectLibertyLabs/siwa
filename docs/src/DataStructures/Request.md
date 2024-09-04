@@ -10,7 +10,7 @@
     "signature": {
       "algo": "Sr25519",
       "encoding": "base16",
-      "encodedValue": "0x2a10f099cc914126f91aae93e3c9c90f3f1bf01b79a33fd74a8ea05fd4939604ed154ca5fa8c0e51cf7ccfd8d4a452ec19ea8d6a5bee215ef060d2d60fd7f486"
+      "encodedValue": "0x8ac71cb992be24e91d4ce61b83a0cc48010cfeacd328dd391c23472e4f094e7c0fbb58cf773a7c1665d815d9902c98fdd7ef822a6c5930bcad0412f0c4f8268f"
     },
     "payload": {
       "callback": "http://localhost:3000",

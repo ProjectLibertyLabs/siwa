@@ -15,16 +15,16 @@
     "id": "https://some.permanent.url/schema/phone_number.json"
   },
   "credentialSubject": {
-    "id": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
+    "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
     "phoneNumber": "+01-234-867-5309",
     "lastVerified": "2024-08-21T21:27:59.309+0000"
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "verificationMethod": "did:web:frequencyaccess.com#z6Mktjdrv1ZHpSQM2RA5xNj1pmxqUJ2iZ1qzB7t8vHQuWKi4",
+    "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "z65f7GjW81cTD47QqpYfvog1obJTbgyEEAH74TJvxBKQbtxBnZyMKanpDSj296TDzpWHmMuCDD32JbQb5v5ctfm4b"
+    "proofValue": "z3NsdGe93oVTiguenKkidg6DQp2JY8ioeeQr5UviNbWHYmM5RxNnAJAndKBNznEwnJDDYwFu9TP2tcFoNZmJ49RMF"
   }
 }
 ```
