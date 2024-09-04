@@ -4,7 +4,7 @@ interface SiwaResponseCredentialBase {
   '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'];
   type: string[];
   issuer: string;
-  validFrom: string;
+  validFrom?: string;
   credentialSchema: {
     type: 'JsonSchema';
     id: string;
@@ -38,7 +38,6 @@ function isCredentialProof(obj: any): obj is SiwaResponseCredentialBase['proof']
     obj.type === 'DataIntegrityProof' &&
     obj.cryptosuite === 'eddsa-rdfc-2022' &&
     obj.proofPurpose === 'assertionMethod' &&
-    isStr(obj.created) &&
     isStr(obj.verificationMethod) &&
     isStr(obj.proofValue)
   );
@@ -51,7 +50,6 @@ function isCredentialBase(obj: any): obj is SiwaResponseCredentialBase {
     (isStr(obj['@context']) || isArrayOf(obj['@context'], isStr)) &&
     isArrayOf(obj.type, isStr) &&
     isStr(obj.issuer) &&
-    isStr(obj.validFrom) &&
     isCredentialSchema(obj.credentialSchema) &&
     isCredentialSubject(obj.credentialSubject) &&
     isCredentialProof(obj.proof)
@@ -91,7 +89,7 @@ export interface SiwaResponseCredentialPhone extends SiwaResponseCredentialBase 
 export function isCredentialPhone(obj: any): obj is SiwaResponseCredentialPhone {
   return (
     isCredentialBase(obj) &&
-    obj.type.includes('VerifiedPhoneCredential') &&
+    obj.type.includes('VerifiedPhoneNumberCredential') &&
     isStr(obj.credentialSubject.id) &&
     isStr(obj.credentialSubject.phoneNumber) &&
     isStr(obj.credentialSubject.lastVerified)

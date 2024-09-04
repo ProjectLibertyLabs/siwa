@@ -148,7 +148,7 @@ export async function validateCredential(credential: SiwaResponseCredential, tru
 
 export async function validateCredentials(
   credentials: SiwaResponse['credentials'],
-  trustDids: string[]
+  trustDids: string[] = []
 ): Promise<void> {
   // Only validate if there are any
   if (!credentials) return;
