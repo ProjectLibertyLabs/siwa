@@ -32,7 +32,7 @@ These are the Frequency Schema Ids that delegation was requested of the user.
 ## Step 2: Signing the Request
 
 To ensure that the correct application is requesting the authentication and that the response is only sent to the authorized party, the request is signed.
-The signature MUST be from one of the [Control Keys]() of the Frequency Provider.
+The signature MUST be from one of the [Control Keys](https://docs.frequency.xyz/Identity/ControlKeys.html) of the Frequency Provider.
 
 ### 2a: Serialize the payload using the [SCALE Codec](https://docs.substrate.io/reference/scale-codec/)
 
@@ -58,7 +58,7 @@ Sign the serialized payload using Schnorr signatures over ECDSA.
 ### 2d: Example
 
 Remember that Sr25519 signatures are non-deterministic, so the payload and encoding will match, but the signature will be different.
-This example uses the `//Alice` key pair.
+This example uses the `//Alice` seed phrase to generate the signature.
 
 - Payload: `{ "callback": "https://localhost:44181", "permissions": [5, 7, 8, 9, 10] }`
 - SCALE Payload (Hex): `0x5c68747470733a2f2f6c6f63616c686f73743a34343138311405000700080009000a00`

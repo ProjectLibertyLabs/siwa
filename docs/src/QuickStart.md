@@ -10,7 +10,7 @@ TypeScript will be shown for the examples.
 
 `npm i @projectlibertylabs/siwa`
 
-## Step 1: Generation of the Request
+## Step 1: Generate the Request
 
 This is the only step that _must_ take place on a secure backend server with access to the private key of one of the Control Keys for the Frequency Provider Account.
 
@@ -99,7 +99,7 @@ async function handleCallback(incommingUrl: string) {
 You now have a logged in user!
 Assuming the chain submissions are complete, you also have:
 
-- A consistent identifier, the MSA Id
+- A consistent identifier, i.e. the MSA Id
 - A universal handle (If the user set one)
 - A public delegation between the user's MSA Id and your Provider Id on chain (revokable at any time by you or the user independently)
 
@@ -109,5 +109,4 @@ And if requested:
 - Permission to act on the user's behalf for delegated actions
 - Verified email or phone/SMS number for the user
 
-Note: It is not an issue to start the user's session and process the submissions in the background.
-However, you may not be able to have some data such as the consistent identifier, the MSA Id, or full handle with suffix until the processing is complete depending on the submissions that need processing.
+Note: You may start the user’s session and process the submissions in the background, however some data such as the consistent identifier, the MSA Id or full handle with suffix may not be accessible until the processing is complete.

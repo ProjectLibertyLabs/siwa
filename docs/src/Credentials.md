@@ -1,6 +1,6 @@
 # Available Credentials
 
-Each request also has a multiformat hash of the schema file to ensure correct verification document is requested.
+Each request also has a multiformat hash of the schema file to ensure the correct verification document is requested.
 Below is the official type and multihash to use.
 
 ## Graph Key

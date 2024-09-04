@@ -38,11 +38,11 @@ These credentials follow the [DSNP Verifiable Credentials Specification](https:/
 
 ### Verify the Credential
 
-_Trust Model Note_: You may choose to just trust that credentials issued by Frequency Access given that the credential is fetched directly from Frequency Access. These will have issuer `did:web:testnet.frequencyaccess.com` or `did:web:frequencyaccess.com`.
+_Trust Model Note_: You may choose to just trust credentials issued by Frequency Access given that the credential is fetched directly from Frequency Access. These will have issuer `did:web:testnet.frequencyaccess.com` or `did:web:frequencyaccess.com`.
 
 1. Check that the `credentialSubject.id` matches the `userPublicKey` following the [`did:key` Method from the W3C](https://w3c-ccg.github.io/did-method-key/#format)
   - Example: `f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH` is the [SS58](https://docs.substrate.io/reference/address-formats/) version with prefix `90` of the hex address `0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d`. `0xef01d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d` is multicodec `sr25519-pub` hex which is multiformat `base58-btc` `z6QNzHod3tSSJbwo4e5xGDcnsndsR9WByZzPoCGdbv3sv1jJ`
-2. Fetch the issuer DID Document following the [`did:web` Method from the W3C](https://w3c-ccg.github.io/did-method-web/).
+2. Fetch the issuer DID Document following the [`did:web` Method from the W3C](https://w3c-ccg.github.io/did-method-web/)
   - Production-Mainnet should always be `did:web:frequencyaccess.com` which resolves to `https://frequencyaccess.com/.well-known/did.json`
   - Staging-Testnet should always be `did:web:testnet.frequencyaccess.com` which resolves to `https://testnet.frequencyaccess.com/.well-known/did.json`
 3. Check that the key in the `proof.verificationMethod` is in the DID Document to verify that the key is still valid
@@ -72,7 +72,7 @@ The payload section has several different types that can be returned:
 
 \* Requires submission to Frequency
 
-The payloads that require submission to Frequency should be submitted in one batch using Capacity.
+The payloads that require submission to Frequency should be submitted in one batch using [Capacity](https://docs.frequency.xyz/Tokenomics/ProviderIncentives.html#capacity-model).
 The `addProvider` *must* always be *first* in the batch to ensure the correct permissions and delegations are in place for subsequent actions in the batch.
 
 Signatures to Frequency have an expiration set to a future Frequency block number.
@@ -99,23 +99,23 @@ Issued At: {{issued-at}}
 
 #### Validation Steps
 1. Perform an Sr25519 signature verification using:
-  - `userPublicKey`: The signing key
-  - `payload.message`: The signed message parsing `\n` into `LF` line breaks
-  - `signature.encodedValue`: The signature
-2. verify that the `userPublicKey` matches the second line of the message for the correct chain identifier
-  - Production-Mainnet: `frequency:mainnet:`
-  - Staging-Testnet: `frequency:testnet-paseo:`
-2. Verify that the message starts with your domain based on [RFC 4501](https://www.rfc-editor.org/rfc/rfc4501.html) `dnsauthority`
-2. Verify the `Issued At` value from the message is within your acceptable time range
-3. Verify that `Nonce` value in the message is not being reused
+    - `userPublicKey`: The signing key
+    - `payload.message`: The signed message parsing `\n` into `LF` line breaks
+    - `signature.encodedValue`: The signature
+2. Verify that the `userPublicKey` matches the second line of the message for the correct chain identifier
+    - Production-Mainnet: `frequency:mainnet:`
+    - Staging-Testnet: `frequency:testnet-paseo:`
+3. Verify that the message starts with your domain based on [RFC 4501](https://www.rfc-editor.org/rfc/rfc4501.html) `dnsauthority`
+4. Verify the `Issued At` value from the message is within your acceptable time range
+5. Verify that `Nonce` value in the message is not being reused
 
 #### Parsing the Message Data
 
 1. Break the lines by `\n`
 2. Match based on the prefix:
-  - `Nonce: `
-  - `Issued At: `
-  - `URI: `
+    - `Nonce: `
+    - `Issued At: `
+    - `URI: `
 
 ### `addProvider`
 
