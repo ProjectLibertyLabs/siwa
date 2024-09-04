@@ -9,4 +9,5 @@
 - [Reference](Reference.md)
   - [Credentials](Credentials.md)
   - [Delegations](Delegations.md)
+  - [Payloads](Payloads.md)
   - [Data Structures](DataStructures/All.md)

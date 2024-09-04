@@ -78,6 +78,8 @@ The `addProvider` *must* always be *first* in the batch to ensure the correct pe
 Signatures to Frequency have an expiration set to a future Frequency block number.
 If the actions are not submitted before expriation, Frequency will reject the transactions and your application will need to request new signatures from Frequency Access.
 
+[Payload Examples and Signature Details](../Payloads.md)
+
 ### `login`
 
 The user has the correct delegation already existing.
