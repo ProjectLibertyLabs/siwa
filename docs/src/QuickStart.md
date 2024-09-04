@@ -109,4 +109,6 @@ And if requested:
 - Permission to act on the user's behalf for delegated actions
 - Verified email or phone/SMS number for the user
 
+<div class="warning">
 Note: You may start the user’s session and process the submissions in the background, however some data such as the consistent identifier, the MSA Id or full handle with suffix may not be accessible until the processing is complete.
+</div>
