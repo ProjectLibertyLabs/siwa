@@ -7,6 +7,7 @@ import {
   ExamplePayloadGrantDelegation,
   ExamplePayloadLoginGood,
   ExamplePayloadLoginStatic,
+  ExamplePayloadPublicGraphKey,
 } from './mocks/payloads.js';
 import { ExampleUserPublicKey } from './mocks/index.js';
 import { ExampleProviderKey } from './mocks/keys.js';
@@ -96,5 +97,36 @@ describe('validatePayloads', () => {
         payloads: [payload],
       })
     ).rejects.toThrowError('Payload signature failed');
+  });
+
+  it('Can verify an Add Items', async () => {
+    await expect(
+      validatePayloads({
+        userPublicKey: ExampleUserPublicKey,
+        payloads: [ExamplePayloadPublicGraphKey()],
+      })
+    ).resolves.toBeUndefined();
+  });
+
+  it('Can fail with a wrong Add Items payload', async () => {
+    const payload = ExamplePayloadPublicGraphKey();
+    payload.payload.schemaId = 1111;
+    await expect(
+      validatePayloads({
+        userPublicKey: ExampleUserPublicKey,
+        payloads: [payload],
+      })
+    ).rejects.toThrowError('Payload signature failed');
+  });
+
+  it('Can fail with a wrong payload', async () => {
+    const payload = ExamplePayloadPublicGraphKey();
+    (payload.payload as any) = {};
+    await expect(
+      validatePayloads({
+        userPublicKey: ExampleUserPublicKey,
+        payloads: [payload],
+      })
+    ).rejects.toThrowError('Unknown or Bad Payload: itemActions');
   });
 });

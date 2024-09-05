@@ -3,39 +3,37 @@ import { encodeAddress } from '@polkadot/keyring';
 import { u8aToHex } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { SiwaOptions } from './types/general.js';
-import { SiwaCredential, SiwaCredentialRequest, SiwaRequest } from './types/request.js';
+import { SiwaCredential, SiwaCredentialRequest, SiwaRequest, isSiwaCredentialsRequest } from './types/request.js';
 import { parseEndpoint, serializeLoginPayloadHex } from './util.js';
 
 const keyring = new Keyring({ type: 'sr25519' });
 
-function isSiwaCredentialRequest(input: unknown): input is SiwaCredentialRequest {
-  return typeof input === 'object' && input !== null && Object.hasOwn(input, 'type') && Object.hasOwn(input, 'hash');
-}
+/**
+ * Request for a verified email address
+ */
+export const VerifiedEmailAddressCredential = {
+  type: 'VerifiedEmailAddressCredential',
+  // TODO: Add Correct Hash
+  hash: ['multihash_of_email_schema_file'],
+};
 
-function credentialRequest(cred: SiwaCredential): SiwaCredentialRequest {
-  if (isSiwaCredentialRequest(cred)) return cred;
-  switch (cred) {
-    case 'VerifiedEmailAddressCredential':
-      return {
-        type: cred.toString(),
-        // TODO: Add Correct Hash
-        hash: ['multihash_of_email_schema_file'],
-      };
-    case 'VerifiedPhoneNumberCredential':
-      return {
-        type: cred.toString(),
-        // TODO: Add Correct Hash
-        hash: ['multihash_of_phone_schema_file'],
-      };
-    case 'VerifiedGraphKeyCredential':
-      return {
-        type: cred.toString(),
-        // TODO: Add Correct Hash
-        hash: ['multihash_of_private_key_schema_file'],
-      };
-  }
-  throw new Error('Unknown Credential Request Type');
-}
+/**
+ * Request for a verified SMS/Phone Number
+ */
+export const VerifiedPhoneNumberCredential = {
+  type: 'VerifiedPhoneNumberCredential',
+  // TODO: Add Correct Hash
+  hash: ['multihash_of_phone_schema_file'],
+};
+
+/**
+ * Request for a the private graph encryption key
+ */
+export const VerifiedGraphKeyCredential: SiwaCredential = {
+  type: 'VerifiedGraphKeyCredential',
+  // TODO: Add Correct Hash
+  hash: ['multihash_of_private_key_schema_file'],
+};
 
 /**
  * Generates a redirect URL for the authentication flow with Frequency Access.
@@ -43,9 +41,9 @@ function credentialRequest(cred: SiwaCredential): SiwaCredentialRequest {
  * @param {string} providerKeyUri - The URI of a key, usually a seed phrase, but may also include test accounts such as `//Alice` or `//Bob`.
  * @param {string} callbackUri - The URI that the user should return to after authenticating with Frequency Access.
  * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
- * @param {SiwaCredential[]} anyOfCredentials - List of credentials, either via their type or full type, hash object. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html). One or more of these will be returned.
- * @param {SiwaOptions} options - Options for endpoint selection.
- *                 options.endpoint - The endpoint to use. Can be specified as 'production' for production environment or 'staging' for test environments.
+ * @param {SiwaCredentialRequest[]} credentials - (Optional) List of credentials, either via their full structure. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html).
+ * @param {SiwaOptions} options - (Optional) Options for endpoint selection.
+ *                 options.endpoint - (Default: 'production') The endpoint to use. Can be specified as 'production' for production environment or 'staging' for test environments.
  *
  * @returns {Promise<string>} The generated redirect URL that can be used for authentication with Frequency Access.
  */
@@ -53,7 +51,7 @@ export async function getRedirectUrl(
   providerKeyUri: string,
   callbackUri: string,
   permissions: number[],
-  anyOfCredentials: SiwaCredential[] = [],
+  credentials: SiwaCredentialRequest[] = [],
   options?: SiwaOptions
 ): Promise<string> {
   await cryptoWaitReady();
@@ -64,7 +62,12 @@ export async function getRedirectUrl(
     callback: callbackUri,
     permissions,
   };
-  const credentialRequests = anyOfCredentials.map(credentialRequest);
+
+  if (!isSiwaCredentialsRequest(credentials)) {
+    console.error('credentials', credentials);
+    throw new Error('Invalid Credentials Request');
+  }
+  const requestedCredentials = credentials;
 
   const signature = keyPair.sign(serializeLoginPayloadHex(payload), {});
 
@@ -84,9 +87,7 @@ export async function getRedirectUrl(
       },
       payload,
     },
-    requestedCredentials: {
-      anyOf: credentialRequests,
-    },
+    requestedCredentials,
   };
 
   const response = await fetch(endpoint, { body: JSON.stringify(request), method: 'POST' });

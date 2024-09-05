@@ -1,7 +1,30 @@
-export interface SiwaCredentialRequest {
+import { isArrayOf, isObj, isStr } from './general';
+
+interface AllOfRequired {
+  allOf: SiwaCredentialRequest[];
+  anyOf?: SiwaCredentialRequest[];
+  oneOf?: SiwaCredentialRequest[];
+}
+
+interface AnyOfRequired {
+  allOf?: SiwaCredentialRequest[];
+  anyOf: SiwaCredentialRequest[];
+  oneOf?: SiwaCredentialRequest[];
+}
+
+interface OneOfRequired {
+  allOf?: SiwaCredentialRequest[];
+  anyOf?: SiwaCredentialRequest[];
+  oneOf: SiwaCredentialRequest[];
+}
+
+export interface SiwaCredential {
   type: string;
   hash: string[];
 }
+
+// Union of the different interfaces
+export type SiwaCredentialRequest = AllOfRequired | AnyOfRequired | OneOfRequired | SiwaCredential;
 
 export interface SiwaRequest {
   requestedSignatures: {
@@ -21,14 +44,32 @@ export interface SiwaRequest {
       permissions: number[];
     };
   };
-  requestedCredentials: {
-    anyOf: SiwaCredentialRequest[];
-  };
+  requestedCredentials?: SiwaCredentialRequest[];
 }
 
-export type SiwaCredentialTypes =
-  | 'VerifiedEmailAddressCredential'
-  | 'VerifiedPhoneNumberCredential'
-  | 'VerifiedGraphKeyCredential';
+function isSiwaCredential(input: unknown): input is SiwaCredential {
+  return isObj(input) && isStr(input.type) && isArrayOf(input.hash, isStr);
+}
 
-export type SiwaCredential = SiwaCredentialTypes | SiwaCredentialRequest;
+function isXOf<T = AllOfRequired | AnyOfRequired | OneOfRequired>(input: unknown): input is T {
+  return (
+    isObj(input) &&
+    // Require at least one of these
+    ('allOf' in input || 'anyOf' in input || 'oneOf' in input) &&
+    isSiwaCredentialsRequest(input.allOf || []) &&
+    isSiwaCredentialsRequest(input.anyOf || []) &&
+    isSiwaCredentialsRequest(input.oneOf || [])
+  );
+}
+
+function isSiwaCredentialRequest(input: unknown): input is SiwaCredentialRequest {
+  if (isSiwaCredential(input)) return true;
+  return isXOf(input);
+}
+
+export function isSiwaCredentialsRequest(input: unknown): input is SiwaCredentialRequest[] {
+  if (Array.isArray(input)) {
+    return input.every(isSiwaCredentialRequest);
+  }
+  return false;
+}

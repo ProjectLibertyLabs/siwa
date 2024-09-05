@@ -29,10 +29,16 @@ async function startLogin() {
   // This example is for Graph Only
   const permissions: number[] = [7, 8, 9, 10];
 
-  // List of Credentials, either via their type or full type, hash object
-  // See a full reference: https://projectlibertylabs.github.io/siwa/Credentials.html
-  // One or more of these will be returned
-  const anyOfCredentials = ["VerifiedEmailAddressCredential", "VerifiedPhoneNumberCredential"];
+  // List of Credentials
+  // See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
+  const credentials = [
+    {
+      oneOf: [
+        siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential
+      ],
+    },
+    siwa.VerifiedGraphKeyCredential,
+  ];
 
   // Options with endpoint selection
   // Endpoint may be tagged or specified in full
@@ -40,7 +46,7 @@ async function startLogin() {
   // Staging-Testnet Options
   // const options = { endpoint: 'staging' };
 
-  const redirectUrl = await siwa.getRedirectUrl(providerKeyUri, callbackUri, permissions, anyOfCredentials, options);
+  const redirectUrl = await siwa.getRedirectUrl(providerKeyUri, callbackUri, permissions, credentials, options);
 
   // Send the `redirectUrl` to the client.
 }
