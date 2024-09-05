@@ -1,9 +1,21 @@
 import { describe, expect, it, vi } from 'vitest';
 import { signatureVerify } from '@polkadot/util-crypto';
-import { getRedirectUrl } from './request.js';
+import {
+  getRedirectUrl,
+  VerifiedEmailAddressCredential,
+  VerifiedGraphKeyCredential,
+  VerifiedPhoneNumberCredential,
+} from './request.js';
 import { serializeLoginPayloadHex } from './util.js';
 
 global.fetch = vi.fn();
+
+const stockCredentials = [
+  {
+    oneOf: [VerifiedEmailAddressCredential, VerifiedPhoneNumberCredential],
+  },
+  VerifiedGraphKeyCredential,
+];
 
 describe('request', () => {
   it('correctly throws an error with a 404 response', async () => {
@@ -29,9 +41,9 @@ describe('request', () => {
       })
     );
 
-    await expect(
-      getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], ['VerifiedEmailAddressCredential'])
-    ).to.resolves.toBe('https://unittest.frequencyaccess.com/go');
+    await expect(getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], stockCredentials)).to.resolves.toBe(
+      'https://unittest.frequencyaccess.com/go'
+    );
 
     const body = JSON.parse(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString() || '');
 
@@ -53,14 +65,24 @@ describe('request', () => {
           permissions: [1, 2, 100],
         },
       },
-      requestedCredentials: {
-        anyOf: [
-          {
-            type: 'VerifiedEmailAddressCredential',
-            hash: ['multihash_of_email_schema_file'],
-          },
-        ],
-      },
+      requestedCredentials: [
+        {
+          oneOf: [
+            {
+              type: 'VerifiedEmailAddressCredential',
+              hash: ['multihash_of_email_schema_file'],
+            },
+            {
+              type: 'VerifiedPhoneNumberCredential',
+              hash: ['multihash_of_phone_schema_file'],
+            },
+          ],
+        },
+        {
+          type: 'VerifiedGraphKeyCredential',
+          hash: ['multihash_of_private_key_schema_file'],
+        },
+      ],
     });
   });
 
@@ -90,7 +112,7 @@ describe('request', () => {
     );
 
     await expect(
-      getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], ['VerifiedEmailAddressCredential'])
+      getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], [VerifiedEmailAddressCredential])
     ).to.resolves.toBe('https://unittest.frequencyaccess.com/go');
 
     const body = JSON.parse(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString() || '');

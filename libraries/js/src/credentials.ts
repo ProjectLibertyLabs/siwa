@@ -41,6 +41,7 @@ export async function validateGeneralCredential(
   if (credential.proof.validUntil && Date.parse(credential.proof.validUntil) < Date.now()) {
     throw new Error(`Credential Expired: ${credential.proof.validUntil}`);
   }
+
   if (credential.proof.expirationDate && Date.parse(credential.proof.expirationDate) < Date.now()) {
     throw new Error(`Credential Expired: ${credential.proof.expirationDate}`);
   }

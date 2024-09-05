@@ -1,6 +1,6 @@
 import { describe, it, vi, expect, beforeAll } from 'vitest';
 import { ExampleLogin, ExampleNewProvider, ExampleNewUser } from './mocks/index.js';
-import { getLoginResult } from './response.js';
+import { getLoginResult, hasChainSubmissions } from './response.js';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 
 global.fetch = vi.fn();
@@ -41,5 +41,19 @@ describe('getLoginResult', () => {
     } as any);
 
     await expect(getLoginResult('fakeAuthCode')).to.resolves.toMatchObject(example);
+  });
+});
+
+describe('hasChainSubmissions', () => {
+  it('returns true when it has some', async () => {
+    expect(hasChainSubmissions(await ExampleNewUser())).toBe(true);
+    expect(hasChainSubmissions(await ExampleNewProvider())).toBe(true);
+  });
+
+  it('returns false when it has none', async () => {
+    const loginResponse = await ExampleLogin();
+    expect(hasChainSubmissions(loginResponse)).toBe(false);
+    loginResponse.payloads = [];
+    expect(hasChainSubmissions(loginResponse)).toBe(false);
   });
 });

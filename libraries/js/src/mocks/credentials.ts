@@ -2,15 +2,16 @@ import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
 import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
 import * as vc from '@digitalbazaar/vc';
 
-import { SiwaResponseCredential } from '../types/credential.js';
+import {
+  SiwaResponseCredentialEmail,
+  SiwaResponseCredentialGraph,
+  SiwaResponseCredentialPhone,
+} from '../types/credential.js';
 import { ExampleProviderKey, ExampleUserKey, multibaseEd25519, multibaseSr25519 } from './keys.js';
 import { documentLoaderGenerator } from '../documents/loader.js';
 import { KeyringPair } from '@polkadot/keyring/types';
 
-export async function signCredential(
-  keypair: KeyringPair,
-  credential: Omit<SiwaResponseCredential, 'proof'>
-): Promise<SiwaResponseCredential> {
+export async function signCredential<T>(keypair: KeyringPair, credential: Omit<T, 'proof'>): Promise<T> {
   const multicodec = multibaseEd25519(keypair.publicKey);
   // Use the did:web version if it is a "provider key" coming through
   const signerId =
@@ -32,7 +33,7 @@ export async function signCredential(
       credential,
       suite,
       documentLoader: documentLoaderGenerator(),
-    })) as SiwaResponseCredential;
+    })) as T;
 
     return signedCredential;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,7 +54,7 @@ const exampleX25519 = {
   secretKey: '0xd0910c853563723253c4ed105c08614fc8aaaf1b0871375520d72251496e8d87',
 };
 
-export const ExampleUserGraphCredential = (): Promise<SiwaResponseCredential> =>
+export const ExampleUserGraphCredential = (): Promise<SiwaResponseCredentialGraph> =>
   signCredential(ExampleUserKey.keyPairEd(), {
     '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
     type: ['VerifiedGraphKeyCredential', 'VerifiableCredential'],
@@ -74,7 +75,7 @@ export const ExampleUserGraphCredential = (): Promise<SiwaResponseCredential> =>
     },
   });
 
-export const ExampleEmailCredential = (): Promise<SiwaResponseCredential> =>
+export const ExampleEmailCredential = (): Promise<SiwaResponseCredentialEmail> =>
   signCredential(ExampleProviderKey.keyPairEd(), {
     '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
     type: ['VerifiedEmailAddressCredential', 'VerifiableCredential'],
@@ -91,7 +92,7 @@ export const ExampleEmailCredential = (): Promise<SiwaResponseCredential> =>
     },
   });
 
-export const ExamplePhoneCredential = (): Promise<SiwaResponseCredential> =>
+export const ExamplePhoneCredential = (): Promise<SiwaResponseCredentialPhone> =>
   signCredential(ExampleProviderKey.keyPairEd(), {
     '@context': ['https://www.w3.org/ns/credentials/v2', 'https://www.w3.org/ns/credentials/undefined-terms/v2'],
     type: ['VerifiedPhoneNumberCredential', 'VerifiableCredential'],

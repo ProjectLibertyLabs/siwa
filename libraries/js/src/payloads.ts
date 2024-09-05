@@ -110,5 +110,6 @@ export async function validatePayloads(response: SiwaResponse): Promise<void> {
           serializeItemActionsPayloadHex(payload.payload)
         );
     }
+    throw new Error(`Unknown or Bad Payload: ${payload.type}`);
   });
 }
