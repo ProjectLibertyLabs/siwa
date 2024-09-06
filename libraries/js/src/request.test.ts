@@ -99,7 +99,7 @@ describe('request', () => {
       'https://unittest.frequencyaccess.com/go'
     );
 
-    expect(vi.mocked(fetch).mock.calls[0]?.[0]).toBe('https://testnet.frequencyaccess.com/siwa/api/payload');
+    expect(vi.mocked(fetch).mock.calls[0]?.[0]).toBe('https://testnet.frequencyaccess.com/siwa/api/request');
   });
 
   it('correctly generates the signature', async () => {
