@@ -58,12 +58,12 @@ jobs:
         working-directory: tools/siwa-mock
         run: |
           npm run start &
-          sleep 5 # Ensure the server has time to start
+          sleep 1
 
       # Run the example tests
-      - name: Example install
+      - name: JS-Example install
         working-directory: tools/js-example
-        run: npm ci
+        run: npm i ../../libraries/js/dist/projectlibertylabs-siwa-0.0.0.tgz
 
       - name: Run the example tests
         working-directory: tools/js-example
