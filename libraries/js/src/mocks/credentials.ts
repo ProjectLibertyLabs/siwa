@@ -10,6 +10,7 @@ import {
 import { ExampleProviderKey, ExampleUserKey, multibaseEd25519, multibaseSr25519 } from './keys.js';
 import { documentLoaderGenerator } from '../documents/loader.js';
 import { KeyringPair } from '@polkadot/keyring/types';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../credentials.js';
 
 export async function signCredential<T>(keypair: KeyringPair, credential: Omit<T, 'proof'>): Promise<T> {
   const multicodec = multibaseEd25519(keypair.publicKey);
@@ -62,7 +63,7 @@ export const ExampleUserGraphCredential = (): Promise<SiwaResponseCredentialGrap
     validFrom: '2024-08-21T21:28:08.289+0000',
     credentialSchema: {
       type: 'JsonSchema',
-      id: 'https://some.permanent.url/schema/private_key.json',
+      id: VerifiedGraphKey.id,
     },
     credentialSubject: {
       id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
@@ -83,7 +84,7 @@ export const ExampleEmailCredential = (): Promise<SiwaResponseCredentialEmail> =
     validFrom: '2024-08-21T21:28:08.289+0000',
     credentialSchema: {
       type: 'JsonSchema',
-      id: 'https://some.permanent.url/schema/email_address.json',
+      id: VerifiedEmailAddress.id,
     },
     credentialSubject: {
       id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),
@@ -100,7 +101,7 @@ export const ExamplePhoneCredential = (): Promise<SiwaResponseCredentialPhone> =
     validFrom: '2024-08-21T21:28:08.289+0000',
     credentialSchema: {
       type: 'JsonSchema',
-      id: 'https://some.permanent.url/schema/phone_number.json',
+      id: VerifiedPhoneNumber.id,
     },
     credentialSubject: {
       id: 'did:key:' + multibaseSr25519(ExampleUserKey.keyPair().publicKey),

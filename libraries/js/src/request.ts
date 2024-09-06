@@ -3,37 +3,26 @@ import { encodeAddress } from '@polkadot/keyring';
 import { u8aToHex } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { SiwaOptions } from './types/general.js';
-import { SiwaCredential, SiwaCredentialRequest, SiwaRequest, isSiwaCredentialsRequest } from './types/request.js';
+import { SiwaCredentialRequest, SiwaRequest, isSiwaCredentialsRequest } from './types/request.js';
 import { parseEndpoint, serializeLoginPayloadHex } from './util.js';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from './credentials.js';
 
 const keyring = new Keyring({ type: 'sr25519' });
 
 /**
  * Request for a verified email address
  */
-export const VerifiedEmailAddressCredential = {
-  type: 'VerifiedEmailAddressCredential',
-  // TODO: Add Correct Hash
-  hash: ['multihash_of_email_schema_file'],
-};
+export const VerifiedEmailAddressCredential = VerifiedEmailAddress.credential;
 
 /**
  * Request for a verified SMS/Phone Number
  */
-export const VerifiedPhoneNumberCredential = {
-  type: 'VerifiedPhoneNumberCredential',
-  // TODO: Add Correct Hash
-  hash: ['multihash_of_phone_schema_file'],
-};
+export const VerifiedPhoneNumberCredential = VerifiedPhoneNumber.credential;
 
 /**
  * Request for a the private graph encryption key
  */
-export const VerifiedGraphKeyCredential: SiwaCredential = {
-  type: 'VerifiedGraphKeyCredential',
-  // TODO: Add Correct Hash
-  hash: ['multihash_of_private_key_schema_file'],
-};
+export const VerifiedGraphKeyCredential = VerifiedGraphKey.credential;
 
 /**
  * Generates a redirect URL for the authentication flow with Frequency Access.

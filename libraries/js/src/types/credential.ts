@@ -70,6 +70,7 @@ export function isCredentialEmail(obj: any): obj is SiwaResponseCredentialEmail 
   return (
     isCredentialBase(obj) &&
     obj.type.includes('VerifiedEmailAddressCredential') &&
+    obj.credentialSubject.id === '' &&
     isStr(obj.credentialSubject.id) &&
     isStr(obj.credentialSubject.emailAddress) &&
     isStr(obj.credentialSubject.lastVerified)
