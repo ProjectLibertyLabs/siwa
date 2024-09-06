@@ -84,18 +84,18 @@ Supported Options:
   "requestedCredentials": [
     {
       "type": "VerifiedGraphKeyCredential",
-      "hash": ["multihash_of_private_key_schema_file"]
+      "hash": ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
     }
     {
       "oneOf": [
         // List of contact credential requests here
         {
           "type": "VerifiedEmailAddressCredential",
-          "hash": ["multihash_of_email_schema_file"]
+          "hash": ["bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi"]
         },
         {
           "type": "VerifiedPhoneNumberCredential",
-          "hash": ["multihash_of_phone_schema_file"]
+          "hash": ["bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"]
         }
       ]
     }

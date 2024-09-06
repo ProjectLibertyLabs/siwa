@@ -11,7 +11,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0x94156d570b29e9c4e3a04eefbff56439f40de7fb6bdba1ca31e9017b55e5e773f747d0ab4f0fc2b44ca903aa8fb641f227fac395e74bb1d837d07cfa70fa1e80"
+        "encodedValue": "0xda92707ba01de26377fdcc00401dc8817bfc73a7df1c33a278723df7ccbc7657fa6ffb7bff2cb695fa81b22bd079601be9a4ccc5047b03ee8a5eb62829b3d78e"
       },
       "endpoint": {
         "pallet": "msa",
@@ -45,7 +45,7 @@
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
         "type": "JsonSchema",
-        "id": "https://some.permanent.url/schema/email_address.json"
+        "id": "https://schemas.frequencyaccess.com/VerifiedEmailAddressCredential/bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi.json"
       },
       "credentialSubject": {
         "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -57,7 +57,7 @@
         "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z38CC2SNcH64FYHsgQHCC6Tu2g9rT6kCfxj4Y5LYDGFmDEczAmPqUFWvaK8PSMcM9dPfEM1WDXb2kyTkREdd1Bums"
+        "proofValue": "z4jArnPwuwYxLnbBirLanpkcyBpmQwmyn5f3PdTYnxhpy48qpgvHHav6warjizjvtLMg6j3FK3BqbR2nuyT2UTSWC"
       }
     },
     {
@@ -73,7 +73,7 @@
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
         "type": "JsonSchema",
-        "id": "https://some.permanent.url/schema/private_key.json"
+        "id": "https://schemas.frequencyaccess.com/VerifiedGraphKeyCredential/bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y.json"
       },
       "credentialSubject": {
         "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -89,7 +89,7 @@
         "verificationMethod": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z5r9jTXbssu1AWswnZkrgmx7MaQ8evviTbAJKwULs8rsDLKiTTKoDUT2Rihfq4yHLZg1f9tHHfhoUdQAWrSBTCsap"
+        "proofValue": "z2HHWwtWggZfvGqNUk4S5AAbDGqZRFXjpMYAsXXmEksGxTk4DnnkN3upCiL1mhgwHNLkxY3s8YqNyYnmpuvUke7jF"
       }
     }
   ]

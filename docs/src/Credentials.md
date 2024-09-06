@@ -17,17 +17,17 @@ This is a common request: one verified contact method and access to the graph en
 [
   {
     "type": "VerifiedGraphKeyCredential",
-    "hash": ["multihash_of_private_key_schema_file"]
+    "hash": ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
   },
   {
     "anyOf": [
       {
         "type": "VerifiedEmailAddressCredential",
-        "hash": ["multihash_of_email_schema_file"]
+        "hash": ["bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi"]
       },
       {
         "type": "VerifiedPhoneNumberCredential",
-        "hash": ["multihash_of_phone_schema_file"]
+        "hash": ["bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"]
       }
     ]
   }
@@ -41,27 +41,33 @@ Below is the official types and multihashes to use.
 
 ### Graph Key
 
+- URL: https://schemas.frequencyaccess.com/VerifiedGraphKeyCredential/bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y.json
+
 ```json
 {
   "type": "VerifiedGraphKeyCredential",
-  "hash": ["multihash_of_private_key_schema_file"]
+  "hash": ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
 }
 ```
 
 ### Email
 
+- URL: https://schemas.frequencyaccess.com/VerifiedEmailAddressCredential/bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi.json
+
 ```json
 {
   "type": "VerifiedEmailAddressCredential",
-  "hash": ["multihash_of_email_schema_file"]
+  "hash": ["bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi"]
 }
 ```
 
 ### Phone/SMS
 
+- URL: https://schemas.frequencyaccess.com/VerifiedPhoneNumberCredential/bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq.json
+
 ```json
 {
   "type": "VerifiedPhoneNumberCredential",
-  "hash": ["multihash_of_phone_schema_file"]
+  "hash": ["bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"]
 }
 ```

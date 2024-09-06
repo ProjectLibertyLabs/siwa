@@ -12,7 +12,7 @@
   "validFrom": "2024-08-21T21:28:08.289+0000",
   "credentialSchema": {
     "type": "JsonSchema",
-    "id": "https://some.permanent.url/schema/private_key.json"
+    "id": "https://schemas.frequencyaccess.com/VerifiedGraphKeyCredential/bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y.json"
   },
   "credentialSubject": {
     "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -28,7 +28,7 @@
     "verificationMethod": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "z5r9jTXbssu1AWswnZkrgmx7MaQ8evviTbAJKwULs8rsDLKiTTKoDUT2Rihfq4yHLZg1f9tHHfhoUdQAWrSBTCsap"
+    "proofValue": "z2HHWwtWggZfvGqNUk4S5AAbDGqZRFXjpMYAsXXmEksGxTk4DnnkN3upCiL1mhgwHNLkxY3s8YqNyYnmpuvUke7jF"
   }
 }
 ```

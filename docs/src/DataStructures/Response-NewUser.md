@@ -11,7 +11,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0xdaca9a962aa95f6eee66c97edcf9c04c40c671dde2796a97043d3288ffb5ff2dfeb98b90283c9052aadb9ca6e56ac54791ee3cbe998206981bcd8fa2fd45f28e"
+        "encodedValue": "0x04df9ec55d150c563d2a75fd71401d53e788b72e3e158a00459081f244d13234dddaf23f28bf7d7e2a1d7d8c4d83a2d286afdf3067e1ef393123340af05fbd8d"
       },
       "endpoint": {
         "pallet": "msa",
@@ -34,7 +34,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0x86bdd46a5f91ed3f259374f5856fdc48ee00b8eced10eecd05af8d7637c51d17df6252f617feacbce1cf91cc57ca036c69773ab9b0c31d6843344704b4fb898d"
+        "encodedValue": "0x0c17f1959de2ae30e07daddb91a78a7b9aee4023342888e541ba10a9a394ac59b6613c81fbcd23264c64a22bdc1e4bb576b9cc6b2f7a22054df400c6eed46c84"
       },
       "endpoint": {
         "pallet": "statefulStorage",
@@ -57,7 +57,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0xc8c7587ef80b6bd64295d63b69f97196a9a0b635bd8f1974156d7e3c7206134bb9838d29978a2f91c18a6592aff180f2314db7528b6aac796f0073d758406e81"
+        "encodedValue": "0xf2a29d0e25900400ef50edeae02434fdd5dab903f9674040ebe9ea9859fdc25c7c8f0a1de203fe6d1e8e92180906160b9b97db98bdc6e16bbf9f59328aef2784"
       },
       "endpoint": {
         "pallet": "handles",
@@ -84,7 +84,7 @@
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
         "type": "JsonSchema",
-        "id": "https://some.permanent.url/schema/email_address.json"
+        "id": "https://schemas.frequencyaccess.com/VerifiedEmailAddressCredential/bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi.json"
       },
       "credentialSubject": {
         "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -96,7 +96,7 @@
         "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z38CC2SNcH64FYHsgQHCC6Tu2g9rT6kCfxj4Y5LYDGFmDEczAmPqUFWvaK8PSMcM9dPfEM1WDXb2kyTkREdd1Bums"
+        "proofValue": "z4jArnPwuwYxLnbBirLanpkcyBpmQwmyn5f3PdTYnxhpy48qpgvHHav6warjizjvtLMg6j3FK3BqbR2nuyT2UTSWC"
       }
     },
     {
@@ -112,7 +112,7 @@
       "validFrom": "2024-08-21T21:28:08.289+0000",
       "credentialSchema": {
         "type": "JsonSchema",
-        "id": "https://some.permanent.url/schema/private_key.json"
+        "id": "https://schemas.frequencyaccess.com/VerifiedGraphKeyCredential/bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y.json"
       },
       "credentialSubject": {
         "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -128,7 +128,7 @@
         "verificationMethod": "did:key:z6MktZ15TNtrJCW2gDLFjtjmxEdhCadNCaDizWABYfneMqhA",
         "cryptosuite": "eddsa-rdfc-2022",
         "proofPurpose": "assertionMethod",
-        "proofValue": "z5r9jTXbssu1AWswnZkrgmx7MaQ8evviTbAJKwULs8rsDLKiTTKoDUT2Rihfq4yHLZg1f9tHHfhoUdQAWrSBTCsap"
+        "proofValue": "z2HHWwtWggZfvGqNUk4S5AAbDGqZRFXjpMYAsXXmEksGxTk4DnnkN3upCiL1mhgwHNLkxY3s8YqNyYnmpuvUke7jF"
       }
     }
   ]

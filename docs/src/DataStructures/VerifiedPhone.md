@@ -12,7 +12,7 @@
   "validFrom": "2024-08-21T21:28:08.289+0000",
   "credentialSchema": {
     "type": "JsonSchema",
-    "id": "https://some.permanent.url/schema/phone_number.json"
+    "id": "https://schemas.frequencyaccess.com/VerifiedPhoneNumberCredential/bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq.json"
   },
   "credentialSubject": {
     "id": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
@@ -24,7 +24,7 @@
     "verificationMethod": "did:web:frequencyaccess.com#z6MkofWExWkUvTZeXb9TmLta5mBT6Qtj58es5Fqg1L5BCWQD",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "z3NsdGe93oVTiguenKkidg6DQp2JY8ioeeQr5UviNbWHYmM5RxNnAJAndKBNznEwnJDDYwFu9TP2tcFoNZmJ49RMF"
+    "proofValue": "z5sJ2CjHX1wwgzfFGoZNocxeFKd2ffpo5TVgUvdaSkYq1M6gF7UjpYfePo97QoZgmiWdgPAWPjxFvGBysaxHV8DZ4"
   }
 }
 ```
