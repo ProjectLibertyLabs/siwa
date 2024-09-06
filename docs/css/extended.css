@@ -66,3 +66,7 @@ table {
   border: 2px solid var(--sidebar-active);
   color: var(--sidebar-fg);
 }
+
+#logo .st2 {
+  fill: var(--sidebar-fg);
+}
