@@ -1,4 +1,4 @@
-import { DidDoc } from './loader';
+import { DidDoc } from './loader.js';
 
 let cachedValidDids = new Map<string, DidDoc>();
 let cacheDate = Date.now();

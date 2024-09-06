@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isValidX25519PrivateKey } from './x25519';
+import { isValidX25519PrivateKey } from './x25519.js';
 
 describe('z25519 validation', () => {
   it('isValidX25519PrivateKey successful case', () => {

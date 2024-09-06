@@ -46,7 +46,7 @@ export async function getRedirectUrl(
   await cryptoWaitReady();
   const keyPair = keyring.createFromUri(providerKeyUri);
 
-  const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/api/payload`;
+  const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/api/request`;
   const payload = {
     callback: callbackUri,
     permissions,

@@ -23,15 +23,15 @@ delete rootPackage['files'];
 delete rootPackage['devDependencies'];
 
 // Setup the main and types correctly
-rootPackage['main'] = 'index.cjs';
-rootPackage['module'] = 'index.js';
+rootPackage['main'] = 'cjs/index.js';
+rootPackage['module'] = 'esm/index.js';
 rootPackage['types'] = 'index.d.ts';
 (rootPackage['exports'] = {
   '.': {
     types: './index.d.ts',
-    require: './index.cjs',
-    import: './index.js',
-    default: './index.js',
+    require: './cjs/index.js',
+    import: './esm/index.js',
+    default: './esm/index.js',
   },
 }),
   // Write it out

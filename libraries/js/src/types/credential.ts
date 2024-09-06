@@ -1,3 +1,4 @@
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../credentials.js';
 import { isArrayOf, isObj, isStr } from './general.js';
 
 interface SiwaResponseCredentialBase {
@@ -69,8 +70,8 @@ export interface SiwaResponseCredentialEmail extends SiwaResponseCredentialBase 
 export function isCredentialEmail(obj: any): obj is SiwaResponseCredentialEmail {
   return (
     isCredentialBase(obj) &&
-    obj.type.includes('VerifiedEmailAddressCredential') &&
-    obj.credentialSubject.id === '' &&
+    obj.type.includes(VerifiedEmailAddress.credential.type) &&
+    obj.credentialSchema.id === VerifiedEmailAddress.id &&
     isStr(obj.credentialSubject.id) &&
     isStr(obj.credentialSubject.emailAddress) &&
     isStr(obj.credentialSubject.lastVerified)
@@ -90,7 +91,8 @@ export interface SiwaResponseCredentialPhone extends SiwaResponseCredentialBase 
 export function isCredentialPhone(obj: any): obj is SiwaResponseCredentialPhone {
   return (
     isCredentialBase(obj) &&
-    obj.type.includes('VerifiedPhoneNumberCredential') &&
+    obj.type.includes(VerifiedPhoneNumber.credential.type) &&
+    obj.credentialSchema.id === VerifiedPhoneNumber.id &&
     isStr(obj.credentialSubject.id) &&
     isStr(obj.credentialSubject.phoneNumber) &&
     isStr(obj.credentialSubject.lastVerified)
@@ -114,7 +116,8 @@ export interface SiwaResponseCredentialGraph extends SiwaResponseCredentialBase 
 export function isCredentialGraph(obj: any): obj is SiwaResponseCredentialGraph {
   return (
     isCredentialBase(obj) &&
-    obj.type.includes('VerifiedGraphKeyCredential') &&
+    obj.type.includes(VerifiedGraphKey.credential.type) &&
+    obj.credentialSchema.id === VerifiedGraphKey.id &&
     isStr(obj.credentialSubject.id) &&
     isStr(obj.credentialSubject.encodedPublicKeyValue) &&
     isStr(obj.credentialSubject.encodedPrivateKeyValue) &&

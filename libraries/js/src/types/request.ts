@@ -1,4 +1,4 @@
-import { isArrayOf, isObj, isStr } from './general';
+import { isArrayOf, isObj, isStr } from './general.js';
 
 interface AllOfRequired {
   allOf: SiwaCredentialRequest[];
