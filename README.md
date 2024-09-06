@@ -1,4 +1,4 @@
-# Sign In With Access Docuemntation & Tools
+# Sign In With Access Documentation & Tools
 
 <!-- TABLE OF CONTENTS -->
 
@@ -26,7 +26,7 @@ Sign In With Access (SIWA) is the developer documentation and toolset to integra
 - [Frequency Documentation](https://docs.frequency.xyz)
 - [Frequency on GitHub](https://github.com/frequency-chain/frequency)
 - [Frequency Provider Dashboard](https://provider.frequency.xyz)
-- [Sign In With Frequency](https://github.com/ProjectLibertyLabs/siwf) (Onboarding tool that supports both Frequeqency Access and other wallets)
+- [Sign In With Frequency](https://github.com/ProjectLibertyLabs/siwf) (Onboarding tool that supports both Frequency Access and other wallets)
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 
