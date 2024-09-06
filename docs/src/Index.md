@@ -18,7 +18,7 @@ There are a few main steps to authentication using Frequency Access.
 
 - Your Application: Any website, mobile application, etc for which your user needs authentication
 - Frequency Access: Verifies the user and provides the user with access to the entire Frequency Ecosystem
-- Frequency Blockchain: Manages user delegations and additional socal operations
+- Frequency Blockchain: Manages user delegations and additional social operations
 
 ### User Delegations and Credentials
 
