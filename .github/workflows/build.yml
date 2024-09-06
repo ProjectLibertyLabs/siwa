@@ -12,9 +12,9 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [20.x, 22.x]
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,7 +23,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache-dependency-path: libraries/js/package-lock.json
+          cache: "npm" # Enabling npm caching
+          cache-dependency-path: |
+            libraries/js/package-lock.json
+            tools/siwa-mock/package-lock.json
+            tools/js-example/package-lock.json
 
       - name: Install dependencies
         working-directory: libraries/js
@@ -44,3 +48,23 @@ jobs:
       - name: Package dry run
         working-directory: libraries/js/dist
         run: npm pack
+
+      # Start up the mock server
+      - name: Mock server install
+        working-directory: tools/siwa-mock
+        run: npm ci
+
+      - name: Start mock server
+        working-directory: tools/siwa-mock
+        run: |
+          npm run start &
+          sleep 5 # Ensure the server has time to start
+
+      # Run the example tests
+      - name: Example install
+        working-directory: tools/js-example
+        run: npm ci
+
+      - name: Run the example tests
+        working-directory: tools/js-example
+        run: npm test
