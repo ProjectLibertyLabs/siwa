@@ -1,5 +1,5 @@
 import { describe, it, vi, expect, beforeAll, beforeEach, afterEach } from 'vitest';
-import { getCached, setCached } from './cache';
+import { getCached, setCached } from './cache.js';
 
 const ExampleDidOne = {
   '@context': ['https://www.w3.org/ns/did/v1', 'https://w3id.org/security/multikey/v1'],
