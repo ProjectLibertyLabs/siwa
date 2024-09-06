@@ -3,6 +3,7 @@
 The NPM package `@projectlibertylabs/siwa` offers both CommonJS and ESM exports.
 
 ## Install
+
 - NPM: `npm i @projectlibertylabs/siwa`
 - Yarn: `yarn add @projectlibertylabs/siwa`
 

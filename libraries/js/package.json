@@ -13,7 +13,7 @@
     "prettier": "npx prettier --write src",
     "lint": "tsc -p ./tsconfig.eslint.json --noEmit --pretty && npx eslint src",
     "lint:fix": "npx eslint --fix src",
-    "lint:ci": "npx eslint src && npx prettier --check .",
+    "lint:ci": "npx eslint src && npx prettier --check src",
     "generate:data-structures": "npx tsx src/mocks/generate-data-structures.ts"
   },
   "repository": {

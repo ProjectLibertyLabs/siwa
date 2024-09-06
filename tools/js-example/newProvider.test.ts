@@ -9,7 +9,9 @@ describe("SIWA new provider test", () => {
     try {
       const result = await siwa.getLoginResult(authorizationCode, options);
 
-      expect(result.userPublicKey.encodedValue).toBe("f6akufkq9Lex6rT8RCEDRuoZQRgo5pWiRzeo81nmKNGWGNJdJ");
+      expect(result.userPublicKey.encodedValue).toBe(
+        "f6akufkq9Lex6rT8RCEDRuoZQRgo5pWiRzeo81nmKNGWGNJdJ",
+      );
       expect(result.payloads[0].type).toBe("addProvider");
     } catch (error) {
       throw new Error("Error processing new provider: " + error);

@@ -9,8 +9,12 @@ describe("SIWA new user test", () => {
     try {
       const result = await siwa.getLoginResult(authorizationCode, options);
 
-      expect(result.userPublicKey.encodedValue).toBe("f6akufkq9Lex6rT8RCEDRuoZQRgo5pWiRzeo81nmKNGWGNJdJ");
-      expect(result.payloads[0].endpoint?.extrinsic).toBe("createSponsoredAccountWithDelegation");
+      expect(result.userPublicKey.encodedValue).toBe(
+        "f6akufkq9Lex6rT8RCEDRuoZQRgo5pWiRzeo81nmKNGWGNJdJ",
+      );
+      expect(result.payloads[0].endpoint?.extrinsic).toBe(
+        "createSponsoredAccountWithDelegation",
+      );
     } catch (error) {
       throw new Error("Error processing new user: " + error);
     }

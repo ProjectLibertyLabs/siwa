@@ -10,8 +10,16 @@ describe("SIWA request test", () => {
     const options = { endpoint: "http://localhost:3000" }; // This should point to your mock server
 
     try {
-      const redirectUrl = await siwa.getRedirectUrl(providerKeyUri, callbackUri, permissions, credentials, options);
-      expect(redirectUrl).toContain("http://localhost:3000/callback?authorizationCode=");
+      const redirectUrl = await siwa.getRedirectUrl(
+        providerKeyUri,
+        callbackUri,
+        permissions,
+        credentials,
+        options,
+      );
+      expect(redirectUrl).toContain(
+        "http://localhost:3000/callback?authorizationCode=",
+      );
     } catch (error) {
       throw new Error("Error in generating redirect URL: " + error);
     }

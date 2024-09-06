@@ -26,7 +26,10 @@
   ],
   "credentials": [
     {
-      "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/undefined-terms/v2"],
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/undefined-terms/v2"
+      ],
       "type": ["VerifiedEmailAddressCredential", "VerifiableCredential"],
       "issuer": "did:web:frequencyaccess.com",
       "validFrom": "2024-08-21T21:28:08.289+0000",
@@ -48,7 +51,10 @@
       }
     },
     {
-      "@context": ["https://www.w3.org/ns/credentials/v2", "https://www.w3.org/ns/credentials/undefined-terms/v2"],
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://www.w3.org/ns/credentials/undefined-terms/v2"
+      ],
       "type": ["VerifiedGraphKeyCredential", "VerifiableCredential"],
       "issuer": "did:key:z6QNucQV4AF1XMQV4kngbmnBHwYa6mVswPEGrkFrUayhttT1",
       "validFrom": "2024-08-21T21:28:08.289+0000",

@@ -25,7 +25,11 @@ app.post("/siwa/api/request", (req: Request, res: Response) => {
   const callbackUri = req.body.callback || "http://localhost:3000/callback";
 
   const randomCode =
-    Math.random() < 0.33 ? authCodes.login : Math.random() < 0.5 ? authCodes.newProvider : authCodes.newUser;
+    Math.random() < 0.33
+      ? authCodes.login
+      : Math.random() < 0.5
+        ? authCodes.newProvider
+        : authCodes.newUser;
 
   // Simulate the redirect URL in the Location header
   const redirectUrl = `${callbackUri}?authorizationCode=${randomCode}`;
