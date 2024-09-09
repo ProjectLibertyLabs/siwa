@@ -1,10 +1,7 @@
 import { isArrayOf, isObj, isStr } from './general.js';
 
-// Switch SiwaCredential for SiwaCredentialRequest to enable nested requests
 interface AnyOfRequired {
-  // allOf?: SiwaCredentialRequest[];
   anyOf: SiwaCredential[];
-  // oneOf?: SiwaCredentialRequest[];
 }
 
 export interface SiwaCredential {
@@ -39,18 +36,6 @@ export interface SiwaRequest {
 function isSiwaCredential(input: unknown): input is SiwaCredential {
   return isObj(input) && isStr(input.type) && isArrayOf(input.hash, isStr);
 }
-
-// function isXOf<T = AllOfRequired | AnyOfRequired | OneOfRequired>(input: unknown): input is T {
-//   return (
-//     isObj(input) &&
-//     // Require at least one of these
-//     ('allOf' in input || 'anyOf' in input || 'oneOf' in input) &&
-//     // Allows for nested structures
-//     isSiwaCredentialsRequest(input.allOf || []) &&
-//     isSiwaCredentialsRequest(input.anyOf || []) &&
-//     isSiwaCredentialsRequest(input.oneOf || [])
-//   );
-// }
 
 function isAnyOf(input: unknown): input is AnyOfRequired {
   return isObj(input) && 'anyOf' in input && (input.anyOf || []).every(isSiwaCredential);
