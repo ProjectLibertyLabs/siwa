@@ -11,7 +11,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0x04df9ec55d150c563d2a75fd71401d53e788b72e3e158a00459081f244d13234dddaf23f28bf7d7e2a1d7d8c4d83a2d286afdf3067e1ef393123340af05fbd8d"
+        "encodedValue": "0x1a27cb6d79b508e1ffc8d6ae70af78d5b3561cdc426124a06f230d7ce70e757e1947dd1bac8f9e817c30676a5fa6b06510bae1201b698b044ff0660c60f18c8a"
       },
       "endpoint": {
         "pallet": "msa",
@@ -34,7 +34,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0x0c17f1959de2ae30e07daddb91a78a7b9aee4023342888e541ba10a9a394ac59b6613c81fbcd23264c64a22bdc1e4bb576b9cc6b2f7a22054df400c6eed46c84"
+        "encodedValue": "0x9eb338773b386ded2e3731ba68ba734c80408b3ad24f92ed3c60342d374a32293851fa8e41d722c72a5a4e765a9e401c68570a8c666ab678e4e5d94aa6825d85"
       },
       "endpoint": {
         "pallet": "statefulStorage",
@@ -57,7 +57,7 @@
       "signature": {
         "algo": "Sr25519",
         "encoding": "base16",
-        "encodedValue": "0xf2a29d0e25900400ef50edeae02434fdd5dab903f9674040ebe9ea9859fdc25c7c8f0a1de203fe6d1e8e92180906160b9b97db98bdc6e16bbf9f59328aef2784"
+        "encodedValue": "0xb004140fd8ba3395cf5fcef49df8765d90023c293fde4eaf2e932cc24f74fc51b006c0bebcf31d85565648b4881fa22115e0051a3bdb95ab5bf7f37ac66f798f"
       },
       "endpoint": {
         "pallet": "handles",

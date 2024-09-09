@@ -71,12 +71,10 @@ This example uses the `//Alice` seed phrase to generate the signature.
 Frequency Access users can provide verified email or phone/SMS to your application when requested and approved by the user.
 This is _not_ required, and best practice is to only make such a request if it is required for the functioning of the application.
 
-The request MUST be wrapped in `requestedCredentials` which is an array that is treated as an `allOf`.
+The request MUST be wrapped in `requestedCredentials` which is an array that requires ALL listed credential objects.
 Supported Options:
 
-- `oneOf`: Requires ONLY one credential from the list
 - `anyOf`: Requires one or more credentials from the list
-- `allOf`: Requires ALL listed credentials
 
 ```json
 {
@@ -87,7 +85,7 @@ Supported Options:
       "hash": ["bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"]
     }
     {
-      "oneOf": [
+      "anyOf": [
         // List of contact credential requests here
         {
           "type": "VerifiedEmailAddressCredential",
