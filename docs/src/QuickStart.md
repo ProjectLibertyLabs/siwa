@@ -33,7 +33,7 @@ async function startLogin() {
   // See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
   const credentials = [
     {
-      oneOf: [
+      anyOf: [
         siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential
       ],
     },

@@ -1,5 +1,4 @@
 import { isSiwaCredentialsRequest } from './request.js';
-import { ExampleLogin, ExampleNewProvider, ExampleNewUser } from '../mocks/index.js';
 import { describe, expect, it } from 'vitest';
 import {
   VerifiedEmailAddressCredential,
@@ -16,7 +15,7 @@ describe('isSiwaCredentialsRequest', () => {
     expect(isSiwaCredentialsRequest([VerifiedGraphKeyCredential, VerifiedPhoneNumberCredential])).toBe(true);
   });
 
-  it('is successful with an AnyOf', async () => {
+  it('is success with an AnyOf', async () => {
     expect(
       isSiwaCredentialsRequest([
         VerifiedGraphKeyCredential,
@@ -27,7 +26,7 @@ describe('isSiwaCredentialsRequest', () => {
     ).toBe(true);
   });
 
-  it('is successful with an AllOf', async () => {
+  it('is failure with an AllOf', async () => {
     expect(
       isSiwaCredentialsRequest([
         VerifiedGraphKeyCredential,
@@ -35,10 +34,10 @@ describe('isSiwaCredentialsRequest', () => {
           allOf: [VerifiedPhoneNumberCredential, VerifiedEmailAddressCredential],
         },
       ])
-    ).toBe(true);
+    ).toBe(false);
   });
 
-  it('is successful with an OneOf', async () => {
+  it('is failure with an OneOf', async () => {
     expect(
       isSiwaCredentialsRequest([
         VerifiedGraphKeyCredential,
@@ -46,10 +45,10 @@ describe('isSiwaCredentialsRequest', () => {
           oneOf: [VerifiedPhoneNumberCredential, VerifiedEmailAddressCredential],
         },
       ])
-    ).toBe(true);
+    ).toBe(false);
   });
 
-  it('is successful with nested', async () => {
+  it('is failure with nested', async () => {
     expect(
       isSiwaCredentialsRequest([
         VerifiedGraphKeyCredential,
@@ -67,7 +66,7 @@ describe('isSiwaCredentialsRequest', () => {
           ],
         },
       ])
-    ).toBe(true);
+    ).toBe(false);
   });
 
   it('is can fail', async () => {

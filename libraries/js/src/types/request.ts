@@ -1,21 +1,7 @@
 import { isArrayOf, isObj, isStr } from './general.js';
 
-interface AllOfRequired {
-  allOf: SiwaCredentialRequest[];
-  anyOf?: SiwaCredentialRequest[];
-  oneOf?: SiwaCredentialRequest[];
-}
-
 interface AnyOfRequired {
-  allOf?: SiwaCredentialRequest[];
-  anyOf: SiwaCredentialRequest[];
-  oneOf?: SiwaCredentialRequest[];
-}
-
-interface OneOfRequired {
-  allOf?: SiwaCredentialRequest[];
-  anyOf?: SiwaCredentialRequest[];
-  oneOf: SiwaCredentialRequest[];
+  anyOf: SiwaCredential[];
 }
 
 export interface SiwaCredential {
@@ -24,7 +10,7 @@ export interface SiwaCredential {
 }
 
 // Union of the different interfaces
-export type SiwaCredentialRequest = AllOfRequired | AnyOfRequired | OneOfRequired | SiwaCredential;
+export type SiwaCredentialRequest = AnyOfRequired | SiwaCredential;
 
 export interface SiwaRequest {
   requestedSignatures: {
@@ -51,20 +37,13 @@ function isSiwaCredential(input: unknown): input is SiwaCredential {
   return isObj(input) && isStr(input.type) && isArrayOf(input.hash, isStr);
 }
 
-function isXOf<T = AllOfRequired | AnyOfRequired | OneOfRequired>(input: unknown): input is T {
-  return (
-    isObj(input) &&
-    // Require at least one of these
-    ('allOf' in input || 'anyOf' in input || 'oneOf' in input) &&
-    isSiwaCredentialsRequest(input.allOf || []) &&
-    isSiwaCredentialsRequest(input.anyOf || []) &&
-    isSiwaCredentialsRequest(input.oneOf || [])
-  );
+function isAnyOf(input: unknown): input is AnyOfRequired {
+  return isObj(input) && 'anyOf' in input && (input.anyOf || []).every(isSiwaCredential);
 }
 
 function isSiwaCredentialRequest(input: unknown): input is SiwaCredentialRequest {
   if (isSiwaCredential(input)) return true;
-  return isXOf(input);
+  return isAnyOf(input);
 }
 
 export function isSiwaCredentialsRequest(input: unknown): input is SiwaCredentialRequest[] {
