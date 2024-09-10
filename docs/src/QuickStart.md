@@ -64,9 +64,9 @@ For more details, refer to the official documentation:
 ```typescript
 import * as siwa from "@projectlibertylabs/siwa";
 
-async function handleCallback(incommingUrl: string) {
+async function handleCallback(incomingUrl: string) {
   // Extract the `authorizationCode` from the URL
-  const url = new URL(incommingUrl);
+  const url = new URL(incomingUrl);
   const authorizationCode = url.searchParams.get("authorizationCode");
 
   // Same options as before
