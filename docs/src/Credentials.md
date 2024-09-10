@@ -5,7 +5,7 @@
 The request is a an array that requires ALL listed credential objects.
 Supported Options:
 
-- `anyOf`: Requires one or more credentials from the list
+- `anyOf`: Request for one or more credentials from the list (0+ may return)
 
 ### Example Request
 

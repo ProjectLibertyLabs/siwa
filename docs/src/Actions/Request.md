@@ -74,7 +74,7 @@ This is _not_ required, and best practice is to only make such a request if it i
 The request MUST be wrapped in `requestedCredentials` which is an array that requires ALL listed credential objects.
 Supported Options:
 
-- `anyOf`: Requires one or more credentials from the list
+- `anyOf`: Request for one or more credentials from the list (0+ may return)
 
 ```json
 {
