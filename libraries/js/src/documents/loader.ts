@@ -30,21 +30,22 @@ function keyToDidDocument(url: string, key: string) {
   };
 }
 
-async function didWeb(url: string, trustDids: string[]): Promise<DidDoc> {
+async function didWeb(url: string, trustedIssuers: string[]): Promise<DidDoc> {
   const [did, key] = url.split('#');
   if (!did || !key) {
     console.trace('Missing DID key');
     throw new Error(`Missing DID Key: ${url}`);
   }
 
-  // Trusted DID?
-  if (trustDids.includes(did)) {
+  // Trusted Issuer?
+  if (trustedIssuers.includes(did)) {
     const trustedDidDoc = keyToDidDocument(url, key);
     setCached(url, trustedDidDoc, true);
     return trustedDidDoc;
   }
 
-  const fetchUrl = new URL(did.replace(/^did:web:/, 'https://'));
+  const withoutWeb = did.replace(/^did:web:/, '').replace(':', '/');
+  const fetchUrl = new URL('https://' + withoutWeb);
   if (fetchUrl.pathname === '/') {
     fetchUrl.pathname = '/.well-known/did.json';
   }
@@ -66,7 +67,7 @@ async function didWeb(url: string, trustDids: string[]): Promise<DidDoc> {
 
 // This is a simplified method that would only work due to assumptions in Frequency Access, but it works for the limited use case of this library which is Frequency Access
 // NOTICE: It does NOT support the `trust` extensions
-async function getDid(url: string, trustDids: string[]): Promise<DidDoc | null> {
+async function getDid(url: string, trustedIssuers: string[]): Promise<DidDoc | null> {
   // Handle the cache case
   const cachedValue = getCached(url);
   if (cachedValue) {
@@ -74,7 +75,7 @@ async function getDid(url: string, trustDids: string[]): Promise<DidDoc | null> 
   }
 
   if (url.startsWith('did:web:')) {
-    const webDid = await didWeb(url, trustDids);
+    const webDid = await didWeb(url, trustedIssuers);
     if (webDid) {
       return webDid;
     }

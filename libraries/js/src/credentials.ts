@@ -26,7 +26,7 @@ async function validateGraph(credential: SiwaResponseCredentialGraph): Promise<v
 
 export async function validateGeneralCredential(
   credential: SiwaResponseCredential,
-  trustDids: string[]
+  trustedIssuers: string[]
 ): Promise<void> {
   // Make sure we can validate
   // I don't think we need this? Likely happens inside vc.verifyCredential
@@ -51,7 +51,7 @@ export async function validateGeneralCredential(
   const vcTest = await vc.verifyCredential({
     credential,
     suite,
-    documentLoader: documentLoaderGenerator(trustDids),
+    documentLoader: documentLoaderGenerator(trustedIssuers),
   });
 
   if (!vcTest.verified) {
@@ -61,13 +61,13 @@ export async function validateGeneralCredential(
   }
 }
 
-export async function validateCredential(credential: SiwaResponseCredential, trustDids: string[]): Promise<void> {
+export async function validateCredential(credential: SiwaResponseCredential, trustedIssuers: string[]): Promise<void> {
   switch (true) {
     case isCredentialEmail(credential):
-      await validateGeneralCredential(credential, trustDids);
+      await validateGeneralCredential(credential, trustedIssuers);
       break;
     case isCredentialPhone(credential):
-      await validateGeneralCredential(credential, trustDids);
+      await validateGeneralCredential(credential, trustedIssuers);
       break;
     case isCredentialGraph(credential):
       await validateGraph(credential);
@@ -77,14 +77,14 @@ export async function validateCredential(credential: SiwaResponseCredential, tru
 
 export async function validateCredentials(
   credentials: SiwaResponse['credentials'],
-  trustDids: string[] = []
+  trustedIssuers: string[] = []
 ): Promise<void> {
   // Only validate if there are any
   if (!credentials) return;
 
   for (const credential of credentials) {
     // Throws on error
-    await validateCredential(credential, trustDids);
+    await validateCredential(credential, trustedIssuers);
   }
 }
 
