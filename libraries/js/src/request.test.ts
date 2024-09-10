@@ -12,7 +12,7 @@ global.fetch = vi.fn();
 
 const stockCredentials = [
   {
-    oneOf: [VerifiedEmailAddressCredential, VerifiedPhoneNumberCredential],
+    anyOf: [VerifiedEmailAddressCredential, VerifiedPhoneNumberCredential],
   },
   VerifiedGraphKeyCredential,
 ];
@@ -67,7 +67,7 @@ describe('request', () => {
       },
       requestedCredentials: [
         {
-          oneOf: [
+          anyOf: [
             {
               type: 'VerifiedEmailAddressCredential',
               hash: ['bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi'],

@@ -45,7 +45,7 @@ describe('isSiwaCredentialsRequest', () => {
           oneOf: [VerifiedPhoneNumberCredential, VerifiedEmailAddressCredential],
         },
       ])
-    ).toBe(true);
+    ).toBe(false);
   });
 
   it('is failure with nested', async () => {
