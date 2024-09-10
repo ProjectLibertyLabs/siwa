@@ -22,13 +22,13 @@ describe('validateCredential', () => {
     await expect(validateCredentials([emailCred], [])).resolves.toBeUndefined();
   });
 
-  it('Can verify email with trusted DIDs', async () => {
+  it('Can verify email with trusted issuers', async () => {
     await expect(
       validateCredentials([await ExampleEmailCredential()], ['did:web:frequencyaccess.com'])
     ).resolves.toBeUndefined();
   });
 
-  it('Can fail email with trusted DIDs and bad expiration date', async () => {
+  it('Can fail email with trusted issuers and bad expiration date', async () => {
     const cred = await ExampleEmailCredential();
     cred.proof.expirationDate = new Date('2000-01-01').toISOString();
     await expect(validateCredentials([cred], ['did:web:frequencyaccess.com'])).rejects.toThrowError(
@@ -36,7 +36,7 @@ describe('validateCredential', () => {
     );
   });
 
-  it('Can fail email with trusted DIDs and bad vaild until date', async () => {
+  it('Can fail email with trusted issuers and bad valid until date', async () => {
     const cred = await ExampleEmailCredential();
     cred.proof.validUntil = new Date('2000-01-01').toISOString();
     await expect(validateCredentials([cred], ['did:web:frequencyaccess.com'])).rejects.toThrowError(
@@ -44,13 +44,13 @@ describe('validateCredential', () => {
     );
   });
 
-  it('Can verify phone with trusted DIDs', async () => {
+  it('Can verify phone with trusted issuers', async () => {
     await expect(
       validateCredentials([await ExamplePhoneCredential()], ['did:web:frequencyaccess.com'])
     ).resolves.toBeUndefined();
   });
 
-  it('Can fail phone with trusted DIDs but bad proof', async () => {
+  it('Can fail phone with trusted issuers but bad proof', async () => {
     const cred = await ExamplePhoneCredential();
     cred.proof.proofValue += 'F';
     await expect(validateCredentials([cred], ['did:web:frequencyaccess.com'])).rejects.toThrowError(

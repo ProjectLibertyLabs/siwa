@@ -3,7 +3,7 @@ import { DidDoc } from './loader.js';
 let cachedValidDids = new Map<string, DidDoc>();
 let cacheDate = Date.now();
 // Expire the entire cache after 24 hours
-// This will create a fencepost bug for trusted dids :(
+// This will create a fencepost bug for trusted issuers :(
 const CACHE_EXPIRES_MS = 1000 * 60 * 60 * 24;
 
 function expireCache() {
