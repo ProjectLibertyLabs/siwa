@@ -1,14 +1,6 @@
-# Request Login URL from Frequency Access
+# Redirect URL Signature
 
-To retrieve a URL to send the user through the authentication loop, your application must first request a new redirect URL for each user from Frequency Access.
-
-## Quick Reference
-
-- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
-- Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
-- Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
-- Response: 201 Created
-  - Header `Location`: Redirect URL for Browser
+Most applications can just generate their required signature from [TBD]().
 
 ## Step 1: Create the Payload for Signing
 
@@ -103,20 +95,37 @@ Supported Options:
 
 - See a full list of [Available Credentials](../Credentials.md)
 
-## Step 4: Build and Submit the Request
+### Example Using TypeScript/JavaScript
 
-- Build full request structure
-- `POST` the data:
-  - Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
-  - Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
+```typescript
+// The list of Frequency Schemas Ids that you are requesting the user delegate
+// See a full reference: https://projectlibertylabs.github.io/siwa/Delegations.html
+// This example is for Graph Only
+const permissions: number[] = [7, 8, 9, 10];
+
+// List of Credentials
+// See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
+const credentials = [
+  {
+    anyOf: [
+      siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential
+    ],
+  },
+  siwa.VerifiedGraphKeyCredential,
+];
+
+// TODO: Add call to make the signature and output the base64
+```
 
 ### Full Example Request
 
-{{#markdown-embed src/DataStructures/Request.md 0}}
+{{#markdown-embed src/DataStructures/SignedRequest.md 0}}
 
-## Step 5: Redirect the User
+## Usage
 
-- Extract the Location header
-- Redirect the user's Browser or Embedded Browser (for mobile apps) to the location URL
-  - [SafariViewController for iOS](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
-  - [Chrome Custom Tabs for Android](https://developer.chrome.com/docs/android/custom-tabs/)
+See [Start](./Actions/Start.md) for details on how to use the generated signature.
+
+### Serialization
+
+1. JSON Stringify the `SignedRequest` object
+2. [`base64url`](https://datatracker.ietf.org/doc/html/rfc4648#section-5) encode the stringified result

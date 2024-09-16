@@ -6,12 +6,10 @@ participant "Frequency Access" as fa
 participant "Frequency" as bc
 
 autonumber
-ua->p: Sign In With Frequency Button Click
-p->p: Generate & Sign Request Payload
-p->fa: POST /siwa/api/request SiwaRequest
-return 201 Created with Location Header
-p->ua: Navigate User to Location in Browser\nOption: Embedded Browser for Apps
-ua->fa: GET Location Header Value
+p->p: Generate & Sign Request Payload (once)
+p->p: Generate Redirect URL with correct callback path
+p->ua: Display Sign In With Frequency Button
+ua->fa: Click Sign In With Frequency Button (GET /siwa/api/request SiwaRequest)
 fa->fa: User Authentication and Authorization
 fa->ua: Redirect to callback url from the SiwaRequest with authorizationCode parameter added
 alt Application Backend resolves payload
