@@ -39,7 +39,7 @@
     "rdf-canonize": "^4.0.1",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "dependencies": {
     "@digitalbazaar/data-integrity": "^2.5.0",
