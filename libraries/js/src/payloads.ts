@@ -6,12 +6,13 @@ import {
   isPayloadLogin,
   SiwaResponsePayloadLogin,
 } from './types/payload.js';
-import { SiwaResponse, SiwaUserPublicKey } from './types/response.js';
+import { SiwaResponse } from './types/response.js';
 import {
   serializeAddProviderPayloadHex,
   serializeClaimHandlePayloadHex,
   serializeItemActionsPayloadHex,
 } from './util.js';
+import { SiwaPublicKey } from './types/general.js';
 
 interface SiwxMessage {
   domain: string;
@@ -57,7 +58,7 @@ function expect(test: boolean, errorMessage: string) {
   if (!test) throw new Error(errorMessage);
 }
 
-function validateLoginPayload(payload: SiwaResponsePayloadLogin, userPublicKey: SiwaUserPublicKey): void {
+function validateLoginPayload(payload: SiwaResponsePayloadLogin, userPublicKey: SiwaPublicKey): void {
   // Check that the userPublicKey signed the message
   const signedMessage = payload.payload.message;
   const verifyResult = signatureVerify(signedMessage, payload.signature.encodedValue, userPublicKey.encodedValue);

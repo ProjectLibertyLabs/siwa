@@ -1,10 +1,35 @@
+import { validateAddress } from '@polkadot/util-crypto/address/validate';
+
 export interface SiwaOptions {
   endpoint: string;
+}
+
+export interface SiwaPublicKey {
+  encodedValue: string;
+  encoding: 'base58';
+  format: 'ss58';
+  type: 'Sr25519';
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isPublicKey(obj: any): obj is SiwaPublicKey {
+  return (
+    isObj(obj) &&
+    validateAddress(obj.encodedValue) &&
+    obj.encoding === 'base58' &&
+    obj.format === 'ss58' &&
+    obj.type === 'Sr25519'
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isStr(obj: any): obj is string {
   return typeof obj === 'string';
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isHexStr(obj: any): obj is string {
+  return isStr(obj) && obj.toLowerCase().startsWith('0x');
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

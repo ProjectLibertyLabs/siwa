@@ -1,4 +1,4 @@
-import { SiwaResponse, SiwaUserPublicKey } from '../types/response.js';
+import { SiwaResponse } from '../types/response.js';
 import {
   ExamplePayloadClaimHandle,
   ExamplePayloadCreateSponsoredAccount,
@@ -8,8 +8,9 @@ import {
 } from './payloads.js';
 import { ExampleEmailCredential, ExampleUserGraphCredential } from './credentials.js';
 import { ExampleProviderKey, ExampleUserKey, multibaseEd25519 } from './keys.js';
+import { SiwaPublicKey } from '../types/general.js';
 
-export const ExampleUserPublicKey: SiwaUserPublicKey = {
+export const ExampleUserPublicKey: SiwaPublicKey = {
   encodedValue: ExampleUserKey.public,
   encoding: 'base58',
   format: 'ss58',

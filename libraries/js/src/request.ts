@@ -2,10 +2,15 @@ import { Keyring } from '@polkadot/keyring';
 import { encodeAddress } from '@polkadot/keyring';
 import { u8aToHex } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
-import { SiwaOptions } from './types/general.js';
-import { SiwaCredentialRequest, SiwaRequest, isSiwaCredentialsRequest } from './types/request.js';
-import { parseEndpoint, serializeLoginPayloadHex } from './util.js';
+import {
+  SiwaCredentialRequest,
+  SiwaSignedRequest,
+  isSiwaCredentialsRequest,
+  isSiwaSignedRequest,
+} from './types/request.js';
+import { serializeLoginPayloadHex } from './util.js';
 import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from './credentials.js';
+import { stringFromBase64URL, stringToBase64URL } from './base64url.js';
 
 const keyring = new Keyring({ type: 'sr25519' });
 
@@ -25,28 +30,24 @@ export const VerifiedPhoneNumberCredential = VerifiedPhoneNumber.credential;
 export const VerifiedGraphKeyCredential = VerifiedGraphKey.credential;
 
 /**
- * Generates a redirect URL for the authentication flow with Frequency Access.
+ * Generates the signed payload for the authentication flow with Frequency Access.
  *
  * @param {string} providerKeyUri - The URI of a key, usually a seed phrase, but may also include test accounts such as `//Alice` or `//Bob`.
  * @param {string} callbackUri - The URI that the user should return to after authenticating with Frequency Access.
  * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
  * @param {SiwaCredentialRequest[]} credentials - (Optional) List of credentials, either via their full structure. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html).
- * @param {SiwaOptions} options - (Optional) Options for endpoint selection.
- *                 options.endpoint - (Default: 'production') The endpoint to use. Can be specified as 'production' for production environment or 'staging' for test environments.
  *
  * @returns {Promise<string>} The generated redirect URL that can be used for authentication with Frequency Access.
  */
-export async function getRedirectUrl(
+export async function generateSignedPayload(
   providerKeyUri: string,
   callbackUri: string,
   permissions: number[],
-  credentials: SiwaCredentialRequest[] = [],
-  options?: SiwaOptions
-): Promise<string> {
+  credentials: SiwaCredentialRequest[] = []
+): Promise<SiwaSignedRequest> {
   await cryptoWaitReady();
   const keyPair = keyring.createFromUri(providerKeyUri);
 
-  const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/api/request`;
   const payload = {
     callback: callbackUri,
     permissions,
@@ -60,7 +61,7 @@ export async function getRedirectUrl(
 
   const signature = keyPair.sign(serializeLoginPayloadHex(payload), {});
 
-  const request: SiwaRequest = {
+  return {
     requestedSignatures: {
       publicKey: {
         // TODO: Should this always be encoded as mainnet 90 or check if mainnet?
@@ -78,14 +79,50 @@ export async function getRedirectUrl(
     },
     requestedCredentials,
   };
+}
 
-  const response = await fetch(endpoint, { body: JSON.stringify(request), method: 'POST' });
+/**
+ * Generates the encoded signed payload for the authentication flow with Frequency Access.
+ *
+ * @param {string} providerKeyUri - The URI of a key, usually a seed phrase, but may also include test accounts such as `//Alice` or `//Bob`.
+ * @param {string} callbackUri - The URI that the user should return to after authenticating with Frequency Access.
+ * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
+ * @param {SiwaCredentialRequest[]} credentials - (Optional) List of credentials, either via their full structure. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html).
+ *
+ * @returns {Promise<string>} The generated base64url encoded signed payload that can be that can be used for authentication with Frequency Access.
+ */
+export async function generateEncodedSignedPayload(
+  providerKeyUri: string,
+  callbackUri: string,
+  permissions: number[],
+  credentials: SiwaCredentialRequest[] = []
+): Promise<string> {
+  const signedRequest = await generateSignedPayload(providerKeyUri, callbackUri, permissions, credentials);
+  return encodeSignedRequest(signedRequest);
+}
 
-  const redirectUrl = response.status === 201 ? response.headers.get('Location') : null;
+/**
+ * Encodes a signed payload for the authentication flow with Frequency Access.
+ *
+ * @param {SiwaSignedRequest} signedRequest - A signed request.
+ *
+ * @returns {string} The generated base64url encoded signed payload that can be that can be used for authentication with Frequency Access.
+ */
+export function encodeSignedRequest(signedRequest: SiwaSignedRequest): string {
+  const serialized = JSON.stringify(signedRequest);
+  return stringToBase64URL(serialized);
+}
 
-  if (redirectUrl) {
-    return redirectUrl;
-  }
-
-  throw new Error(`Request for Redirect URL failed or missing header: ${response.status} ${response.statusText}`);
+/**
+ * Decodes a signed payload for the authentication flow with Frequency Access.
+ *
+ * @param {string} encodedSignedRequest - A signed request.
+ *
+ * @returns {SiwaSignedRequest} The generated base64url encoded signed payload that can be that can be used for authentication with Frequency Access.
+ */
+export function decodeSignedRequest(encodedSignedRequest: string): SiwaSignedRequest {
+  const serialized = stringFromBase64URL(encodedSignedRequest);
+  const signedRequest = JSON.parse(serialized);
+  if (isSiwaSignedRequest(signedRequest)) return signedRequest;
+  throw new Error('Unable to validate the contents of the encoded signed request as a valid signed request');
 }
