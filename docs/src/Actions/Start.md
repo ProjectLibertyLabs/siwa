@@ -63,10 +63,13 @@ For example, if you wish to correlate the original unauthorized session with the
 
 ### Example
 
-- `signedRequest`: `dG9kbw==` // TODO
-- `callbackUrlParams`: `uuid=1cf432e2-35f7-4da9-8095-9b27fdd6179b`
+Parameters
 
-Testnet Redirect URL: `https://testnet.frequencyaccess.com/siwa/login?signedRequest=dG9kbw%3D%3D&callbackUrlParams=uuid%3D1cf432e2-35f7-4da9-8095-9b27fdd6179b`
+{{#markdown-embed src/DataStructures/Request.md 0}}
+
+Testnet Redirect URL
+
+{{#markdown-embed src/DataStructures/RequestUrl.md 0}}
 
 ## Step 3: Redirect the User
 

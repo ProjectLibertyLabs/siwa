@@ -1,6 +1,6 @@
 # Redirect URL Signature
 
-Most applications can just generate their required signature from [TBD]().
+Most applications skip all of this and just generate their required signature from [TBD](#todo).
 
 ## Step 1: Create the Payload for Signing
 
@@ -98,6 +98,9 @@ Supported Options:
 ### Example Using TypeScript/JavaScript
 
 ```typescript
+// This is the URI of a key. Usually just a seed phrase, but also supports test accounts such as `//Alice` or `//Bob`
+const providerKeyUri: string = getProviderKeyUriSecret();
+
 // The list of Frequency Schemas Ids that you are requesting the user delegate
 // See a full reference: https://projectlibertylabs.github.io/siwa/Delegations.html
 // This example is for Graph Only
@@ -107,14 +110,30 @@ const permissions: number[] = [7, 8, 9, 10];
 // See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
 const credentials = [
   {
-    anyOf: [
-      siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential
-    ],
+    anyOf: [siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential],
   },
   siwa.VerifiedGraphKeyCredential,
 ];
 
-// TODO: Add call to make the signature and output the base64
+// This is the URI that the user should return to after authenticating with Frequency Access
+const callbackUri: string = getWebOrApplicationCallbackUri();
+
+// The encodedSignedRequest can remain static if
+// It is the same as is generated with the Signed Payload Generation Tool
+const encodedSignedRequest = await siwa.generateEncodedSignedPayload(
+  providerKeyUri,
+  callbackUri,
+  permissions,
+  credentials,
+);
+
+// Options with endpoint selection
+// Endpoint may be tagged or specified in full
+const options = { endpoint: "production" };
+// Staging-Testnet Options
+// const options = { endpoint: 'staging' };
+
+const redirectUrl: string = generateRedirectUrl(signedRequest, new URLSearchParams({ id: getSessionId() }));
 ```
 
 ### Full Example Request
