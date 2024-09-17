@@ -45,11 +45,11 @@
     "@digitalbazaar/data-integrity": "^2.5.0",
     "@digitalbazaar/eddsa-rdfc-2022-cryptosuite": "^1.1.0",
     "@digitalbazaar/vc": "^7.0.0",
-    "@polkadot/keyring": "^13.0.2",
-    "@polkadot/types": "^12.4.2",
-    "@polkadot/types-codec": "^12.4.2",
-    "@polkadot/util": "^13.0.2",
-    "@polkadot/util-crypto": "^13.0.2",
+    "@polkadot/keyring": "^13.1.1",
+    "@polkadot/types": "^13.0.1",
+    "@polkadot/types-codec": "^13.0.1",
+    "@polkadot/util": "^13.1.1",
+    "@polkadot/util-crypto": "^13.1.1",
     "tweetnacl": "^1.0.3"
   }
 }
