@@ -7,19 +7,12 @@ describe("SIWA request test", () => {
     const callbackUri: string = "http://localhost:3000/callback"; // Ensure the mock server is running
     const permissions: number[] = [5, 7, 8, 9, 10];
     const credentials = [siwa.VerifiedEmailAddressCredential];
-    const options = { endpoint: "http://localhost:3000" }; // This should point to your mock server
 
     try {
-      const redirectUrl = await siwa.getRedirectUrl(
-        providerKeyUri,
-        callbackUri,
-        permissions,
-        credentials,
-        options,
-      );
-      expect(redirectUrl).toContain(
-        "http://localhost:3000/callback?authorizationCode=",
-      );
+      const signedRequest = await siwa.generateSignedPayload(providerKeyUri, callbackUri, permissions, credentials);
+      const redirectUrl = await siwa.generateRedirectUrl(signedRequest, new URLSearchParams({ id: "11223344" }));
+      expect(redirectUrl).toContain("callbackUrlParams=");
+      expect(redirectUrl).toContain("signedRequest=");
     } catch (error) {
       throw new Error("Error in generating redirect URL: " + error);
     }

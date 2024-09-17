@@ -5,12 +5,14 @@ import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { ExampleEmailCredential, ExamplePhoneCredential, ExampleUserGraphCredential } from './credentials.js';
 import { ExampleLogin, ExampleNewProvider, ExampleNewUser } from './index.js';
 import { serializeLoginPayloadHex } from '../util.js';
+import { encodeSignedRequest } from '../request.js';
+import { SiwaSignedRequest } from '../types/request.js';
 
 function output(obj: unknown, file: string) {
   writeFileSync(file, '```json\n' + JSON.stringify(obj, null, 2) + '\n```\n');
 }
 
-function exampleRequest() {
+function exampleSignedRequest(): SiwaSignedRequest {
   const keyring = new Keyring({ type: 'sr25519' });
   const payload = {
     callback: 'http://localhost:3000',
@@ -57,11 +59,27 @@ function exampleRequest() {
   };
 }
 
+function exampleRequest(incomingSignedRequest: SiwaSignedRequest) {
+  const signedRequest = encodeSignedRequest(incomingSignedRequest);
+  const callbackUrlParams = new URLSearchParams({ id: '11223344' }).toString();
+  return {
+    signedRequest,
+    callbackUrlParams,
+  };
+}
+
 async function main() {
   await cryptoWaitReady();
   console.log('Starting work generating Data Structures for the Markdown...');
 
-  output(exampleRequest(), '../../docs/src/DataStructures/Request.md');
+  const signedRequest = exampleSignedRequest();
+  const requestParams = exampleRequest(signedRequest);
+  const requestUrl = new URL(`https://testnet.frequencyaccess.com/siwa/login?${new URLSearchParams(requestParams)}`);
+
+  output(signedRequest, '../../docs/src/DataStructures/SignedRequest.md');
+
+  output(requestParams, '../../docs/src/DataStructures/Request.md');
+  output(requestUrl, '../../docs/src/DataStructures/RequestUrl.md');
 
   output(await ExampleLogin(), '../../docs/src/DataStructures/Response-LoginOnly.md');
   output(await ExampleNewUser(), '../../docs/src/DataStructures/Response-NewUser.md');

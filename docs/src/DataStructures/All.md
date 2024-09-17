@@ -6,6 +6,10 @@
 
 {{#markdown-embed src/DataStructures/Request.md 0}}
 
+### Request URL
+
+{{#markdown-embed src/DataStructures/RequestUrl.md 0}}
+
 ### Signed Request
 
 This is JSON stringified and then [`base64url`](https://datatracker.ietf.org/doc/html/rfc4648#section-5) encoded for the Request `signedRequest` value.

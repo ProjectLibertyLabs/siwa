@@ -4,8 +4,8 @@ To start the authentication loop, your application will generate a redirect URL 
 
 ## Quick Reference
 
-- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
-- Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
+- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/login`
+- Production-Mainnet: `https://www.frequencyaccess.com/siwa/login`
 - Generate Signed Request Payload: [`TODO`](#todo)
 - Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
 - Signed Request Structure: [`SiwaSignedRequest`](../DataStructures/All.md#signed-request)
@@ -66,7 +66,7 @@ For example, if you wish to correlate the original unauthorized session with the
 - `signedRequest`: `dG9kbw==` // TODO
 - `callbackUrlParams`: `uuid=1cf432e2-35f7-4da9-8095-9b27fdd6179b`
 
-Testnet Redirect URL: `https://testnet.frequencyaccess.com/siwa/api/request?signedRequest=dG9kbw%3D%3D&callbackUrlParams=uuid%3D1cf432e2-35f7-4da9-8095-9b27fdd6179b`
+Testnet Redirect URL: `https://testnet.frequencyaccess.com/siwa/login?signedRequest=dG9kbw%3D%3D&callbackUrlParams=uuid%3D1cf432e2-35f7-4da9-8095-9b27fdd6179b`
 
 ## Step 3: Redirect the User
 
