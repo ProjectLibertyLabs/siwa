@@ -118,9 +118,9 @@ const credentials = [
 // This is the URI that the user should return to after authenticating with Frequency Access
 const callbackUri: string = getWebOrApplicationCallbackUri();
 
-// The encodedSignedRequest can remain static if
+// The Encoded Signed Request can remain static if
 // It is the same as is generated with the Signed Payload Generation Tool
-const encodedSignedRequest = await siwa.generateEncodedSignedPayload(
+const encodedSignedRequest = await siwa.generateEncodedSignedRequest(
   providerKeyUri,
   callbackUri,
   permissions,

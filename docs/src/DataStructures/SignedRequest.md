@@ -10,7 +10,7 @@
     "signature": {
       "algo": "Sr25519",
       "encoding": "base16",
-      "encodedValue": "0x46d52f34d7be2f0a64a656a1dd4d180b6e09d492bb543f3aaa393b86d456ce125c0c292bd33424ebe950321d2ef79d6e6ba7bdeda64f6b6115f52daf74df6c83"
+      "encodedValue": "0x348fef20566914a763337eee53674c6ef5dba03aa273b47e2808d591f09f910d702c1b19f06b06039de35a83d73aa56021857a4ecc920c666b0427094f1d5381"
     },
     "payload": {
       "callback": "http://localhost:3000",
@@ -25,6 +25,12 @@
   },
   "requestedCredentials": [
     {
+      "type": "VerifiedGraphKeyCredential",
+      "hash": [
+        "bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"
+      ]
+    },
+    {
       "anyOf": [
         {
           "type": "VerifiedEmailAddressCredential",
@@ -38,12 +44,6 @@
             "bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq"
           ]
         }
-      ]
-    },
-    {
-      "type": "VerifiedGraphKeyCredential",
-      "hash": [
-        "bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y"
       ]
     }
   ]

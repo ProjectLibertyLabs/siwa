@@ -40,6 +40,10 @@ function exampleSignedRequest(): SiwaSignedRequest {
     },
     requestedCredentials: [
       {
+        type: 'VerifiedGraphKeyCredential',
+        hash: ['bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y'],
+      },
+      {
         anyOf: [
           {
             type: 'VerifiedEmailAddressCredential',
@@ -50,10 +54,6 @@ function exampleSignedRequest(): SiwaSignedRequest {
             hash: ['bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq'],
           },
         ],
-      },
-      {
-        type: 'VerifiedGraphKeyCredential',
-        hash: ['bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y'],
       },
     ],
   };
