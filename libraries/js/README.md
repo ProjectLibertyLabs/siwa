@@ -16,7 +16,7 @@ See [Markdown/GitHub Docs](../../docs/src/QuickStart.md) or
 
 | Function                       | Description                                                                                                    |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `generateRedirectUrl`          | Generates the signed request for the authentication flow with Frequency Access                                 |
+| `generateAuthenticationUrl`          | Generates the signed request for the authentication flow with Frequency Access                                 |
 | `getLoginResult`               | Fetch and extract the Result of the Login from Frequency Access                                                |
 | `hasChainSubmissions`          | Checks to see if there are any chain submissions in the given result                                           |
 | `generateSignedRequest`        | Generates the signed payload for the authentication flow with Frequency Access using a keypair                 |

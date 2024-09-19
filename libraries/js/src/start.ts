@@ -4,16 +4,16 @@ import { SiwaOptions } from './types/index.js';
 import { parseEndpoint } from './util.js';
 
 /**
- * Generates a redirect URL for SIWA to start the user's login path.
+ * Generates an Authentication URL for SIWA to start the user's login path.
  *
  * @param {SiwaSignedRequest|string} signedRequest - The signed request object or string.
  * @param {URLSearchParams|string} callbackUrlParams - The URL parameters to be added to the callback.
  * @param {SiwaOptions} options - Options for endpoint selection.
  *                 options.endpoint - The endpoint to use. Can be specified as 'production' for production environment or 'staging' for test environments.
  *
- * @returns {string} - The generated redirect URL
+ * @returns {string} - The generated Authentication URL
  */
-export function generateRedirectUrl(
+export function generateAuthenticationUrl(
   signedRequest: SiwaSignedRequest | string,
   callbackUrlParams: URLSearchParams | string,
   options?: SiwaOptions

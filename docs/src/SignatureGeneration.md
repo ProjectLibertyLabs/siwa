@@ -1,4 +1,4 @@
-# Redirect URL Signature
+# Authentication URL Signature
 
 Most applications skip all of this and just generate their required signature from [TBD](#todo).
 
@@ -133,7 +133,7 @@ const options = { endpoint: "production" };
 // Staging-Testnet Options
 // const options = { endpoint: 'staging' };
 
-const redirectUrl: string = generateRedirectUrl(signedRequest, new URLSearchParams({ id: getSessionId() }));
+const authenticationUrl: string = generateAuthenticationUrl(signedRequest, new URLSearchParams({ id: getSessionId() }));
 ```
 
 ### Full Example Request

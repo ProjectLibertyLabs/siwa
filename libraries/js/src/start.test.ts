@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { generateRedirectUrl } from './start.js';
+import { generateAuthenticationUrl } from './start.js';
 
-describe('generateRedirectUrl', () => {
+describe('generateAuthenticationUrl', () => {
   it('correctly generates the url with a fake signed request and no callbackUrlParams', async () => {
-    expect(generateRedirectUrl('testing', '')).toEqual(
+    expect(generateAuthenticationUrl('testing', '')).toEqual(
       'https://www.frequencyaccess.com/siwa/start?signedRequest=testing'
     );
   });

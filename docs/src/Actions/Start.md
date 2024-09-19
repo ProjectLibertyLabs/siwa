@@ -1,11 +1,11 @@
 # Redirect User to Frequency Access
 
-To start the authentication loop, your application will generate a redirect URL for each user.
+To start the authentication loop, your application will generate an Authentication URL for each user.
 
 ## Quick Reference
 
-- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/login`
-- Production-Mainnet: `https://www.frequencyaccess.com/siwa/login`
+- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/start`
+- Production-Mainnet: `https://www.frequencyaccess.com/siwa/start`
 - Generate Signed Request Payload: [`TODO`](#todo)
 - Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
 - Signed Request Structure: [`SiwaSignedRequest`](../DataStructures/All.md#signed-request)
@@ -31,7 +31,7 @@ TODO: Link or embed this here
 
 For details on the Payload and how it is formed, see the [Reference Documentation](../SignatureGeneration.md).
 
-## Step 2: Build the Redirect URL Parameters
+## Step 2: Build the Authentication URL Parameters
 
 ### Parameter: `signedRequest`
 
@@ -44,12 +44,12 @@ Reminder: This includes the callback domain that will be used.
 Additional unsigned parameters that will be appended to the callback URL.
 
 
-## Step 3: Build the Redirect URL
+## Step 3: Build the Authentication URL
 
-Taking the parameters from the previous step, build a Redirect URL using the correct base:
+Taking the parameters from the previous step, build an Authentication URL using the correct base:
 
-- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/login`
-- Production-Mainnet: `https://www.frequencyaccess.com/siwa/login`
+- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/start`
+- Production-Mainnet: `https://www.frequencyaccess.com/siwa/start`
 
 Frequency Access will send the user back by building the callback URL.
 The callback URL will be built with:
@@ -67,12 +67,12 @@ Parameters
 
 {{#markdown-embed src/DataStructures/Request.md 0}}
 
-Testnet Redirect URL
+Testnet Authentication URL
 
 {{#markdown-embed src/DataStructures/RequestUrl.md 0}}
 
 ## Step 3: Redirect the User
 
-- Redirect the user's Browser or Embedded Browser (for mobile apps) to the Redirect URL.
+- Redirect the user's Browser or Embedded Browser (for mobile apps) to the Authentication URL.
   - [SafariViewController for iOS](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
   - [Chrome Custom Tabs for Android](https://developer.chrome.com/docs/android/custom-tabs/)

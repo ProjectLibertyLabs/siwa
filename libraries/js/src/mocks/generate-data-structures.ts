@@ -74,7 +74,7 @@ async function main() {
 
   const signedRequest = exampleSignedRequest();
   const requestParams = exampleRequest(signedRequest);
-  const requestUrl = new URL(`https://testnet.frequencyaccess.com/siwa/login?${new URLSearchParams(requestParams)}`);
+  const requestUrl = new URL(`https://testnet.frequencyaccess.com/siwa/start?${new URLSearchParams(requestParams)}`);
 
   output(signedRequest, '../../docs/src/DataStructures/SignedRequest.md');
 

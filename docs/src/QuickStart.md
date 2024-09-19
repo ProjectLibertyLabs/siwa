@@ -33,13 +33,13 @@ async function startLogin() {
   // Staging-Testnet Options
   // const options = { endpoint: 'staging' };
 
-  const redirectUrl = siwa.getRedirectUrl(signedRequest, callbackPath, options);
+  const authenticationUrl = siwa.generateAuthenticationUrl(signedRequest, callbackPath, options);
 }
 ```
 
 ## Step 2 (Web): Forward the User to a Browser
 
-For website interactions, just forward the user to the returned `redirectUrl`.
+For website interactions, just forward the user to the returned `authenticationUrl`.
 
 ## Step 2 (Android/iOS): Forward the User to an Embedded Browser
 

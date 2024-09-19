@@ -36,7 +36,7 @@ export const VerifiedGraphKeyCredential = VerifiedGraphKey.credential;
  * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
  * @param {boolean} isBytesWrapped - Generate it with (default) or without the `<Bytes>` wrapping
  *
- * @returns {string} The generated redirect URL that can be used for authentication with Frequency Access.
+ * @returns {string} The generated Authentication URL that can be used for authentication with Frequency Access.
  */
 export function generateRequestSigningData(
   callbackUri: string,
@@ -60,7 +60,7 @@ export function generateRequestSigningData(
  * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
  * @param {SiwaCredentialRequest[]} credentials - (Optional) List of credentials, either via their full structure. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html).
  *
- * @returns {Promise<string>} The generated redirect URL that can be used for authentication with Frequency Access.
+ * @returns {Promise<string>} The generated Authentication URL that can be used for authentication with Frequency Access.
  */
 export async function generateSignedRequest(
   providerKeyUri: string,
@@ -85,7 +85,7 @@ export async function generateSignedRequest(
  * @param {number[]} permissions - The list of Frequency Schemas IDs that you are requesting the user to delegate. For more details, see [Frequency Schemas Delegations](https://projectlibertylabs.github.io/siwa/Delegations.html).
  * @param {SiwaCredentialRequest[]} credentials - (Optional) List of credentials, either via their full structure. For more details, see [Credentials Reference](https://projectlibertylabs.github.io/siwa/Credentials.html).
  *
- * @returns {string} The generated redirect URL that can be used for authentication with Frequency Access.
+ * @returns {string} The generated Authentication URL that can be used for authentication with Frequency Access.
  */
 export function buildSignedRequest(
   signature: string,
