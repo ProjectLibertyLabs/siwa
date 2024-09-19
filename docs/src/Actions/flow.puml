@@ -9,7 +9,7 @@ autonumber
 p->p: Generate & Sign Request Payload (once)
 p->p: Generate Redirect URL with correct callback path
 p->ua: Display Sign In With Frequency Button
-ua->fa: Click Sign In With Frequency Button (GET /siwa/api/request SiwaRequest)
+ua->fa: Click Sign In With Frequency Button (GET /siwa/login with base64url encoded SiwaRequest)
 fa->fa: User Authentication and Authorization
 fa->ua: Redirect to callback url from the SiwaRequest with authorizationCode parameter added
 alt Application Backend resolves payload

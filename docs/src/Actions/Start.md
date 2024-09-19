@@ -35,7 +35,7 @@ For details on the Payload and how it is formed, see the [Reference Documentatio
 
 ### Parameter: `signedRequest`
 
-The Base64 encoded value from Step 1.
+The [Base64url](https://datatracker.ietf.org/doc/html/rfc4648#section-5) encoded value from Step 1.
 
 Reminder: This includes the callback domain that will be used.
 

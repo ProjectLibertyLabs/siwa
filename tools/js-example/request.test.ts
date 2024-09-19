@@ -9,7 +9,7 @@ describe("SIWA request test", () => {
     const credentials = [siwa.VerifiedEmailAddressCredential];
 
     try {
-      const signedRequest = await siwa.generateSignedPayload(providerKeyUri, callbackUri, permissions, credentials);
+      const signedRequest = await siwa.generateSignedRequest(providerKeyUri, callbackUri, permissions, credentials);
       const redirectUrl = await siwa.generateRedirectUrl(signedRequest, new URLSearchParams({ id: "11223344" }));
       expect(redirectUrl).toContain("callbackUrlParams=");
       expect(redirectUrl).toContain("signedRequest=");

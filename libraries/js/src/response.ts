@@ -19,7 +19,6 @@ export function hasChainSubmissions(result: SiwaResponse): boolean {
 
 /**
  * Fetch and extract the Result of the Login from Frequency Access
- * Generates a redirect URL for the authentication flow with Frequency Access.
  *
  * @param {string} authorizationCode - The code from the callback URI parameters.
  * @param {SiwaOptions} options - Options for endpoint selection.
@@ -53,17 +52,3 @@ export async function getLoginResult(authorizationCode: string, options?: SiwaOp
 
   return body;
 }
-
-// IDEAS?
-// export async function getLoginResultAsSiwf();
-// Instead of SiwaResponse as is, we convert to a simpler format?
-// userKey: string
-// siwf
-// graphKey
-// etc...?
-//
-// export function resultToSiwf()
-// Offer a helper function to extract the Siwf structure
-//
-// export function getUserKey()
-// Helper functions to help extract the data from the data structure such as user key, graph key, etc...

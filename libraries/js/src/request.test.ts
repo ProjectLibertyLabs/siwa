@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { signatureVerify } from '@polkadot/util-crypto';
 import {
   decodeSignedRequest,
-  generateEncodedSignedPayload,
-  generateSignedPayload,
+  generateEncodedSignedRequest,
+  generateSignedRequest,
   VerifiedEmailAddressCredential,
   VerifiedGraphKeyCredential,
   VerifiedPhoneNumberCredential,
@@ -19,14 +19,14 @@ const stockCredentials = [
 
 describe('request', () => {
   it('correctly generates the signed request', async () => {
-    const signedPayload = await generateSignedPayload(
+    const generateSignedRequest = await generateSignedRequest(
       '//Alice',
       'http://localhost:3000',
       [1, 2, 100],
       stockCredentials
     );
 
-    expect(signedPayload).toEqual({
+    expect(generateSignedRequest).toEqual({
       requestedSignatures: {
         publicKey: {
           encodedValue: 'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH',
@@ -66,14 +66,14 @@ describe('request', () => {
   });
 
   it('correctly generates the signature', async () => {
-    const signedPayload = await generateSignedPayload(
+    const generateSignedRequest = await generateSignedRequest(
       '//Alice',
       'http://localhost:3000',
       [5, 7, 8, 9, 10],
       stockCredentials
     );
 
-    const signature = signedPayload.requestedSignatures.signature.encodedValue;
+    const signature = generateSignedRequest.requestedSignatures.signature.encodedValue;
 
     const verified = signatureVerify(
       serializeLoginPayloadHex({
@@ -88,7 +88,7 @@ describe('request', () => {
   });
 
   it('Can encode and decode successfully', async () => {
-    const encoded = await generateEncodedSignedPayload(
+    const encoded = await generateEncodedSignedRequest(
       '//Alice',
       'http://localhost:3000',
       [5, 7, 8, 9, 10],

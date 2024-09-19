@@ -42,19 +42,19 @@ const frequencyTypes: RegistryTypes = {
 
 registry.register(frequencyTypes);
 
+export function requestPayloadBytes(payload: SiwaSignedRequest['requestedSignatures']['payload']): Uint8Array {
+  return new Struct(
+    registry,
+    {
+      callback: Text,
+      permissions: 'Vec<U16>',
+    },
+    payload
+  ).toU8a();
+}
+
 export function serializeLoginPayloadHex(payload: SiwaSignedRequest['requestedSignatures']['payload']): string {
-  return u8aToHex(
-    u8aWrapBytes(
-      new Struct(
-        registry,
-        {
-          callback: Text,
-          permissions: 'Vec<U16>',
-        },
-        payload
-      ).toU8a()
-    )
-  );
+  return u8aToHex(u8aWrapBytes(requestPayloadBytes(payload)));
 }
 
 export function serializeAddProviderPayloadHex(payload: SiwaResponsePayloadAddProvider['payload']): string {
