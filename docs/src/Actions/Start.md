@@ -41,8 +41,8 @@ Reminder: This includes the callback domain that will be used.
 
 ### Parameter: `callbackUrlParams`
 
-Additional unsigned parameters that will be appended to the callback URL.
-
+A URL encoded [query string fragment](https://www.rfc-editor.org/rfc/rfc3986#section-3.4).
+These will be additional _unsigned_ parameters that will be appended to the callback URL.
 
 ## Step 3: Build the Authentication URL
 
