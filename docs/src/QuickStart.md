@@ -23,9 +23,9 @@ async function startLogin() {
   // Get the signed base64url encoded payload
   const signedRequest: string = getStaticProviderSignedRequest();
 
-  // This is the callback URL parameters that the user should return to after authenticating with Frequency
+  // Additional callback URL parameters that will be appended to the Callback URL
   // Remember that the callback path is secured as part of the Signed Payload
-  const callbackUrlParams: string = getWebOrApplicationCallbackUrlParams();
+  const additionalCallbackUrlParams: string = getWebOrApplicationCallbackUrlParams();
 
   // Options with endpoint selection
   // Endpoint may be tagged or specified in full
@@ -33,7 +33,7 @@ async function startLogin() {
   // Staging-Testnet Options
   // const options = { endpoint: 'staging' };
 
-  const authenticationUrl = siwa.generateAuthenticationUrl(signedRequest, callbackPath, options);
+  const authenticationUrl = siwa.generateAuthenticationUrl(signedRequest, additionalCallbackUrlParams, options);
 }
 ```
 

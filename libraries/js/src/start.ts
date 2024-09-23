@@ -15,13 +15,19 @@ import { parseEndpoint } from './util.js';
  */
 export function generateAuthenticationUrl(
   signedRequest: SiwaSignedRequest | string,
-  callbackUrlParams: URLSearchParams | string,
+  additionalCallbackUrlParams: URLSearchParams | string,
   options?: SiwaOptions
 ): string {
   const encodedSignedRequest = typeof signedRequest === 'string' ? signedRequest : encodeSignedRequest(signedRequest);
   const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/start`;
   const url = new URL(endpoint);
+  // Copy over the additionalCallbackUrlParams
+  new URLSearchParams(additionalCallbackUrlParams).forEach((value, key) => {
+    url.searchParams.set(key, value);
+  });
+  // Set this last so that it cannot be overridden
   url.searchParams.set('signedRequest', encodedSignedRequest);
-  if (callbackUrlParams) url.searchParams.set('callbackUrlParams', callbackUrlParams.toString());
+  // Remove the reserved keywords, if any
+  url.searchParams.delete('authorizationCode');
   return url.toString();
 }

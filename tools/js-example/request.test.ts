@@ -12,9 +12,9 @@ describe("SIWA request test", () => {
       const signedRequest = await siwa.generateSignedRequest(providerKeyUri, callbackUri, permissions, credentials);
       const authenticationUrl = await siwa.generateAuthenticationUrl(
         signedRequest,
-        new URLSearchParams({ id: "11223344" }),
+        new URLSearchParams({ mode: "dark" }),
       );
-      expect(authenticationUrl).toContain("callbackUrlParams=");
+      expect(authenticationUrl).toContain("mode=dark");
       expect(authenticationUrl).toContain("signedRequest=");
     } catch (error) {
       throw new Error("Error in generating Authentication URL: " + error);

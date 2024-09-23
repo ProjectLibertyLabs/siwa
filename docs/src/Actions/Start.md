@@ -39,10 +39,19 @@ The [Base64url](https://datatracker.ietf.org/doc/html/rfc4648#section-5) encoded
 
 Reminder: This includes the callback domain that will be used.
 
-### Parameter: `callbackUrlParams`
+### Additional Parameters are Forwarded
 
-A URL encoded [query string fragment](https://www.rfc-editor.org/rfc/rfc3986#section-3.4).
-These will be additional _unsigned_ parameters that will be appended to the callback URL.
+Any additional parameters that do not collide with reserved parameter names on the Authentication URL are passed through unchanged.
+
+<div class="warning">
+Note: These parameters are not protected and could be changed by malicious actors.
+Take care when using them for security related data.
+</div>
+
+#### Example
+
+- `https://www.frequencyaccess.com/siwa/start?signedRequest=<request value>&key1=<value1>&key2=<value2>&other=<result>`
+- Will result in callback URL parameters of: `?authorizationCode=<authorization code>&key1=<value1>&key2=<value2>&other=<result>`
 
 ## Step 3: Build the Authentication URL
 
@@ -55,7 +64,7 @@ Frequency Access will send the user back by building the callback URL.
 The callback URL will be built with:
 
 - The callback from the `signedRequest`
-- Appending the `callbackUrlParams`
+- Appending any additional GET request parameters
 - Appending the reserved URL parameter of `authorizationCode`
 
 The callback URL _will maintain_ all non-reserved URL parameters.

@@ -61,10 +61,10 @@ function exampleSignedRequest(): SiwaSignedRequest {
 
 function exampleRequest(incomingSignedRequest: SiwaSignedRequest) {
   const signedRequest = encodeSignedRequest(incomingSignedRequest);
-  const callbackUrlParams = new URLSearchParams({ id: '11223344' }).toString();
   return {
     signedRequest,
-    callbackUrlParams,
+    // additionalCallbackUrlParams
+    mode: 'dark',
   };
 }
 
