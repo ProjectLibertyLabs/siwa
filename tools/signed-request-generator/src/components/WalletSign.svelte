@@ -9,15 +9,26 @@
 	export let permissions: number[] = [];
 	export let signature = '';
 	export let signerPublicKey = '';
-
 	export let isLoading = true;
+
+	let clearSignatureCheck: string = '';
+	function shouldClearSignature(uri: string, params: number[]) {
+		const newCheck = `${uri}+${params.join(',')}`;
+		const result = newCheck !== clearSignatureCheck;
+		clearSignatureCheck = newCheck;
+		return result;
+	}
+
+	$: if (shouldClearSignature(callbackUri, permissions)) {
+		signature = '';
+	}
 
 	// Wallet access
 	let thisWeb3Enable: typeof web3Enable | null = null;
 	let thisWeb3Accounts: typeof web3Accounts | null = null;
 	let thisWeb3FromAddress: typeof web3FromAddress | null = null;
 
-	let walletAccounts: InjectedAccountWithMeta[] = [];
+	let walletAccounts: [string, string][] = [];
 	let selectedAccount: string;
 
 	let generatedSigningData = '';
@@ -37,7 +48,12 @@
 						'Polkadot Wallet Compatible extension not found; please install one first.'
 					);
 				}
-				walletAccounts = await thisWeb3Accounts();
+				walletAccounts = (await thisWeb3Accounts())
+					.map((account): [string, string] => [
+						account.address,
+						`${account.meta.name} (${account.address})`
+					])
+					.toSorted((a, b) => a[1].localeCompare(b[1]));
 			}
 		} catch (e) {
 			console.error('Unable to load extension accounts', e);
@@ -48,16 +64,19 @@
 
 	async function requestSignature() {
 		isLoading = true;
-		signerPublicKey = selectedAccount;
-		const extension = thisWeb3FromAddress ? await thisWeb3FromAddress(signerPublicKey) : null;
-		const sign = extension?.signer?.signRaw;
-		const signerPayloadRaw: SignerPayloadRaw = {
-			address: signerPublicKey,
-			data: generatedSigningData,
-			type: 'payload'
-		};
-		signature = sign ? (await sign(signerPayloadRaw)).signature : '';
-		isLoading = false;
+		try {
+			signerPublicKey = selectedAccount;
+			const extension = thisWeb3FromAddress ? await thisWeb3FromAddress(signerPublicKey) : null;
+			const sign = extension?.signer?.signRaw;
+			const signerPayloadRaw: SignerPayloadRaw = {
+				address: signerPublicKey,
+				data: generatedSigningData,
+				type: 'payload'
+			};
+			signature = sign ? (await sign(signerPayloadRaw)).signature : '';
+		} finally {
+			isLoading = false;
+		}
 	}
 
 	function handleWalletSign() {
@@ -83,9 +102,9 @@
 {#if walletAccounts.length > 0}
 	<div class="mb-4">
 		<select id="walletAccount" bind:value={selectedAccount}>
-			{#each walletAccounts as account}
-				<option value={account.address}>
-					{account.meta.name} ({account.address})
+			{#each walletAccounts as [address, display]}
+				<option value={address}>
+					{display}
 				</option>
 			{/each}
 		</select>
@@ -106,3 +125,12 @@
 		(Loading...)
 	{/if}
 </button>
+
+{#if signature.length}
+	<dl>
+		<dt>Signature</dt>
+		<dd style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+			{signature}
+		</dd>
+	</dl>
+{/if}

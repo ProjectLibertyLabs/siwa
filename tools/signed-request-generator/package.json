@@ -6,6 +6,7 @@
 		"generate:siwa": "cd ../../libraries/js && npm i && npm run build && cd dist && npm pack",
 		"dev": "vite dev",
 		"build": "vite build",
+		"build:copy": "vite build && rm -Rf ../../docs/src/Generator && cp -a build ../../docs/src/Generator",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

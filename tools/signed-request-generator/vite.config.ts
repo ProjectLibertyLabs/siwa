@@ -7,6 +7,6 @@ export default defineConfig({
 		target: 'esnext', // Ensure modern output
 		minify: true, // Minify the JS and CSS
 		assetsInlineLimit: 100000000, // Large limit to inline all assets
-		chunkSizeWarningLimit: 100000000,
+		chunkSizeWarningLimit: 100000000
 	}
 });

@@ -22,16 +22,25 @@
 	let credentials: SiwaCredential[] = [];
 	let isRequiredComplete = false;
 
+	let manualSignature = '';
+	let walletSignature = '';
+
 	// Toggle between manual sign and Polkadot.js
 	function toggleSignMethod(method: string) {
 		isManualSign = method === 'manual';
 	}
+
+	$: signature = isManualSign ? manualSignature : walletSignature;
 
 	$: {
 		isRequiredComplete = !!form?.checkValidity();
 		try {
 			if (!form.checkValidity()) {
 				throw new Error('Invalid form. Check required fields.');
+			}
+
+			if (!signature) {
+				throw new Error('Waiting on signature.');
 			}
 			const signedRequest = buildSignedRequest(
 				signature,
@@ -69,7 +78,7 @@
 	</div>
 	{#if isRequiredComplete}
 		<div class="mb-4">
-			<fieldset>
+			<fieldset style="min-width: 0;">
 				<legend>Choose Signing Method *</legend>
 				<div class="checkboxes">
 					<label for="signMethod-polkadot">
@@ -94,9 +103,19 @@
 						Generate Data and Input Signature Manually
 					</label>
 					{#if isManualSign}
-						<ManualSign {callbackUri} {permissions} bind:signature bind:signerPublicKey />
+						<ManualSign
+							{callbackUri}
+							{permissions}
+							bind:signature={manualSignature}
+							bind:signerPublicKey
+						/>
 					{:else}
-						<WalletSign {callbackUri} {permissions} bind:signature bind:signerPublicKey />
+						<WalletSign
+							{callbackUri}
+							{permissions}
+							bind:signature={walletSignature}
+							bind:signerPublicKey
+						/>
 					{/if}
 				</div>
 			</fieldset>

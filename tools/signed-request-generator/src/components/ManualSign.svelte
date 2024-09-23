@@ -6,15 +6,25 @@
 	export let signature = '';
 	export let signerPublicKey = '';
 
-	let generatedSigningData = '';
+	let signingData = '';
+	let clearSignatureCheck: string = '';
+	function shouldClearSignature(uri: string, params: number[]) {
+		const newCheck = `${uri}+${params.join(',')}`;
+		const result = newCheck !== clearSignatureCheck;
+		clearSignatureCheck = newCheck;
+		return result;
+	}
 
-	// Generate signing data on mount and when the input changes
-	$: generatedSigningData = generateRequestSigningData(callbackUri, permissions);
+	$: if (shouldClearSignature(callbackUri, permissions)) {
+		signature = '';
+	}
+
+	$: signingData = generateRequestSigningData(callbackUri, permissions);
 </script>
 
 <div>
 	<label for="signingData">Generated Signing Data to Sign</label>
-	<input type="text" id="signingData" readonly bind:value={generatedSigningData} />
+	<input type="text" id="signingData" readonly bind:value={signingData} />
 </div>
 
 <div>
