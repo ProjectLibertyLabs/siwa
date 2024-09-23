@@ -7,10 +7,6 @@
 	let error = '';
 </script>
 
-<h1>Signed Request Generator</h1>
-
-<p>Fill out the form and the signed request will be generated at the bottom</p>
-
 <div class="mb-4">
 	<Form bind:encodedRequest bind:requestJson bind:error />
 </div>

@@ -132,7 +132,8 @@ table {
   input[type="text"],
   input[type="url"],
   input[type="email"],
-  select {
+  select,
+  textarea {
     font-size: 1.8rem;
     width: 100%;
     border-radius: 10px;
