@@ -75,7 +75,7 @@ jobs:
         node-version: [22.x]
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.36.2-jammy
+      image: mcr.microsoft.com/playwright:v1.47.1-jammy
 
     steps:
       - name: Checkout
