@@ -25,7 +25,7 @@ The generated signed request payload is secured by the signature included in it,
 
 ### Signed Request Payload Generator
 
-TODO: Link or embed this here
+Generate one or more login request payloads and signatures (`signedRequest`) using the [Generator Tool](../Generate.md).
 
 ### Signed Request Payload Detailed Documentation
 

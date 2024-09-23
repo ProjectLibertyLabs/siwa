@@ -81,6 +81,12 @@
 			<fieldset style="min-width: 0;">
 				<legend>Choose Signing Method *</legend>
 				<div class="checkboxes">
+					<p>
+						Remember: You MUST use one of the active <a
+							href="https://docs.frequency.xyz/Identity/ControlKeys.html"
+							target="_blank">Control Keys</a
+						> for your Provider in the environment you are targeting.
+					</p>
 					<label for="signMethod-polkadot">
 						<input
 							id="signMethod-polkadot"

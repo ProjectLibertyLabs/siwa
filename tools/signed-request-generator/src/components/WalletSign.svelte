@@ -3,7 +3,6 @@
 	import type { SignerPayloadRaw } from '@polkadot/types/types';
 	import { generateRequestSigningData } from '@projectlibertylabs/siwa';
 	import type { web3Enable, web3Accounts, web3FromAddress } from '@polkadot/extension-dapp';
-	import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 	export let callbackUri = '';
 	export let permissions: number[] = [];
@@ -115,6 +114,15 @@
 	</div>
 {/if}
 
+{#if signature.length}
+	<dl>
+		<dt>Wallet Signature</dt>
+		<dd style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+			{signature}
+		</dd>
+	</dl>
+{/if}
+
 <button disabled={isLoading} on:click={handleWalletSign}>
 	{#if walletAccounts.length === 0}
 		Connect to Wallet
@@ -125,12 +133,3 @@
 		(Loading...)
 	{/if}
 </button>
-
-{#if signature.length}
-	<dl>
-		<dt>Signature</dt>
-		<dd style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-			{signature}
-		</dd>
-	</dl>
-{/if}

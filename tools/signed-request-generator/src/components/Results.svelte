@@ -9,7 +9,11 @@
 
 <h2>Result</h2>
 <dl>
-	<dt>Encoded Request</dt>
+	<dt>
+		Login Request Payload and Signature (
+		<code>signedRequest</code>
+		parameter )
+	</dt>
 	<dd>
 		<textarea readonly style="width: 100%; height: 6em; font-size: 1.5rem;"
 			>{encodedRequest}</textarea

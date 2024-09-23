@@ -1,6 +1,6 @@
 # Authentication URL Signature
 
-Most applications skip all of this and just [generate the ;ogin request payload and signature](./Generate.md).
+Most applications skip all of this and just [generate the login request payload and signature](./Generate.md).
 
 ## Step 1: Create the Payload for Signing
 
