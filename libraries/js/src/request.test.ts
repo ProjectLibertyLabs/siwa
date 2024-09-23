@@ -19,14 +19,9 @@ const stockCredentials = [
 
 describe('request', () => {
   it('correctly generates the signed request', async () => {
-    const generateSignedRequest = await generateSignedRequest(
-      '//Alice',
-      'http://localhost:3000',
-      [1, 2, 100],
-      stockCredentials
-    );
+    const generated = await generateSignedRequest('//Alice', 'http://localhost:3000', [1, 2, 100], stockCredentials);
 
-    expect(generateSignedRequest).toEqual({
+    expect(generated).toEqual({
       requestedSignatures: {
         publicKey: {
           encodedValue: 'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH',
@@ -66,14 +61,14 @@ describe('request', () => {
   });
 
   it('correctly generates the signature', async () => {
-    const generateSignedRequest = await generateSignedRequest(
+    const generated = await generateSignedRequest(
       '//Alice',
       'http://localhost:3000',
       [5, 7, 8, 9, 10],
       stockCredentials
     );
 
-    const signature = generateSignedRequest.requestedSignatures.signature.encodedValue;
+    const signature = generated.requestedSignatures.signature.encodedValue;
 
     const verified = signatureVerify(
       serializeLoginPayloadHex({
