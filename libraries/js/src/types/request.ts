@@ -1,4 +1,4 @@
-import { isArrayOf, isObj, isStr } from './general.js';
+import { isArrayOf, isHexStr, isNum, isObj, isPublicKey, isStr, SiwaPublicKey } from './general.js';
 
 interface AnyOfRequired {
   anyOf: SiwaCredential[];
@@ -12,14 +12,9 @@ export interface SiwaCredential {
 // Union of the different interfaces
 export type SiwaCredentialRequest = AnyOfRequired | SiwaCredential;
 
-export interface SiwaRequest {
+export interface SiwaSignedRequest {
   requestedSignatures: {
-    publicKey: {
-      encodedValue: string;
-      encoding: 'base58';
-      format: 'ss58';
-      type: 'Sr25519';
-    };
+    publicKey: SiwaPublicKey;
     signature: {
       algo: 'Sr25519';
       encoding: 'base16';
@@ -51,4 +46,29 @@ export function isSiwaCredentialsRequest(input: unknown): input is SiwaCredentia
     return input.every(isSiwaCredentialRequest);
   }
   return false;
+}
+
+function isRequestedSignaturePayload(input: unknown): input is SiwaSignedRequest['requestedSignatures']['payload'] {
+  return isObj(input) && isStr(input.callback) && isArrayOf(input.permissions, isNum);
+}
+
+function isRequestedSignature(input: unknown): input is SiwaSignedRequest['requestedSignatures'] {
+  return isObj(input) && input.algo === 'Sr25519' && input.encoding === 'base16' && isHexStr(input.encodedValue);
+}
+
+function isRequestedSignatures(input: unknown): input is SiwaSignedRequest['requestedSignatures'] {
+  return (
+    isObj(input) &&
+    isPublicKey(input.publicKey) &&
+    isRequestedSignature(input.signature) &&
+    isRequestedSignaturePayload(input.payload)
+  );
+}
+
+export function isSiwaSignedRequest(input: unknown): input is SiwaSignedRequest {
+  return (
+    isObj(input) &&
+    isRequestedSignatures(input.requestedSignatures) &&
+    isSiwaCredentialsRequest(input.requestedCredentials)
+  );
 }

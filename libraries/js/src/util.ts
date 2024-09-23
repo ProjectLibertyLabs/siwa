@@ -1,7 +1,7 @@
 import { Struct, Text } from '@polkadot/types-codec';
 import { TypeRegistry } from '@polkadot/types';
 import type { RegistryTypes } from '@polkadot/types/types';
-import { SiwaRequest } from './types/request.js';
+import { SiwaSignedRequest } from './types/request.js';
 import { u8aToHex, u8aWrapBytes } from '@polkadot/util';
 import {
   SiwaResponsePayloadAddProvider,
@@ -42,19 +42,19 @@ const frequencyTypes: RegistryTypes = {
 
 registry.register(frequencyTypes);
 
-export function serializeLoginPayloadHex(payload: SiwaRequest['requestedSignatures']['payload']): string {
-  return u8aToHex(
-    u8aWrapBytes(
-      new Struct(
-        registry,
-        {
-          callback: Text,
-          permissions: 'Vec<U16>',
-        },
-        payload
-      ).toU8a()
-    )
-  );
+export function requestPayloadBytes(payload: SiwaSignedRequest['requestedSignatures']['payload']): Uint8Array {
+  return new Struct(
+    registry,
+    {
+      callback: Text,
+      permissions: 'Vec<U16>',
+    },
+    payload
+  ).toU8a();
+}
+
+export function serializeLoginPayloadHex(payload: SiwaSignedRequest['requestedSignatures']['payload']): string {
+  return u8aToHex(u8aWrapBytes(requestPayloadBytes(payload)));
 }
 
 export function serializeAddProviderPayloadHex(payload: SiwaResponsePayloadAddProvider['payload']): string {

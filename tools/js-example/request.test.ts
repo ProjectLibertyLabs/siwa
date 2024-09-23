@@ -2,26 +2,22 @@ import { describe, it, expect } from "vitest";
 import * as siwa from "@projectlibertylabs/siwa";
 
 describe("SIWA request test", () => {
-  it("should return a valid redirect URL from the real SIWA server", async () => {
+  it("should return a valid Authentication URL from the real SIWA server", async () => {
     const providerKeyUri: string = "//Alice";
     const callbackUri: string = "http://localhost:3000/callback"; // Ensure the mock server is running
     const permissions: number[] = [5, 7, 8, 9, 10];
     const credentials = [siwa.VerifiedEmailAddressCredential];
-    const options = { endpoint: "http://localhost:3000" }; // This should point to your mock server
 
     try {
-      const redirectUrl = await siwa.getRedirectUrl(
-        providerKeyUri,
-        callbackUri,
-        permissions,
-        credentials,
-        options,
+      const signedRequest = await siwa.generateSignedRequest(providerKeyUri, callbackUri, permissions, credentials);
+      const authenticationUrl = await siwa.generateAuthenticationUrl(
+        signedRequest,
+        new URLSearchParams({ mode: "dark" }),
       );
-      expect(redirectUrl).toContain(
-        "http://localhost:3000/callback?authorizationCode=",
-      );
+      expect(authenticationUrl).toContain("mode=dark");
+      expect(authenticationUrl).toContain("signedRequest=");
     } catch (error) {
-      throw new Error("Error in generating redirect URL: " + error);
+      throw new Error("Error in generating Authentication URL: " + error);
     }
   });
 });

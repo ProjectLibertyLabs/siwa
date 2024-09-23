@@ -10,35 +10,22 @@ TypeScript will be shown for the examples.
 
 `npm i @projectlibertylabs/siwa`
 
-## Step 1: Generate the Request
+## Prerequisites
 
-This is the only step that _must_ take place on a secure backend server with access to the private key of one of the Control Keys for the Frequency Provider Account.
+- Generate a [Signed Request Payload](#todo)
+
+## Step 1: Generate the Request URL
 
 ```typescript
 import * as siwa from "@projectlibertylabs/siwa";
 
 async function startLogin() {
-  // This is the URI of a key. Usually just a seed phrase, but also supports test accounts such as `//Alice` or `//Bob`
-  const providerKeyUri: string = getProviderKeyUriSecret();
+  // Get the signed base64url encoded payload
+  const signedRequest: string = getStaticProviderSignedRequest();
 
-  // This is the URI that the user should return to after authenticating with Frequency Access
-  const callbackUri: string = getWebOrApplicationCallbackUri();
-
-  // The list of Frequency Schemas Ids that you are requesting the user delegate.
-  // See a full reference: https://projectlibertylabs.github.io/siwa/Delegations.html
-  // This example is for Graph Only
-  const permissions: number[] = [7, 8, 9, 10];
-
-  // List of Credentials
-  // See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
-  const credentials = [
-    {
-      anyOf: [
-        siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential
-      ],
-    },
-    siwa.VerifiedGraphKeyCredential,
-  ];
+  // Additional callback URL parameters that will be appended to the Callback URL
+  // Remember that the callback path is secured as part of the Signed Payload
+  const additionalCallbackUrlParams: string = getWebOrApplicationCallbackUrlParams();
 
   // Options with endpoint selection
   // Endpoint may be tagged or specified in full
@@ -46,19 +33,17 @@ async function startLogin() {
   // Staging-Testnet Options
   // const options = { endpoint: 'staging' };
 
-  const redirectUrl = await siwa.getRedirectUrl(providerKeyUri, callbackUri, permissions, credentials, options);
-
-  // Send the `redirectUrl` to the client.
+  const authenticationUrl = siwa.generateAuthenticationUrl(signedRequest, additionalCallbackUrlParams, options);
 }
 ```
 
 ## Step 2 (Web): Forward the User to a Browser
 
-For website interactions, just forward the user to the returned `redirectUrl`.
+For website interactions, just forward the user to the returned `authenticationUrl`.
 
 ## Step 2 (Android/iOS): Forward the User to an Embedded Browser
 
-For mobile applications, it is recommended to use an embedded browser and set the `callbackUri` to your application's Universal Link. This ensures that the user remains within the application environment and does not have to leave the app.
+For mobile applications, it is recommended to use an embedded browser and set the `callbackDomain` in the `signedRequest` and the `callbackPath` to your application's Universal Link. This ensures that the user remains within the application environment and does not have to leave the app.
 
 For more details, refer to the official documentation:
 

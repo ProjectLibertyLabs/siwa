@@ -1,14 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 import { signatureVerify } from '@polkadot/util-crypto';
 import {
-  getRedirectUrl,
+  decodeSignedRequest,
+  generateEncodedSignedRequest,
+  generateSignedRequest,
   VerifiedEmailAddressCredential,
   VerifiedGraphKeyCredential,
   VerifiedPhoneNumberCredential,
 } from './request.js';
 import { serializeLoginPayloadHex } from './util.js';
-
-global.fetch = vi.fn();
 
 const stockCredentials = [
   {
@@ -18,36 +18,10 @@ const stockCredentials = [
 ];
 
 describe('request', () => {
-  it('correctly throws an error with a 404 response', async () => {
-    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 404, statusText: 'Not Found' }));
-    expect(getRedirectUrl('//Alice', 'http://localhost:3000', [])).to.rejects.toThrow(
-      'Request for Redirect URL failed or missing header: 404 Not Found'
-    );
-  });
+  it('correctly generates the signed request', async () => {
+    const generated = await generateSignedRequest('//Alice', 'http://localhost:3000', [1, 2, 100], stockCredentials);
 
-  it('correctly throws an error with a missing header response', async () => {
-    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 201, statusText: 'Created' }));
-    expect(getRedirectUrl('//Alice', 'http://localhost:3000', [])).to.rejects.toThrow(
-      'Request for Redirect URL failed or missing header: 201 Created'
-    );
-  });
-
-  it('correctly generates the request', async () => {
-    vi.mocked(fetch).mockResolvedValue(
-      new Response(null, {
-        status: 201,
-        statusText: 'Created',
-        headers: { Location: 'https://unittest.frequencyaccess.com/go' },
-      })
-    );
-
-    await expect(getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], stockCredentials)).to.resolves.toBe(
-      'https://unittest.frequencyaccess.com/go'
-    );
-
-    const body = JSON.parse(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString() || '');
-
-    expect(body).toEqual({
+    expect(generated).toEqual({
       requestedSignatures: {
         publicKey: {
           encodedValue: 'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH',
@@ -86,40 +60,17 @@ describe('request', () => {
     });
   });
 
-  it('correctly evaluates the endpoint', async () => {
-    vi.mocked(fetch).mockResolvedValue(
-      new Response(null, {
-        status: 201,
-        statusText: 'Created',
-        headers: { Location: 'https://unittest.frequencyaccess.com/go' },
-      })
-    );
-
-    await expect(getRedirectUrl('//Alice', 'http://localhost:3000', [], [], { endpoint: 'testnet' })).to.resolves.toBe(
-      'https://unittest.frequencyaccess.com/go'
-    );
-
-    expect(vi.mocked(fetch).mock.calls[0]?.[0]).toBe('https://testnet.frequencyaccess.com/siwa/api/request');
-  });
-
   it('correctly generates the signature', async () => {
-    vi.mocked(fetch).mockResolvedValue(
-      new Response(null, {
-        status: 201,
-        statusText: 'Created',
-        headers: { Location: 'https://unittest.frequencyaccess.com/go' },
-      })
+    const generated = await generateSignedRequest(
+      '//Alice',
+      'http://localhost:3000',
+      [5, 7, 8, 9, 10],
+      stockCredentials
     );
 
-    await expect(
-      getRedirectUrl('//Alice', 'http://localhost:3000', [1, 2, 100], [VerifiedEmailAddressCredential])
-    ).to.resolves.toBe('https://unittest.frequencyaccess.com/go');
+    const signature = generated.requestedSignatures.signature.encodedValue;
 
-    const body = JSON.parse(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString() || '');
-
-    const signature = body.requestedSignatures.signature.encodedValue;
-
-    signatureVerify(
+    const verified = signatureVerify(
       serializeLoginPayloadHex({
         callback: 'http://localhost:3000',
         permissions: [5, 7, 8, 9, 10],
@@ -127,5 +78,27 @@ describe('request', () => {
       signature,
       'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH'
     );
+
+    expect(verified.isValid).toBeTruthy();
+  });
+
+  it('Can encode and decode successfully', async () => {
+    const encoded = await generateEncodedSignedRequest(
+      '//Alice',
+      'http://localhost:3000',
+      [5, 7, 8, 9, 10],
+      stockCredentials
+    );
+
+    expect(decodeSignedRequest(encoded)).toMatchObject({
+      requestedSignatures: {
+        publicKey: {
+          encodedValue: 'f6cL4wq1HUNx11TcvdABNf9UNXXoyH47mVUwT59tzSFRW8yDH',
+          encoding: 'base58',
+          format: 'ss58',
+          type: 'Sr25519',
+        },
+      },
+    });
   });
 });

@@ -8,7 +8,7 @@ Sign In With Access (SIWA) provides documentation and tools to integrate with [F
 
 There are a few main steps to authentication using Frequency Access.
 
-1. Your application sends the user the Frequency Access redirect URL
+1. Your application sends the user the Frequency Access Authentication URL
 2. Frequency Access verifies the user, and the user signs the requested payload(s)
 3. Frequency Access sends the signed user payloads back to your application
 4. If needed, your application sends the signed payloads to Frequency

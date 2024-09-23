@@ -1,14 +1,6 @@
-# Request Login URL from Frequency Access
+# Authentication URL Signature
 
-To retrieve a URL to send the user through the authentication loop, your application must first request a new redirect URL for each user from Frequency Access.
-
-## Quick Reference
-
-- Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
-- Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
-- Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
-- Response: 201 Created
-  - Header `Location`: Redirect URL for Browser
+Most applications skip all of this and just generate their required signature from [TBD](#todo).
 
 ## Step 1: Create the Payload for Signing
 
@@ -103,20 +95,56 @@ Supported Options:
 
 - See a full list of [Available Credentials](../Credentials.md)
 
-## Step 4: Build and Submit the Request
+### Example Using TypeScript/JavaScript
 
-- Build full request structure
-- `POST` the data:
-  - Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/api/request`
-  - Production-Mainnet: `https://www.frequencyaccess.com/siwa/api/request`
+```typescript
+// This is the URI of a key. Usually just a seed phrase, but also supports test accounts such as `//Alice` or `//Bob`
+const providerKeyUri: string = getProviderKeyUriSecret();
+
+// The list of Frequency Schemas Ids that you are requesting the user delegate
+// See a full reference: https://projectlibertylabs.github.io/siwa/Delegations.html
+// This example is for Graph Only
+const permissions: number[] = [7, 8, 9, 10];
+
+// List of Credentials
+// See a full reference and examples: https://projectlibertylabs.github.io/siwa/Credentials.html
+const credentials = [
+  {
+    anyOf: [siwa.VerifiedEmailAddressCredential, siwa.VerifiedPhoneNumberCredential],
+  },
+  siwa.VerifiedGraphKeyCredential,
+];
+
+// This is the URI that the user should return to after authenticating with Frequency Access
+const callbackUri: string = getWebOrApplicationCallbackUri();
+
+// The Encoded Signed Request can remain static if
+// It is the same as is generated with the Signed Payload Generation Tool
+const encodedSignedRequest = await siwa.generateEncodedSignedRequest(
+  providerKeyUri,
+  callbackUri,
+  permissions,
+  credentials,
+);
+
+// Options with endpoint selection
+// Endpoint may be tagged or specified in full
+const options = { endpoint: "production" };
+// Staging-Testnet Options
+// const options = { endpoint: 'staging' };
+
+const authenticationUrl: string = generateAuthenticationUrl(signedRequest, new URLSearchParams({ id: getSessionId() }));
+```
 
 ### Full Example Request
 
-{{#markdown-embed src/DataStructures/Request.md 0}}
+{{#markdown-embed src/DataStructures/SignedRequest.md 0}}
 
-## Step 5: Redirect the User
+## Usage
 
-- Extract the Location header
-- Redirect the user's Browser or Embedded Browser (for mobile apps) to the location URL
-  - [SafariViewController for iOS](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller)
-  - [Chrome Custom Tabs for Android](https://developer.chrome.com/docs/android/custom-tabs/)
+See [Start](./Actions/Start.md) for details on how to use the generated signature.
+
+### Serialization
+
+1. JSON Stringify the `SignedRequest` object
+2. [`base64url`](https://datatracker.ietf.org/doc/html/rfc4648#section-5) encode the stringified result
