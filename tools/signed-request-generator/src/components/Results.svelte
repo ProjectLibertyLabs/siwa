@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { generateRedirectUrl } from '@projectlibertylabs/siwa';
+	import { generateAuthenticationUrl } from '@projectlibertylabs/siwa';
 	export let encodedRequest = '';
 	export let requestJson = '';
 
-	$: mainnet = generateRedirectUrl(encodedRequest, '', { endpoint: 'production' });
-	$: testnet = generateRedirectUrl(encodedRequest, '', { endpoint: 'staging' });
+	$: mainnet = generateAuthenticationUrl(encodedRequest, '', { endpoint: 'production' });
+	$: testnet = generateAuthenticationUrl(encodedRequest, '', { endpoint: 'staging' });
 </script>
 
 <h2>Result</h2>
