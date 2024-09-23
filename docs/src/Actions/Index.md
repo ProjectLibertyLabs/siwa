@@ -10,7 +10,7 @@ Frequency Access handles three different situations for each user:
 
 ## General Flow
 
-1. Generate Provider Login Request Payload and Signature ([Generator Tool](#todo)) ([Documentation](../SignatureGeneration.md))
+1. Generate Provider Login Request Payload and Signature ([Generator Tool](../Generate.md)) ([Documentation](../SignatureGeneration.md))
 2. Build and send the user to the Authentication URL ([See Details](./Start.md))
 3. Receive a callback from Frequency Access
 4. Retrieve and process the login response from Frequency Access ([See Details](./Response.md))

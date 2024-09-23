@@ -1,6 +1,6 @@
 # Authentication URL Signature
 
-Most applications skip all of this and just generate their required signature from [TBD](#todo).
+Most applications skip all of this and just [generate the login request payload and signature](./Generate.md).
 
 ## Step 1: Create the Payload for Signing
 

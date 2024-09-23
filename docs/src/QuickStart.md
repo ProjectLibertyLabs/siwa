@@ -12,7 +12,7 @@ TypeScript will be shown for the examples.
 
 ## Prerequisites
 
-- Generate a [Signed Request Payload](#todo)
+- Generate a [Login Request Payload and Signature](./Generate.md)
 
 ## Step 1: Generate the Request URL
 
@@ -23,8 +23,9 @@ async function startLogin() {
   // Get the signed base64url encoded payload
   const signedRequest: string = getStaticProviderSignedRequest();
 
-  // Additional callback URL parameters that will be appended to the Callback URL
-  // Remember that the callback path is secured as part of the Signed Payload
+  // Any additional parameters that do not collide with reserved parameter names
+  // on the Authentication URL are passed through unchanged.
+  // Remember that ONLY the callback path from the Signed Payload is secured via signature.
   const additionalCallbackUrlParams: string = getWebOrApplicationCallbackUrlParams();
 
   // Options with endpoint selection
