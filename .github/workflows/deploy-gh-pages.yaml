@@ -30,10 +30,10 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
 
-      - name: Generator Tool - Install Node.js ${{ matrix.node-version }}
+      - name: Generator Tool - Install Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "22.x"
           cache: "npm" # Enabling npm caching
           cache-dependency-path: |
             libraries/js/package-lock.json
