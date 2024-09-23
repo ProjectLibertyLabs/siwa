@@ -6,7 +6,7 @@ To start the authentication loop, your application will generate an Authenticati
 
 - Staging-Testnet: `https://testnet.frequencyaccess.com/siwa/start`
 - Production-Mainnet: `https://www.frequencyaccess.com/siwa/start`
-- Generate Signed Request Payload: [`TODO`](#todo)
+- Generate Login Request Payload and Signature: [Generator Tool](../Generate.md)
 - Request Structure: [`SiwaRequest`](../DataStructures/All.md#request)
 - Signed Request Structure: [`SiwaSignedRequest`](../DataStructures/All.md#signed-request)
 

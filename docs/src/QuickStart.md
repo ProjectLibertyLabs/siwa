@@ -12,7 +12,7 @@ TypeScript will be shown for the examples.
 
 ## Prerequisites
 
-- Generate a [Signed Request Payload](#todo)
+- Generate a [Login Request Payload and Signature](./Generate.md)
 
 ## Step 1: Generate the Request URL
 

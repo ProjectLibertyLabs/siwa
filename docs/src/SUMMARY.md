@@ -8,6 +8,7 @@
     - [Login Response](Actions/Response.md)
 - [Reference](Reference.md)
   - [Signature Generation](SignatureGeneration.md)
+    - [Generator](Generate.md)
   - [Credentials](Credentials.md)
   - [Delegations](Delegations.md)
   - [Payloads](Payloads.md)
