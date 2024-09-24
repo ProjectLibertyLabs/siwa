@@ -15,7 +15,7 @@ on:
 
 env:
   NEW_RELEASE_TAG: ${{github.ref_name}}
-  TEST_RUN: ${{startsWith(github.ref_name, 'v0.0.1')}}
+  NPM_LATEST: ${{!contains(fromJSON('["-rc", "v0.0."]'), github.ref_name)}}
 
 jobs:
   publish-npm:
@@ -37,14 +37,13 @@ jobs:
 
       - name: Install dependencies
         working-directory: libraries/js
-        run: npm i
+        run: npm ci
 
       - name: build
         working-directory: libraries/js
         run: npm run build
 
       - name: Version Package
-        if: env.TEST_RUN != 'true'
         working-directory: libraries/js/dist
         run: npm version --new-version "${{env.NEW_RELEASE_TAG}}" --no-git-tag-version
 
@@ -53,11 +52,11 @@ jobs:
         run: npm config set //registry.npmjs.org/:_authToken ${{secrets.NPM_AUTH_TOKEN}}
 
       - name: Release on NPM @latest
-        if: env.TEST_RUN != 'true' && steps.is-full-release.outputs.is-full-release == 'true'
+        if: env.NPM_LATEST == 'true'
         working-directory: libraries/js/dist
         run: npm publish --tag latest --access public
 
-      - name: Release Candidate on NPM
-        if: env.TEST_RUN != 'true' && steps.is-full-release.outputs.is-full-release != 'true'
+      - name: Release on NPM without @latest
+        if: env.NPM_LATEST != 'true'
         working-directory: libraries/js/dist
         run: npm publish --access public
