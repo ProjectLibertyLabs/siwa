@@ -17,9 +17,9 @@ For example, if you wish to correlate the original unauthorized session with the
 
 ### Parameter: `permissions`
 
-These are the Frequency Schema Ids that delegation was requested of the user.
+The list of Frequency Schema Ids permissions your application is requesting from the user.
 
-- See a full list of [Available Delegations](../Delegations.md)
+- See a full list of [Available Delegations](./Delegations.md)
 
 ## Step 2: Signing the Request
 
@@ -93,7 +93,7 @@ Supported Options:
 }
 ```
 
-- See a full list of [Available Credentials](../Credentials.md)
+- See a full list of [Available Credentials](./Credentials.md)
 
 ### Example Using TypeScript/JavaScript
 

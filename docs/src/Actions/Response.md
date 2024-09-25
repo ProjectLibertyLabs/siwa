@@ -28,7 +28,7 @@ While the `userPublicKey` may change, the MSA Id will _always_ be the same for t
 
 ## Step 3: Processing the Credentials
 
-The `credentials` array will contain any [requested](./Request#step-3-optional-request-credentials-email-phone) and approved credentials.
+The `credentials` array will contain any [requested](../SignatureGeneration.md#step-3-optional-request-credentials-graph-key-email-phone) and approved credentials.
 Each credential would be matched based on the `type` field.
 
 These credentials follow the [DSNP Verifiable Credentials Specification](https://spec.dsnp.org/VerifiableCredentials/Overview.html).
@@ -82,7 +82,7 @@ If the actions are not submitted before expriation, Frequency will reject the tr
 
 ### `login`
 
-The user has the correct delegation already existing.
+The correct delegation for the user already exists.
 No submission to the chain is required, but the application *must* validate the signature to be sure that the user is authenticated.
 
 The message signed follows [CAIP-122: Sign in With X](https://chainagnostic.org/CAIPs/caip-122) specification which is derived from [EIP-4361: Sign-In with Ethereum](https://eips.ethereum.org/EIPS/eip-4361).

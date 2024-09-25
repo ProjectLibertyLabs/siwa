@@ -35,7 +35,7 @@ This is a common request: one verified contact method and access to the graph en
 ## Available Credentials
 
 Each request also has a multiformat hash of the schema file to ensure the correct verification document is requested.
-Below is the official types and multihashes to use.
+Below are the official types and multihashes to use.
 
 ### Graph Key
 
