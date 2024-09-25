@@ -12,7 +12,7 @@ To start the authentication loop, your application will generate an Authenticati
 
 ## Step 1: Generate the Signed Request Payload
 
-You *can* generate more than one of these for use simultaneously.
+You *can* generate more than one of these to use simultaneously.
 Most applications should generate and keep their needed value(s) static.
 The generated signed request payload is secured by the signature included in it, and it is not sensitive data.
 
@@ -45,7 +45,7 @@ Any additional parameters that do not collide with reserved parameter names on t
 
 <div class="warning">
 Note: These parameters are not protected and could be changed by malicious actors.
-Take care when using them for security related data.
+Take care when using them for security-related data.
 </div>
 
 #### Example

@@ -16,13 +16,13 @@ There are a few main steps to authentication using Frequency Access.
 
 ### Actors
 
-- Your Application: Any website, mobile application, etc for which your user needs authentication
+- Your Application: Any website, mobile application, etc. for which your user needs authentication
 - Frequency Access: Verifies the user and provides the user with access to the entire Frequency Ecosystem
 - Frequency Blockchain: Manages user delegations and additional social operations
 
 ### User Delegations and Credentials
 
-Frequency Access allows you to request that user give you various delegations such as private graph changes, and credentials such as verified email.
+Frequency Access allows you to request that a user give you various delegations such as private graph changes, and credentials such as verified email.
 
 - See a full list of [Available Credentials](./Credentials.md)
 - See a full list of [Available Delegations](./Delegations.md)
