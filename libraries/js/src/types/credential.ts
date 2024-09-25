@@ -1,4 +1,4 @@
-import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../credentials.js';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../constants.js';
 import { isArrayOf, isObj, isStr } from './general.js';
 
 interface SiwaResponseCredentialBase {

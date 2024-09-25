@@ -10,7 +10,7 @@ import {
 import { ExampleProviderKey, ExampleUserKey, multibaseEd25519, multibaseSr25519 } from './keys.js';
 import { documentLoaderGenerator } from '../documents/loader.js';
 import { KeyringPair } from '@polkadot/keyring/types';
-import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../credentials.js';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../constants.js';
 
 export async function signCredential<T>(keypair: KeyringPair, credential: Omit<T, 'proof'>): Promise<T> {
   const multicodec = multibaseEd25519(keypair.publicKey);
