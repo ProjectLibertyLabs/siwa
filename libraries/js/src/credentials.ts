@@ -1,6 +1,6 @@
-import * as vc from '@digitalbazaar/vc';
-import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
+import { verifyCredential } from '@digitalcredentials/vc';
+import { cryptosuite as eddsaRdfc2022CryptoSuite } from './vc/cryptosuite-eddsa/index.js';
+import { DataIntegrityProof } from './vc/data-integrity/index.js';
 import { SiwaResponse } from './types/response.js';
 import {
   isCredentialEmail,
@@ -48,7 +48,7 @@ export async function validateGeneralCredential(
 
   const suite = new DataIntegrityProof({ cryptosuite: eddsaRdfc2022CryptoSuite });
 
-  const vcTest = await vc.verifyCredential({
+  const vcTest = await verifyCredential({
     credential,
     suite,
     documentLoader: documentLoaderGenerator(trustedIssuers),

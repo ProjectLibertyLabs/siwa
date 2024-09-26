@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any  */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
-declare module '@digitalbazaar/vc' {
+declare module '@digitalcredentials/vc' {
   /**
    * Creates a proof purpose that will validate whether or not the verification
    * method in a proof was authorized by its declared controller for the
@@ -199,7 +199,7 @@ declare module '@digitalbazaar/vc' {
    * @returns {Promise<VerifyCredentialResult>} The verification result.
    */
   function verifyCredential(options: {
-    credential: JsonLdObj;
+    credential: any;
     suite?: suites.LinkedDataProof | suites.LinkedDataProof[];
     purpose?: purposes.ProofPurpose;
     documentLoader?: DocumentLoader;
@@ -261,58 +261,31 @@ declare module '@digitalbazaar/vc' {
   ): Promise<{ VerifiablePresentation }>;
 }
 
-declare module 'jsonld-signatures' {
-  export function extendContextLoader(extension: (string) => any);
-  export function sign(
-    subject: any,
-    options: {
-      suite: LinkedDataSignature;
-      purpose: ProofPurpose;
-      documentLoader: (url: string) => Promise<{
-        document: string | object;
-        documentUrl: string;
-        contextUrl: string | null;
-      }>;
-      addSuiteContext?: boolean;
-    }
-  ): any;
-  export const purposes: {
-    AssertionProofPurpose: any;
-    AuthenticationProofPurpose: any;
-    ControllerProofPurpose: any;
-    ProofPurpose: any;
-  };
-}
-
-declare module '@digitalbazaar/data-integrity' {
-  export class DataIntegrityProof {
-    constructor(options: any);
-    verificationMethod: string;
-  }
-}
-
 declare module '@digitalbazaar/data-integrity-context' {
   export const CONTEXT: object;
   export const CONTEXT_URL: string;
 }
 
-declare module '@digitalbazaar/ed25519-multikey' {}
-
-declare module '@digitalbazaar/eddsa-rdfc-2022-cryptosuite' {
-  export const cryptosuite: object;
-}
-
-declare module 'jsonld' {
-  export const documentLoaders: { node: () => any };
-}
-
-declare module '@digitalbazaar/credentials-context' {
-  export const named: Map;
-}
-
-declare module '@digitalbazaar/did-io' {
-  export class CachedResolver {
-    constructor(options: any);
-    get(options: any);
+declare module '@digitalbazaar/ed25519-multikey' {
+  export interface CreateKeyPairInterface {
+    signer: () => Buffer;
+    verifier: () => boolean;
   }
+  export function from(key: object): Promise<CreateKeyPairInterface>;
 }
+
+declare module 'rdf-canonize' {
+  export interface RdfOptions {
+    algorithm: string;
+    inputFormat?: string;
+    createMessageDigest?: any;
+    messageDigestAlgorithm?: string;
+    canonicalIdMap?: Map<any, any>;
+    maxWorkFactor?: number;
+    maxDeepIterations?: number;
+    signal?: any;
+  }
+  export function canonize(dataset: any, options: any): Promise<string>;
+}
+
+declare module '@digitalcredentials/jsonld';

@@ -1,6 +1,6 @@
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
-import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
-import * as vc from '@digitalbazaar/vc';
+import { DataIntegrityProof } from '../vc/data-integrity/index.js';
+import { cryptosuite as eddsaRdfc2022CryptoSuite } from '../vc/cryptosuite-eddsa/index.js';
+import * as vc from '@digitalcredentials/vc';
 
 import {
   SiwaResponseCredentialEmail,
