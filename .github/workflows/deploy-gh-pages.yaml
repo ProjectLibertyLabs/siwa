@@ -41,7 +41,7 @@ jobs:
 
       - name: Generator Tool - Install Library dependencies
         working-directory: libraries/js
-        run: npm ci
+        run: npm i
 
       - name: Generator Tool - Build Library
         working-directory: libraries/js

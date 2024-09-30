@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: libraries/js
-        run: npm ci
+        run: npm i
 
       - name: Lint
         working-directory: libraries/js
@@ -52,7 +52,7 @@ jobs:
       # Start up the mock server
       - name: Mock server install
         working-directory: tools/siwa-mock
-        run: npm ci
+        run: npm i
 
       - name: Start mock server
         working-directory: tools/siwa-mock
@@ -92,7 +92,7 @@ jobs:
 
       - name: Install Library dependencies
         working-directory: libraries/js
-        run: npm ci
+        run: npm i
 
       - name: Build Library
         working-directory: libraries/js

@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: libraries/js
-        run: npm ci
+        run: npm i
 
       - name: build
         working-directory: libraries/js
