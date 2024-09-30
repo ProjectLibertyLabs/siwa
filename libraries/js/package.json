@@ -58,5 +58,8 @@
     "bs58": "^6.0.0",
     "rdf-canonize": "^4.0.1",
     "tweetnacl": "^1.0.3"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.22.5"
   }
 }
