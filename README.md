@@ -57,19 +57,6 @@ See [Markdown/GitHub Docs](./docs/src/QuickStart.md) or [Live Docs](https://proj
 
 <p align="right">(<a href="#-table-of-contents">back to top</a>)</p>
 
-https://github.com/ProjectLibertyLabs/custodial-wallet/blob/main/docs/siwa/contract.md
-I removed the sessionId from the call to resolve the payloads, I had mentioned it to Bogu on Tuesday, it's a leak of sensitive information that shouldn't be leaked. The authorizationCode is all you need to send to get the SIWA response stuff, as you can see here
-
-https://testnet.frequencyaccess.com/webjars/swagger-ui/index.html#/siwa-api-controller/retrievePayload.
-
-https://github.com/ProjectLibertyLabs/custodial-wallet/blob/main/docs/siwa/phase1/integration_diagram.svg
-
-Also, the example SCALE object that we are using for our verifying the SIWA Request can be found here https://github.com/ProjectLibertyLabs/custodial-wallet/blob/main/app/src/main/java/io/amplica/custodial_wallet/orchestration/ScaleSiwaPayload.java
-
-
-
-https://testnet.frequencyaccess.com/webjars/swagger-ui/index.html
-
 ## ⚙️ Development<a name="-development"></a>
 
 ### Documentation
