@@ -1,6 +1,6 @@
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
-import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
-import * as vc from '@digitalbazaar/vc';
+import { DataIntegrityProof } from '../vc/data-integrity/index.js';
+import { cryptosuite as eddsaRdfc2022CryptoSuite } from '../vc/cryptosuite-eddsa/index.js';
+import * as vc from '@digitalcredentials/vc';
 
 import {
   SiwaResponseCredentialEmail,
@@ -10,7 +10,7 @@ import {
 import { ExampleProviderKey, ExampleUserKey, multibaseEd25519, multibaseSr25519 } from './keys.js';
 import { documentLoaderGenerator } from '../documents/loader.js';
 import { KeyringPair } from '@polkadot/keyring/types';
-import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../credentials.js';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from '../constants.js';
 
 export async function signCredential<T>(keypair: KeyringPair, credential: Omit<T, 'proof'>): Promise<T> {
   const multicodec = multibaseEd25519(keypair.publicKey);

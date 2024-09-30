@@ -9,7 +9,7 @@ import {
   isSiwaSignedRequest,
 } from './types/request.js';
 import { requestPayloadBytes, serializeLoginPayloadHex } from './util.js';
-import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from './credentials.js';
+import { VerifiedEmailAddress, VerifiedGraphKey, VerifiedPhoneNumber } from './constants.js';
 import { stringFromBase64URL, stringToBase64URL } from './base64url.js';
 
 const keyring = new Keyring({ type: 'sr25519' });

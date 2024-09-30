@@ -29,7 +29,7 @@ export function hasChainSubmissions(result: SiwaResponse): boolean {
 export async function getLoginResult(authorizationCode: string, options?: SiwaOptions): Promise<SiwaResponse> {
   await cryptoWaitReady();
   const endpoint = new URL(
-    `${parseEndpoint(options?.endpoint)}/siwa/api/payload?authorizationCode=${authorizationCode}`
+    `${parseEndpoint(options?.endpoint, '/api/payload')}?authorizationCode=${authorizationCode}`
   );
   const response = await fetch(endpoint);
 

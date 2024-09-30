@@ -1,6 +1,6 @@
-import * as vc from '@digitalbazaar/vc';
-import { cryptosuite as eddsaRdfc2022CryptoSuite } from '@digitalbazaar/eddsa-rdfc-2022-cryptosuite';
-import { DataIntegrityProof } from '@digitalbazaar/data-integrity';
+import { verifyCredential } from '@digitalcredentials/vc';
+import { cryptosuite as eddsaRdfc2022CryptoSuite } from './vc/cryptosuite-eddsa/index.js';
+import { DataIntegrityProof } from './vc/data-integrity/index.js';
 import { SiwaResponse } from './types/response.js';
 import {
   isCredentialEmail,
@@ -48,7 +48,7 @@ export async function validateGeneralCredential(
 
   const suite = new DataIntegrityProof({ cryptosuite: eddsaRdfc2022CryptoSuite });
 
-  const vcTest = await vc.verifyCredential({
+  const vcTest = await verifyCredential({
     credential,
     suite,
     documentLoader: documentLoaderGenerator(trustedIssuers),
@@ -87,36 +87,3 @@ export async function validateCredentials(
     await validateCredential(credential, trustedIssuers);
   }
 }
-
-/**
- * Request for a verified email address
- */
-export const VerifiedEmailAddress = {
-  credential: {
-    type: 'VerifiedEmailAddressCredential',
-    hash: ['bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi'],
-  },
-  id: 'https://schemas.frequencyaccess.com/VerifiedEmailAddressCredential/bciqe4qoczhftici4dzfvfbel7fo4h4sr5grco3oovwyk6y4ynf44tsi.json',
-};
-
-/**
- * Request for a verified SMS/Phone Number
- */
-export const VerifiedPhoneNumber = {
-  credential: {
-    type: 'VerifiedPhoneNumberCredential',
-    hash: ['bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq'],
-  },
-  id: 'https://schemas.frequencyaccess.com/VerifiedPhoneNumberCredential/bciqjspnbwpc3wjx4fewcek5daysdjpbf5xjimz5wnu5uj7e3vu2uwnq.json',
-};
-
-/**
- * Request for a the private graph encryption key
- */
-export const VerifiedGraphKey = {
-  credential: {
-    type: 'VerifiedGraphKeyCredential',
-    hash: ['bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y'],
-  },
-  id: 'https://schemas.frequencyaccess.com/VerifiedGraphKeyCredential/bciqmdvmxd54zve5kifycgsdtoahs5ecf4hal2ts3eexkgocyc5oca2y.json',
-};
