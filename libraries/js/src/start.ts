@@ -7,7 +7,7 @@ import { parseEndpoint } from './util.js';
  * Generates an Authentication URL for SIWA to start the user's login path.
  *
  * @param {SiwaSignedRequest|string} signedRequest - The signed request object or string.
- * @param {URLSearchParams|string} callbackUrlParams - The URL parameters to be added to the callback.
+ * @param {URLSearchParams|string} additionalCallbackUrlParams - The URL parameters to be added to the callback.
  * @param {SiwaOptions} options - Options for endpoint selection.
  *                 options.endpoint - The endpoint to use. Can be specified as 'production' for production environment or 'staging' for test environments.
  *
@@ -19,7 +19,7 @@ export function generateAuthenticationUrl(
   options?: SiwaOptions
 ): string {
   const encodedSignedRequest = typeof signedRequest === 'string' ? signedRequest : encodeSignedRequest(signedRequest);
-  const endpoint = `${parseEndpoint(options?.endpoint)}/siwa/start`;
+  const endpoint = parseEndpoint(options?.endpoint, '/start');
   const url = new URL(endpoint);
   // Copy over the additionalCallbackUrlParams
   new URLSearchParams(additionalCallbackUrlParams).forEach((value, key) => {

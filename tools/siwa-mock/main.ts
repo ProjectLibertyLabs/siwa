@@ -21,7 +21,7 @@ const payloads = {
 };
 
 // GET /siwa/api/payload: Return mock payload data
-app.get("/siwa/api/payload", (req: Request, res: Response) => {
+app.get("/api/payload", (req: Request, res: Response) => {
   const { authorizationCode } = req.query;
 
   if (authorizationCode === authCodes.login) {

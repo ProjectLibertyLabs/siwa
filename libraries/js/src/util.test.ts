@@ -49,21 +49,27 @@ describe('SCALE serializations', () => {
 
 describe('parseEndpoint', () => {
   it('parses keywords', () => {
-    expect(parseEndpoint('mainnet')).toEqual('https://www.frequencyaccess.com');
-    expect(parseEndpoint('production')).toEqual('https://www.frequencyaccess.com');
-    expect(parseEndpoint('prod')).toEqual('https://www.frequencyaccess.com');
-    expect(parseEndpoint('testnet')).toEqual('https://testnet.frequencyaccess.com');
-    expect(parseEndpoint('staging')).toEqual('https://testnet.frequencyaccess.com');
+    expect(parseEndpoint('mainnet', '/start')).toEqual('https://www.frequencyaccess.com/siwa/start');
+    expect(parseEndpoint('production', '/api/payload')).toEqual('https://www.frequencyaccess.com/siwa/api/payload');
+    expect(parseEndpoint('prod', '/start')).toEqual('https://www.frequencyaccess.com/siwa/start');
+    expect(parseEndpoint('testnet', '/api/payload')).toEqual('https://testnet.frequencyaccess.com/siwa/api/payload');
+    expect(parseEndpoint('staging', '/start')).toEqual('https://testnet.frequencyaccess.com/siwa/start');
   });
 
   it('returns custom endpoint', () => {
-    expect(parseEndpoint('https://mainnet.frequencyaccess.com')).toEqual('https://mainnet.frequencyaccess.com');
-    expect(parseEndpoint('http://localhost')).toEqual('http://localhost');
-    expect(parseEndpoint('http://localhost:3000')).toEqual('http://localhost:3000');
+    expect(parseEndpoint('https://mainnet.frequencyaccess.com', '/start')).toEqual(
+      'https://mainnet.frequencyaccess.com/start'
+    );
+    expect(parseEndpoint('http://localhost', '/start')).toEqual('http://localhost/start');
+    expect(parseEndpoint('http://localhost:3000/something/else/', '/api/payload')).toEqual(
+      'http://localhost:3000/something/else/api/payload'
+    );
   });
 
   it('strips ending / from the custom endpoint', () => {
-    expect(parseEndpoint('https://mainnet.frequencyaccess.com/')).toEqual('https://mainnet.frequencyaccess.com');
-    expect(parseEndpoint('http://localhost:3000/')).toEqual('http://localhost:3000');
+    expect(parseEndpoint('https://mainnet.frequencyaccess.com/', '/start')).toEqual(
+      'https://mainnet.frequencyaccess.com/start'
+    );
+    expect(parseEndpoint('http://localhost:3000/', '/api/payload')).toEqual('http://localhost:3000/api/payload');
   });
 });

@@ -86,16 +86,16 @@ export function serializeClaimHandlePayloadHex(payload: SiwaResponsePayloadClaim
   return u8aToHex(u8aWrapBytes(registry.createType('CommonPrimitivesHandlesClaimHandlePayload', payload).toU8a()));
 }
 
-export function parseEndpoint(input = 'mainnet') {
+export function parseEndpoint(input = 'mainnet', path: '/start' | '/api/payload') {
   switch (input) {
     case 'mainnet':
     case 'production':
     case 'prod':
-      return 'https://www.frequencyaccess.com';
+      return 'https://www.frequencyaccess.com/siwa' + path;
     case 'testnet':
     case 'staging':
-      return 'https://testnet.frequencyaccess.com';
+      return 'https://testnet.frequencyaccess.com/siwa' + path;
     default:
-      return input.replace(/\/$/, '');
+      return input.replace(/\/$/, '') + path;
   }
 }
